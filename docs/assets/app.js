@@ -539,7 +539,8 @@
                 );
             }
 
-            const md = await res.text();
+            const md = (await res.text())
+                .replace(/^\s*{%\s*(?:raw|endraw)\s*%}\s*$/gmi, '');
 
             const words = md
                 .trim()
