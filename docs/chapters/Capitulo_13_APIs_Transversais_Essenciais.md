@@ -1,3 +1,5 @@
+{% raw %}
+
 # 13 APIS TRANSVERSAIS ESSENCIAIS
 
 Chega uma hora em que o plugin já sabe gravar dados, mostrar uma interface, receber formulário, proteger uma ação e executar processamento em segundo plano, mas mesmo assim ainda aparecem dezenas de pequenas necessidades que, quando são resolvidas na mão, deixam o código estranho. O administrador quer uma configuração, o usuário quer escolher uma preferência, uma página precisa entrar na navegação, uma integração precisa mandar uma notificação, um prazo precisa aparecer no calendário, um relatório precisa respeitar grupos, um registro precisa ficar pesquisável na busca global e um resultado grande precisa ser exportado para CSV ou Excel. Nenhuma dessas coisas parece grande o suficiente para ganhar um capítulo próprio, porém juntas elas aparecem em quase todo plugin Moodle que deixa de ser exemplo de curso e começa a ser usado de verdade.
@@ -656,3 +658,6 @@ MOODLE. Developer Resources. Preference API. Disponível em: https://moodledev.i
 MOODLE. Developer Resources. Tag API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/tag
 
 MOODLE. Developer Resources. Templates. Disponível em: https://moodledev.io/docs/5.0/guides/templates
+
+
+{% endraw %}

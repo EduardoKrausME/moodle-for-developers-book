@@ -1,3 +1,5 @@
+{% raw %}
+
 # 5 BANCO DE DADOS E XMLDB
 
 Banco de dados é uma das partes em que um plugin Moodle consegue parecer correto durante meses e ainda assim estar construído sobre decisões ruins. Você abre a tela, salva um registro, consulta outro, tudo responde rápido na instalação de desenvolvimento e a sensação é de que está resolvido. Depois o plugin chega a um ambiente com milhões de registros, PostgreSQL em vez de MariaDB, duas tarefas concorrentes e um upgrade vindo de uma versão antiga, então aparecem duplicidades, deadlocks, consultas lentas e aquela frase clássica de suporte, "aqui sempre funcionou".
@@ -897,3 +899,6 @@ MOODLE. Common files. Moodle Developer Resources. Disponível em https://moodled
 MOODLE. core\\persistent Class Reference. Moodle PHP Documentation. Disponível em https://phpdoc.moodledev.io/main/df/d9f/classcore_1_1persistent.html. Acesso em 23 set. 2026.
 
 MOODLE. Moodle 5.2. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/5.2. Acesso em 23 set. 2026.
+
+
+{% endraw %}

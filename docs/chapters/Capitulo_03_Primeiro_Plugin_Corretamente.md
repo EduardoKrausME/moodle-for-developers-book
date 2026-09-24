@@ -1,3 +1,5 @@
+{% raw %}
+
 # 3 PRIMEIRO PLUGIN CORRETAMENTE
 
 Criar um plugin Moodle que instala é relativamente fácil. Criar um plugin que continua compreensível depois de dois anos, passa por upgrades sem susto, não espalha lógica em arquivos globais e não obriga o próximo desenvolvedor a descobrir regras escondidas já é outra história. O problema é que os dois plugins podem parecer iguais no primeiro dia. Ambos possuem um `version.php`, ambos aparecem na administração e ambos talvez exibam uma página que funciona. A diferença aparece depois, quando o projeto cresce e aquilo que parecia apenas uma pasta com alguns arquivos começa a depender de eventos, permissões, tarefas agendadas, integrações, cache, web services, backup e compatibilidade entre versões.
@@ -796,3 +798,6 @@ MOODLE. Moodle App Plugins Development Guide. Moodle Developer Resources. Dispon
 MOODLE. Moodle 5.0 developer update. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/devupdate. Acesso em 23 set. 2026.
 
 MOODLE. Moodle 5.1 developer update. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/devupdate. Acesso em 23 set. 2026.
+
+
+{% endraw %}

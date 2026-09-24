@@ -1,3 +1,5 @@
+{% raw %}
+
 # 22 QUESTION ENGINE E QUIZ
 
 Quiz e Question Engine vivem tão próximos no Moodle que é fácil tratar os dois como se fossem a mesma coisa. O professor cria um Quiz, adiciona questões, o aluno responde e depois aparece uma nota, então visualmente parece existir apenas uma atividade chamada Questionário. No código, porém, a separação é muito mais importante, porque o Quiz é uma atividade que organiza tentativas, tempo, páginas, revisão, notas e regras de acesso, enquanto o Question Engine é um subsistema genérico que sabe executar questões, registrar cada interação, calcular frações, controlar estados e trabalhar com diferentes behaviours sem depender de `mod_quiz`.
@@ -825,3 +827,6 @@ MOODLE. Moodle Developer Resources. Question bank filters. Disponível em: https
 MOODLE. Moodle Developer Resources. Question type plugin restore code. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/qtype/restore. Acesso em: setembro de 2026.
 
 MOODLE. Moodle source code. Core question engine, question usage, question type base and Quiz database schema. Disponível em: https://github.com/moodle/moodle. Acesso em: setembro de 2026.
+
+
+{% endraw %}

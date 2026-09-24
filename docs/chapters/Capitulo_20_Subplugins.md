@@ -1,3 +1,5 @@
+{% raw %}
+
 # 20 SUBPLUGINS
 
 Subplugin é um daqueles assuntos do Moodle que parece simples quando visto pela estrutura de diretórios e fica muito mais interessante quando você entende a arquitetura por trás. A primeira impressão costuma ser "é um plugin dentro de outro plugin", mas essa definição é curta demais porque não explica quem descobre esse plugin, quem define o contrato que ele precisa cumprir, de onde vem o Frankenstyle component, como instalação e upgrade acontecem, nem por que alguns componentes do Moodle conseguem receber extensões internas enquanto outros não conseguem.
@@ -689,3 +691,6 @@ MOODLE. Moodle source code. mod/assign/db/subplugins.json. Disponível em: https
 MOODLE. Moodle source code. mod/data/db/subplugins.json. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/data/db/subplugins.json. Acesso em: 23 set. 2026.
 
 MOODLE. Moodle source code. core_plugin_manager. Disponível em: https://github.com/moodle/moodle/blob/main/public/lib/classes/plugin_manager.php. Acesso em: 23 set. 2026.
+
+
+{% endraw %}

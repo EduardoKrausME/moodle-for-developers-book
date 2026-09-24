@@ -1,3 +1,5 @@
+{% raw %}
+
 # 26 BEHAT
 
 No capítulo anterior trabalhamos com PHPUnit e vimos uma verdade importante: a maior parte da regra de negócio do plugin deve ser testada sem abrir navegador. Isso deixa a suíte rápida, previsível e boa para encontrar regressões em classes, banco, capabilities, Events, Hooks, Tasks, Web Services, Privacy e praticamente qualquer outra API do Moodle. Só que existe uma categoria de problema que PHPUnit não enxerga bem, porque o erro não está em uma função isolada, está na jornada inteira que o usuário executa pela interface.
@@ -1001,3 +1003,6 @@ MOODLE. Moodle source code. `admin/tool/behat/cli/init.php`. Disponível em: htt
 MOODLE. Moodle source code. `admin/tool/behat/cli/run.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/admin/tool/behat/cli/run.php. Acesso em setembro de 2026.
 
 MOODLEHQ. Moodle Docker. Exemplos de execução de Behat em ambiente de desenvolvimento. Disponível em: https://github.com/moodlehq/moodle-docker. Acesso em setembro de 2026.
+
+
+{% endraw %}

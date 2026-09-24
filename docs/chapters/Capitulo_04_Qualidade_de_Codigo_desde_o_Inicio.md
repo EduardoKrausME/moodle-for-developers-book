@@ -1,3 +1,5 @@
+{% raw %}
+
 # 4 QUALIDADE DE CÓDIGO DESDE O INÍCIO
 
 Existe uma maneira bastante eficiente de criar dívida técnica em um curso de desenvolvimento Moodle, ensinar durante vinte capítulos que o importante é fazer funcionar e deixar Coding Style, organização e ferramentas de qualidade para o final. O aluno aprende a resolver tudo com funções globais, copia padrões antigos do core, cria classes que fazem cinco coisas ao mesmo tempo e, quando finalmente chega ao capítulo de qualidade, precisa desaprender metade do que praticou. Eu prefiro inverter essa lógica. Se você vai escrever um plugin hoje, já deve escrever como espera manter esse plugin daqui a três anos.
@@ -499,3 +501,6 @@ Esse exercício fecha uma ideia que vai acompanhar o restante do livro. Qualidad
 Moodle Developer Resources. Dependency Injection, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/di
 
 Moodle Developer Resources. Clock API, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/clock
+
+
+{% endraw %}

@@ -1,3 +1,5 @@
+{% raw %}
+
 # 6 INTERFACE MODERNA E OUTPUT API
 
 Uma página Moodle pode estar correta do ponto de vista funcional e ainda assim estar mal construída. Ela consulta os dados certos, respeita capability, salva sem erro e entrega o resultado esperado, mas mistura HTML com PHP, espalha JavaScript pelo arquivo, duplica strings, cria botão manualmente, ignora o tema e fica praticamente impossível de reaproveitar quando aparece uma segunda tela parecida. É o tipo de código que passa no primeiro teste e começa a cobrar juros assim que o plugin cresce.
@@ -1002,3 +1004,6 @@ MOODLE. Frontend Development. Moodle Developer Resources. Disponível em https:/
 MOODLE. Accessibility. Moodle Developer Resources. Disponível em https://moodledev.io/general/development/policies/accessibility. Acesso em 23 set. 2026.
 
 MOODLE. Moodle 5.2 Release Notes. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/5.2. Acesso em 23 set. 2026.
+
+
+{% endraw %}

@@ -1,3 +1,5 @@
+{% raw %}
+
 # 9. Files API e Moodledata
 
 Se você abrir o moodledata de uma instalação e entrar em filedir esperando encontrar uma estrutura parecida com cursos, atividades, usuários e nomes de arquivos, a primeira impressão costuma ser que alguma coisa deu errado. Em vez de pastas com nomes compreensíveis aparecem diretórios como 08/13 e, dentro deles, arquivos chamados 081371cb102fa559e81993fddc230c79205232ce. Não existe relatorio-final.pdf, foto-do-perfil.jpg nem material-aula-3.zip. Existe uma coleção de hashes que, olhando apenas para o disco, parece não ter relação nenhuma com o que o usuário vê no Moodle.
@@ -634,3 +636,6 @@ Moodle Developer Resources. Files in Forms. Documentação do fluxo de draft are
 Moodle core. `public/lib/filestorage/file_storage.php`, implementação atual de `get_pathname_hash()` e File Storage.
 
 EduardoKrausME. `moodle-local_alternative_file_system`. Implementação de Alternative File System para Moodle, com AWS S3, DigitalOcean Spaces, endpoint S3 compatível, migração do filedir, migração a partir do tool_objectfs e retorno para armazenamento local. Disponível em https://github.com/EduardoKrausME/moodle-local_alternative_file_system.
+
+
+{% endraw %}

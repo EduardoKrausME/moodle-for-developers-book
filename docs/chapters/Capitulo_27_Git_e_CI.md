@@ -1,3 +1,5 @@
+{% raw %}
+
 # 27 GIT E CI
 
 No Capítulo 4 nós falamos de qualidade como uma responsabilidade do desenvolvedor. Código precisa seguir Coding Style, upgrade precisa estar correto, JavaScript precisa compilar, Mustache precisa ser válido, testes precisam passar e um plugin não deveria ser publicado apenas porque abriu sem erro no ambiente de quem escreveu. O problema é que depender de memória humana para executar todas essas verificações antes de cada entrega é uma estratégia que funciona até o dia em que você está corrigindo um bug urgente, esquece um comando e publica justamente o erro que o processo deveria impedir.
@@ -1299,3 +1301,6 @@ GITHUB. Workflow artifacts. Disponível em: https://docs.github.com/en/actions/c
 GITHUB. Secure use reference. Disponível em: https://docs.github.com/en/actions/reference/security/secure-use. Acesso em: 24 set. 2026.
 
 GITHUB. Dependabot version updates. Disponível em: https://docs.github.com/en/code-security/concepts/supply-chain-security/dependabot-version-updates. Acesso em: 24 set. 2026.
+
+
+{% endraw %}

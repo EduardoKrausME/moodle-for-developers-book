@@ -1,3 +1,5 @@
+{% raw %}
+
 # 15 PLUGIN LOCAL
 
 Existe uma frase que eu repito bastante quando alguém começa a desenvolver para Moodle: plugin `local` não é o lugar onde colocamos aquilo que não sabemos onde colocar. Ele é um tipo de plugin legítimo, útil e extremamente flexível, mas essa flexibilidade é justamente o motivo pelo qual ele precisa ser usado com critério, porque quando tudo vira `local` a arquitetura do Moodle perde parte da vantagem de ter tipos de plugins especializados.
@@ -751,3 +753,6 @@ Moodle Developer Resources. Local plugins. https://moodledev.io/docs/5.2/apis/pl
 Moodle Developer Resources. Plugin types. https://moodledev.io/docs/5.2/apis/plugintypes
 
 Moodle Developer Resources. Component communication. https://moodledev.io/general/development/policies/component-communication
+
+
+{% endraw %}

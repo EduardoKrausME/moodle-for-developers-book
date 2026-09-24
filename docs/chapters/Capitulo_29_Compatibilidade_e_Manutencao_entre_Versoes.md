@@ -1,3 +1,5 @@
+{% raw %}
+
 # 29 COMPATIBILIDADE E MANUTENÇÃO ENTRE VERSÕES
 
 Criar um plugin que funciona em uma versão do Moodle é uma tarefa. Manter o mesmo plugin funcionando por anos, atravessando mudanças de PHP, banco, JavaScript, APIs, estrutura de diretórios e políticas de depreciação, é outra completamente diferente. A diferença entre as duas aparece quando o plugin deixa de ser projeto pontual e passa a ser produto. A partir daí você não controla mais apenas o código que escreveu, porque precisa conviver com clientes em branches diferentes, upgrades em ritmos diferentes e instalações que nem sempre podem atualizar Moodle, PHP e banco ao mesmo tempo.
@@ -1053,3 +1055,6 @@ MOODLE. Moodle Developer Resources. Code restructure. https://moodledev.io/docs/
 MOODLE. Moodle Developer Resources. Composer support for plugins. https://moodledev.io/docs/5.2/guides/composer
 
 MOODLE. Moodle Developer Resources. version.php. https://moodledev.io/docs/4.5/apis/commonfiles/version.php
+
+
+{% endraw %}

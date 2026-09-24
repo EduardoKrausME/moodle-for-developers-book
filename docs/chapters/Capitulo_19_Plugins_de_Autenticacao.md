@@ -1,3 +1,5 @@
+{% raw %}
+
 # 19 PLUGINS DE AUTENTICAÇÃO
 
 Autenticação é um daqueles assuntos em que uma palavra aparentemente simples começa a significar coisas diferentes conforme a arquitetura cresce. Em um Moodle pequeno, autenticar pode significar apenas receber usuário e senha, comparar a senha com um hash local e criar a sessão. Em uma instituição maior, a mesma palavra passa a englobar LDAP, banco externo, OAuth 2, OpenID Connect, SAML, login corporativo, área do aluno, portal acadêmico, links de acesso sem senha e MFA, e se tudo isso for tratado como se fosse apenas uma variação de `user_login()`, o plugin rapidamente vira um emaranhado de responsabilidades.
@@ -858,3 +860,6 @@ Moodle core source. `public/lib/authlib.php`, `public/auth/manual/auth.php`, `pu
 Moodle Developer Resources. Moodle 4.3 release notes e Multi-factor Authentication no core. https://moodledev.io/general/releases/4.3
 
 Catalyst IT. User key authentication plugin. Implementação de login por URL de uso único entre aplicação externa e Moodle. https://github.com/catalyst/moodle-auth_userkey
+
+
+{% endraw %}

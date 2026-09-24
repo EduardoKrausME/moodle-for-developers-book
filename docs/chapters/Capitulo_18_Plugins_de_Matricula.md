@@ -1,3 +1,5 @@
+{% raw %}
+
 # 18 PLUGINS DE MATRÍCULA
 
 Quando um sistema externo diz que determinado aluno comprou um curso, assinou um contrato, entrou em uma turma ou perdeu o direito de acesso, o primeiro impulso de muita gente é criar um plugin `local`, inserir alguma coisa em `user_enrolments` e depois atribuir o papel de estudante. Isso pode até parecer simples no primeiro teste, mas é exatamente o tipo de atalho que ignora a arquitetura do Moodle, porque matrícula não é apenas uma linha que libera a entrada no curso, ela possui origem, instância, status, datas, relação com papéis, expiração, sincronização, eventos, backup e regras próprias de cada método.
@@ -651,3 +653,6 @@ MOODLE. Enrolment plugins. Moodle Developer Resources, documentação 5.1. Dispo
 MOODLE. Enrolment API. Moodle Developer Resources, documentação 5.0. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/enrol. Acesso em setembro de 2026.
 
 MOODLE. Core enrolment implementation, `lib/enrollib.php`. Repositório oficial Moodle no GitHub. Acesso em setembro de 2026.
+
+
+{% endraw %}

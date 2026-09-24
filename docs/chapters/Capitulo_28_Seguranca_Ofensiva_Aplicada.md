@@ -1,3 +1,5 @@
+{% raw %}
+
 # 28 SEGURANÇA OFENSIVA APLICADA
 
 Até aqui nós tratamos segurança quase sempre pelo lado de quem está construindo o plugin corretamente. Usamos `required_param()`, capabilities, contexts, `require_login()`, `require_sesskey()`, DML com placeholders, Output API, File API, Privacy API e vários outros contratos do Moodle porque eles evitam classes inteiras de problema. Neste capítulo vamos inverter a perspectiva. Em vez de começar perguntando "qual API devo usar?", vamos olhar um plugin como quem está tentando quebrá-lo e perguntar onde o dado entra, em qual momento ele muda de confiança, quais decisões de autorização são tomadas, quais arquivos podem ser alcançados, quais endpoints existem e o que acontece quando alguém envia valores que a interface nunca enviaria.
@@ -1399,3 +1401,6 @@ MOODLE. Moodle Developer Resources. Plugin contribution checklist. Disponível e
 MOODLE. Moodle Developer Resources. Peer review. Disponível em: https://moodledev.io/general/development/process/peer-review. Acesso em: 24 set. 2026.
 
 OWASP FOUNDATION. OWASP Cheat Sheet Series. Disponível em: https://cheatsheetseries.owasp.org/. Acesso em: 24 set. 2026.
+
+
+{% endraw %}

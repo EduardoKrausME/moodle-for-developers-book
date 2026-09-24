@@ -1,3 +1,5 @@
+{% raw %}
+
 # 14 WEB SERVICES E INTEGRACOES
 
 Chega uma hora em que o Moodle deixa de conversar apenas com ele mesmo. Um ERP precisa matricular alunos, um sistema financeiro precisa avisar que uma fatura foi paga, um aplicativo precisa buscar dados de curso, um painel externo precisa ler indicadores, o frontend precisa salvar uma alteração sem recarregar a página e, de repente, aquela classe que até ontem era chamada somente por uma página PHP passa a ser uma fronteira entre sistemas diferentes. É nesse momento que aparece um erro muito comum, o desenvolvedor pega uma função que já existe, coloca alguma coisa em `db/services.php`, gera um token e considera a integração resolvida.
@@ -929,3 +931,6 @@ Moodle Developer Resources. Routing. https://moodledev.io/docs/5.2/apis/subsyste
 Moodle Developer Resources. Responses. https://moodledev.io/docs/5.2/apis/subsystems/routing/responses
 
 Moodle PHP Documentation. curl class. https://phpdoc.moodledev.io/main/da/d9f/classcurl.html
+
+
+{% endraw %}

@@ -1,3 +1,5 @@
+{% raw %}
+
 # 11. Cron, Tasks e processamento assíncrono
 
 Quando uma página demora vinte segundos para responder, o problema nem sempre está na consulta SQL ou no servidor. Muitas vezes o código simplesmente está fazendo no lugar errado um trabalho que nunca deveria ter acontecido dentro da requisição do usuário. Importar dez mil registros, converter arquivos, sincronizar matrículas, chamar uma API externa para centenas de usuários, gerar relatórios pesados ou enviar milhares de mensagens pode até funcionar dentro de um `view.php`, mas funcionar uma vez em ambiente de desenvolvimento não transforma isso numa arquitetura aceitável.
@@ -541,3 +543,6 @@ Moodle Developer Resources. Lock API, versão 5.2. Lock factory, chaves de recur
 Moodle Developer Resources. Moodle 2.7 release notes. Introdução da Task API e recomendação de migração do cron legado.
 
 Moodle Developer Resources. Task API. Remoção do cron legado no Moodle 4.3 e remoção de blocking tasks no Moodle 4.4.
+
+
+{% endraw %}

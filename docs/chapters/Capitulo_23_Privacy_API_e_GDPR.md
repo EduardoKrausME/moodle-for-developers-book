@@ -1,3 +1,5 @@
+{% raw %}
+
 # 23 PRIVACY API E GDPR
 
 Quando a Privacy API apareceu no Moodle, muita gente tratou o assunto como mais uma exigência burocrática: criar `classes/privacy/provider.php`, implementar uma interface e fazer o Plugin Validate parar de reclamar. Esse é provavelmente o pior jeito de pensar o problema, porque a Privacy API não existe para satisfazer o validator, ela existe para obrigar o plugin a responder perguntas que deveriam fazer parte do projeto desde o início: quais dados pessoais ele armazena, por que armazena, em quais contextos esses dados existem, como um usuário pode receber uma cópia do que pertence a ele e o que deve acontecer quando existe uma solicitação de exclusão.
@@ -1068,3 +1070,6 @@ MOODLE. Core source: `core_privacy\local\request\writer`. https://github.com/moo
 MOODLE. Core source: `mod_choice\privacy\provider`. https://github.com/moodle/moodle/blob/main/public/mod/choice/classes/privacy/provider.php. Acesso em 24 set. 2026.
 
 MOODLE. Core source: `mod_forum\privacy\provider`. https://github.com/moodle/moodle/blob/main/public/mod/forum/classes/privacy/provider.php. Acesso em 24 set. 2026.
+
+
+{% endraw %}

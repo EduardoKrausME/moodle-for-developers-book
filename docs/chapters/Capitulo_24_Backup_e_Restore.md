@@ -1,3 +1,5 @@
+{% raw %}
+
 # 24 BACKUP E RESTORE - `backup/moodle2`
 
 Backup e restore é um daqueles subsistemas do Moodle que costuma ser ignorado enquanto o plugin ainda está sendo desenvolvido e só recebe atenção quando alguém duplica uma atividade, importa um curso para outra turma ou tenta restaurar um `.mbz` em outra instalação. O problema é que, nesse momento, já não estamos lidando apenas com uma tabela que precisa ser copiada. O Moodle precisa transportar uma estrutura inteira entre contextos diferentes, recriar registros com novos IDs, remapear usuários, cursos, grupos e arquivos, respeitar a opção de incluir ou não dados de usuários e ainda reconstruir links internos que antes apontavam para outra instalação.
@@ -1287,3 +1289,6 @@ MOODLE. Moodle source code. `mod/folder/backup/moodle2/backup_folder_stepslib.ph
 MOODLE. Moodle source code. `mod/folder/backup/moodle2/restore_folder_activity_task.class.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
 
 MOODLE. Moodle source code. `mod/folder/backup/moodle2/restore_folder_stepslib.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
+
+
+{% endraw %}

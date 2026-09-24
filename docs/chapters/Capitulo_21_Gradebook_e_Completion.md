@@ -1,3 +1,5 @@
+{% raw %}
+
 # 21 GRADEBOOK E COMPLETION
 
 Nota e conclusão aparecem juntas em quase toda atividade avaliativa do Moodle, mas são subsistemas diferentes e precisam continuar diferentes dentro do código. O Gradebook responde qual é a nota do usuário, qual faixa de valores é válida, qual escala está sendo usada, se aquela nota foi sobrescrita manualmente e como ela participa dos cálculos do curso, enquanto Completion responde se uma atividade foi concluída e por quais regras essa conclusão aconteceu. Uma atividade pode ter nota sem usar conclusão, pode ter conclusão sem nota e pode combinar os dois, por exemplo exigindo que o estudante receba uma nota para concluir.
@@ -1135,3 +1137,6 @@ MOODLE. Moodle PHP Documentation. `core_completion\\activity_custom_completion`.
 MOODLE. Moodle source code. `mod/choice/classes/completion/custom_completion.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/choice/classes/completion/custom_completion.php. Acesso em setembro de 2026.
 
 MOODLE. Moodle source code. `mod/assign/lib.php`. Implementação de Gradebook callbacks. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/assign/lib.php. Acesso em setembro de 2026.
+
+
+{% endraw %}

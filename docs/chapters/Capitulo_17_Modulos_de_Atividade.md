@@ -1,3 +1,5 @@
+{% raw %}
+
 # 17 MÓDULOS DE ATIVIDADE
 
 Se existe um tipo de plugin em que o Moodle deixa de parecer um conjunto de páginas PHP e passa a mostrar a arquitetura completa da plataforma, esse tipo é o módulo de atividade. Um `mod` não é apenas um plugin que coloca um item dentro do curso, porque a partir do momento em que a atividade aparece no seletor do professor ela passa a participar de uma série de contratos do Moodle, como contexto próprio, visibilidade, disponibilidade, grupos, calendário, notas, conclusão, arquivos, backup, restauração, duplicação, eventos e navegação. É justamente por isso que um módulo simples pode começar com poucas centenas de linhas e crescer rápido quando passa a conversar corretamente com o restante da plataforma.
@@ -804,3 +806,6 @@ Moodle Developer Resources. Availability API. Controle de disponibilidade de ati
 Moodle Developer Resources. Backup API. Estrutura de backup para activity modules. https://moodledev.io/docs/5.2/apis/subsystems/backup
 
 Moodle Developer Resources. Restore API. Restauração de dados de activity modules. https://moodledev.io/docs/5.0/apis/subsystems/backup/restore
+
+
+{% endraw %}

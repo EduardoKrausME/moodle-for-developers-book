@@ -1,3 +1,5 @@
+{% raw %}
+
 # 16 BLOCOS
 
 Bloco parece simples porque a primeira versão que todo mundo escreve cabe em poucas linhas. Você cria uma classe que herda de `block_base`, coloca um título em `init()`, devolve alguma coisa em `get_content()` e pronto, o Moodle já mostra uma caixinha na lateral da página. O problema é que essa simplicidade inicial engana bastante. Um bloco que começou exibindo dois links pode ganhar configuração por instância, configuração global, filtro por contexto, arquivo, JavaScript, cache, permissão, dados por usuário e, quando você percebe, aquela classe que deveria apenas coordenar a apresentação está consultando cinco tabelas, montando HTML, verificando permissões e executando chamadas externas dentro de `get_content()`.
@@ -1106,3 +1108,6 @@ Moodle Developer Resources. Backup API. https://moodledev.io/docs/5.2/apis/subsy
 Moodle Developer Resources. File API. https://moodledev.io/docs/5.0/apis/subsystems/files
 
 Moodle source code. `public/blocks/moodleblock.class.php`. https://github.com/moodle/moodle
+
+
+{% endraw %}

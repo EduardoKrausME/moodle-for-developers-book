@@ -1,3 +1,5 @@
+{% raw %}
+
 # 7. Forms API
 
 Formulário parece uma das partes mais simples de um plugin Moodle até você precisar editar um registro existente, validar uma regra que depende do banco, receber arquivos, manter um editor HTML com imagens, abrir o mesmo formulário dentro de uma modal e impedir que uma submissão duplicada faça besteira. Nesse momento fica claro que um `<form>` com alguns `<input>` não resolve o problema inteiro, porque a parte difícil nunca foi desenhar o campo na tela, mas fazer o ciclo completo funcionar de forma previsível dentro do Moodle.
@@ -683,3 +685,6 @@ Moodle Developer Resources. Files in Forms e File API. Disponível em `https://m
 Moodle PHP Documentation. `core_form\dynamic_form` e `moodleform_mod`. Disponível em `https://phpdoc.moodledev.io/`.
 
 Moodle Developer Documentation. Modal and AJAX forms. A documentação histórica continua útil para compreender `core_form\dynamic_form`, os métodos de acesso, carregamento de dados e processamento da submissão dinâmica.
+
+
+{% endraw %}

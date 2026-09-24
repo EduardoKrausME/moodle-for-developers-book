@@ -1,3 +1,5 @@
+{% raw %}
+
 # 30 PROJETO FINAL
 
 Chegar ao último capítulo de um livro sobre desenvolvimento de plugins Moodle e terminar criando mais uma classe isolada seria desperdiçar tudo o que foi construído até aqui. O projeto final precisa fazer o contrário, ele deve obrigar você a tomar decisões que parecem pequenas quando cada API é estudada separadamente, mas que passam a depender umas das outras quando o plugin vira um produto de verdade.
@@ -1301,3 +1303,6 @@ MOODLE. Moodle Developer Resources. PHPUnit. Disponível em: https://moodledev.i
 MOODLE. Moodle Developer Resources. Behat. Disponível em: https://moodledev.io/general/development/tools/behat. Acesso em: 24 set. 2026.
 
 MOODLE. Moodle Developer Resources. Coding style. Disponível em: https://moodledev.io/general/development/policies/codingstyle. Acesso em: 24 set. 2026.
+
+
+{% endraw %}

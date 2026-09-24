@@ -1,3 +1,5 @@
+{% raw %}
+
 # 8. Segurança
 
 Segurança em plugin Moodle costuma ser ensinada como uma lista de funções que você deve lembrar de chamar: `require_login()`, `require_capability()`, `require_sesskey()`, `required_param()` e mais algumas. O problema é que decorar essas funções não torna o código seguro, porque quase toda vulnerabilidade interessante aparece justamente quando a função certa foi chamada no lugar errado, no contexto errado ou protegendo uma decisão diferente daquela que realmente precisava ser protegida.
@@ -738,3 +740,6 @@ Moodle Core. Implementação de require_login() em public/lib/moodlelib.php. Dis
 ```php
 Moodle Core. moodle_page::set_course() e moodle_page::set_cm() em public/lib/pagelib.php. Disponível em: https://github.com/moodle/moodle/blob/main/public/lib/pagelib.php
 ```
+
+
+{% endraw %}

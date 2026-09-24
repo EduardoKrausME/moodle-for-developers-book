@@ -1,3 +1,5 @@
+{% raw %}
+
 # 2 TIPOS DE PLUGINS MOODLE
 
 Antes de escrever o primeiro `version.php`, existe uma decisão que costuma definir se o plugin vai envelhecer bem ou se daqui a dois anos alguém vai abrir o código e perguntar por que tudo foi colocado dentro de `local/`. Essa decisão é escolher o tipo correto de plugin. Parece um detalhe de organização porque, olhando de fora, todos acabam sendo pastas com PHP, classes, strings, banco de dados e alguma interface, mas no Moodle o tipo do plugin informa ao core qual papel aquele componente exerce, quando ele deve ser carregado, quais callbacks ou APIs fazem sentido, onde ele aparece na administração e quais contratos específicos precisa cumprir.
@@ -477,3 +479,6 @@ MOODLE. Moodle Developer Resources. Course format. Disponível em: https://moodl
 MOODLE. Moodle Developer Resources. Metadata. Disponível em: https://moodledev.io/general/development/tools/metadata. Acesso em: 23 set. 2026.
 
 MOODLE. Moodle source code. `lib/components.json`. Disponível em: https://github.com/moodle/moodle/blob/main/lib/components.json. Acesso em: 23 set. 2026.
+
+
+{% endraw %}

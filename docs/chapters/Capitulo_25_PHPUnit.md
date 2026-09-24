@@ -1,3 +1,5 @@
+{% raw %}
+
 # 25 PHPUNIT
 
 Teste automatizado em plugin Moodle não deveria entrar no projeto quando alguém pede cobertura antes de publicar. Ele deveria entrar quando a primeira regra de negócio deixa de caber confortavelmente na cabeça de quem escreveu o código, porque é justamente nesse momento que começa a ficar caro descobrir regressão clicando em tela, criando curso, trocando papel, executando cron e repetindo o mesmo cenário depois de cada mudança.
@@ -1206,3 +1208,6 @@ MOODLE. Moodle Developer Resources. PHPUnit 11 Upgrade. Disponível em: https://
 MOODLE. Moodle Developer Resources. External services - Unit Testing. Disponível em: https://moodledev.io/docs/5.1/apis/subsystems/external/testing. Acesso em: 24 set. 2026.
 
 MOODLE. Moodle core source. `advanced_testcase`. Disponível no repositório oficial Moodle em: https://github.com/moodle/moodle. Acesso em: 24 set. 2026.
+
+
+{% endraw %}

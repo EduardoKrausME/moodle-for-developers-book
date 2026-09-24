@@ -1,3 +1,5 @@
+{% raw %}
+
 # 10. Events, callbacks e Hooks
 
 Se você trabalha com Moodle há algum tempo, provavelmente já abriu um `lib.php` procurando uma função com nome enorme, encontrou um `db/events.php` registrando um observer e, em uma branch mais nova, apareceu um `db/hooks.php` apontando para uma classe que recebe um objeto de Hook. Os três mecanismos existem para permitir que uma parte do Moodle reaja ao que outra parte está fazendo, mas eles nasceram em momentos diferentes, resolvem problemas diferentes e, quando são tratados como sinônimos, o código fica confuso muito rápido.
@@ -498,3 +500,6 @@ Moodle Developer Resources. Moodle 2.7 release notes. Conversão dos eventos do 
 Moodle core. `public/lib/classes/event/course_viewed.php`, exemplo atual de Event com `init()`, CRUD, nível educacional, descrição, URL e validação de contexto.
 
 Moodle Developer Resources. Hooks API 4.5 e 5.x. Estratégia de compatibilidade entre callbacks legados e Hooks, incluindo `after_config`, `pre_block_delete`, `replaces_callbacks` e `deprecated_callback_replacement`.
+
+
+{% endraw %}

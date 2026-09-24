@@ -1,3 +1,5 @@
+{% raw %}
+
 # 12. Cache e performance
 
 Performance no Moodle é um assunto que costuma começar errado. A página está lenta, alguém abre a administração de cache, vê Redis disponível e conclui que o problema está resolvido assim que tudo for jogado para memória. Às vezes melhora mesmo, principalmente quando a instalação ainda usa filesystem lento para caches de aplicação, mas essa melhora pode esconder consulta ruim, callback executado em toda página, observer fazendo trabalho pesado, `get_records()` trazendo meio milhão de linhas ou uma sequência de chamadas N+1 que continuará existindo, apenas um pouco mais silenciosa.
@@ -647,3 +649,6 @@ Moodle `config-dist.php`. Configuração de `cachedir`, `localcachedir`, diretó
 Moodle Developer Resources. Profiling PHP. Integração com ferramentas do padrão XHProf e orientação sobre Xdebug em ambientes de produção.
 
 Valkey Documentation. RESP e guia de migração a partir de Redis OSS. Compatibilidade de protocolo e comportamento de clientes Redis com Valkey em versões compatíveis.
+
+
+{% endraw %}
