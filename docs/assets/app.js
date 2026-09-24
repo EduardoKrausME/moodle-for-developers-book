@@ -91,7 +91,7 @@
             id: pad(n),
             number: n,
             title,
-            file: `../${file}`,
+            file: `chapters/${file}`,
             url: `chapters-${pad(n)}.html`
         };
     };
