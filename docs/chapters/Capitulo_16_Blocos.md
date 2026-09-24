@@ -1099,15 +1099,11 @@ Por fim, responda por escrito quatro perguntas. O que deixaria de funcionar se a
 
 Se você consegue responder essas quatro perguntas com clareza, então não criou apenas um bloco que aparece na tela. Você criou um componente que entende o próprio ciclo de vida dentro do Moodle.
 
-## Referências
+## Referências técnicas consultadas
 
-Moodle Developer Resources. Block plugins. https://moodledev.io/docs/5.0/apis/plugintypes/blocks
-
-Moodle Developer Resources. Backup API. https://moodledev.io/docs/5.2/apis/subsystems/backup
-
-Moodle Developer Resources. File API. https://moodledev.io/docs/5.0/apis/subsystems/files
-
-Moodle source code. `public/blocks/moodleblock.class.php`. https://github.com/moodle/moodle
-
+* Moodle Developer Resources. Block plugins. https://moodledev.io/docs/5.0/apis/plugintypes/blocks
+* Moodle Developer Resources. Backup API. https://moodledev.io/docs/5.2/apis/subsystems/backup
+* Moodle Developer Resources. File API. https://moodledev.io/docs/5.0/apis/subsystems/files
+* Moodle source code. `public/blocks/moodleblock.class.php`. https://github.com/moodle/moodle
 
 {% endraw %}

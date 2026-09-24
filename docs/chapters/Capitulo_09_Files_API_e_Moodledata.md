@@ -627,15 +627,10 @@ Se eu pudesse resumir este capítulo em uma única regra seria esta: quando o ar
 
 ## Referências técnicas consultadas
 
-Moodle Developer Resources. File API, versão 5.2. Disponível em moodledev.io/docs/5.2/apis/subsystems/files.
-
-Moodle Developer Resources. File API internals, versão 5.2. Disponível em moodledev.io/docs/5.2/apis/subsystems/files/internals.
-
-Moodle Developer Resources. Files in Forms. Documentação do fluxo de draft areas, filemanager e editor.
-
-Moodle core. `public/lib/filestorage/file_storage.php`, implementação atual de `get_pathname_hash()` e File Storage.
-
-EduardoKrausME. `moodle-local_alternative_file_system`. Implementação de Alternative File System para Moodle, com AWS S3, DigitalOcean Spaces, endpoint S3 compatível, migração do filedir, migração a partir do tool_objectfs e retorno para armazenamento local. Disponível em https://github.com/EduardoKrausME/moodle-local_alternative_file_system.
-
+* Moodle Developer Resources. File API, versão 5.2. Disponível em moodledev.io/docs/5.2/apis/subsystems/files.
+* Moodle Developer Resources. File API internals, versão 5.2. Disponível em moodledev.io/docs/5.2/apis/subsystems/files/internals.
+* Moodle Developer Resources. Files in Forms. Documentação do fluxo de draft areas, filemanager e editor.
+* Moodle core. `public/lib/filestorage/file_storage.php`, implementação atual de `get_pathname_hash()` e File Storage.
+* EduardoKrausME. `moodle-local_alternative_file_system`. Implementação de Alternative File System para Moodle, com AWS S3, DigitalOcean Spaces, endpoint S3 compatível, migração do filedir, migração a partir do tool_objectfs e retorno para armazenamento local. Disponível em https://github.com/EduardoKrausME/moodle-local_alternative_file_system.
 
 {% endraw %}

@@ -1268,27 +1268,17 @@ Também precisa ficar claro que `backup/moodle2` não pertence exclusivamente a 
 
 Quando o backup foi bem implementado, o resultado mais importante é justamente não haver surpresa: o professor duplica, importa ou restaura e a atividade continua funcionando como se tivesse sido criada no destino, porque todos os IDs, files e referências foram reconstruídos pelo contrato correto.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Backup API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/backup. Acesso em: setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Restore API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/backup/restore. Acesso em: setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/mod. Acesso em: setembro de 2026.
-
-MOODLE. Moodle PHP Documentation. `backup_activity_task`. Disponível em: https://phpdoc.moodledev.io/main/d8/d39/classbackup__activity__task.html. Acesso em: setembro de 2026.
-
-MOODLE. Moodle PHP Documentation. `backup_local_plugin`. Disponível em: https://phpdoc.moodledev.io/5.0/d8/de5/classbackup__local__plugin.html. Acesso em: setembro de 2026.
-
-MOODLE. Moodle PHP Documentation. `backup_tool_plugin`. Disponível em: https://phpdoc.moodledev.io/5.0/dd/d5a/classbackup__tool__plugin.html. Acesso em: setembro de 2026.
-
-MOODLE. Moodle source code. `mod/folder/backup/moodle2/backup_folder_activity_task.class.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
-
-MOODLE. Moodle source code. `mod/folder/backup/moodle2/backup_folder_stepslib.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
-
-MOODLE. Moodle source code. `mod/folder/backup/moodle2/restore_folder_activity_task.class.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
-
-MOODLE. Moodle source code. `mod/folder/backup/moodle2/restore_folder_stepslib.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
-
+* MOODLE. Moodle Developer Resources. Backup API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/backup. Acesso em: setembro de 2026.
+* MOODLE. Moodle Developer Resources. Restore API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/backup/restore. Acesso em: setembro de 2026.
+* MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/mod. Acesso em: setembro de 2026.
+* MOODLE. Moodle PHP Documentation. `backup_activity_task`. Disponível em: https://phpdoc.moodledev.io/main/d8/d39/classbackup__activity__task.html. Acesso em: setembro de 2026.
+* MOODLE. Moodle PHP Documentation. `backup_local_plugin`. Disponível em: https://phpdoc.moodledev.io/5.0/d8/de5/classbackup__local__plugin.html. Acesso em: setembro de 2026.
+* MOODLE. Moodle PHP Documentation. `backup_tool_plugin`. Disponível em: https://phpdoc.moodledev.io/5.0/dd/d5a/classbackup__tool__plugin.html. Acesso em: setembro de 2026.
+* MOODLE. Moodle source code. `mod/folder/backup/moodle2/backup_folder_activity_task.class.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
+* MOODLE. Moodle source code. `mod/folder/backup/moodle2/backup_folder_stepslib.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
+* MOODLE. Moodle source code. `mod/folder/backup/moodle2/restore_folder_activity_task.class.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
+* MOODLE. Moodle source code. `mod/folder/backup/moodle2/restore_folder_stepslib.php`. Repositório oficial Moodle no GitHub. Acesso em: setembro de 2026.
 
 {% endraw %}

@@ -670,27 +670,17 @@ Em seguida altere o contrato do pai de maneira compatível, adicionando uma capa
 
 O exercício só está concluído quando você consegue instalar um terceiro conector sem editar uma única linha do pai. Se for necessário abrir `dispatcher.php` e adicionar mais um `case`, você construiu uma coleção de implementações, não um sistema de subplugins.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Plugin types. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Metadata. Disponível em: https://moodledev.io/general/development/tools/metadata. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Component Communication. Disponível em: https://moodledev.io/general/development/policies/component-communication. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Moodle 5.0 developer update. Disponível em: https://moodledev.io/docs/5.0/devupdate. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Assignment sub-plugins. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/assign. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Database activity sub-plugins. Disponível em: https://moodledev.io/docs/5.0/apis/plugintypes/mod_data. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle source code. mod/quiz/db/subplugins.json. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/quiz/db/subplugins.json. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle source code. mod/assign/db/subplugins.json. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/assign/db/subplugins.json. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle source code. mod/data/db/subplugins.json. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/data/db/subplugins.json. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle source code. core_plugin_manager. Disponível em: https://github.com/moodle/moodle/blob/main/public/lib/classes/plugin_manager.php. Acesso em: 23 set. 2026.
-
+* MOODLE. Moodle Developer Resources. Plugin types. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Metadata. Disponível em: https://moodledev.io/general/development/tools/metadata. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Component Communication. Disponível em: https://moodledev.io/general/development/policies/component-communication. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Moodle 5.0 developer update. Disponível em: https://moodledev.io/docs/5.0/devupdate. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Assignment sub-plugins. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/assign. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Database activity sub-plugins. Disponível em: https://moodledev.io/docs/5.0/apis/plugintypes/mod_data. Acesso em: 23 set. 2026.
+* MOODLE. Moodle source code. mod/quiz/db/subplugins.json. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/quiz/db/subplugins.json. Acesso em: 23 set. 2026.
+* MOODLE. Moodle source code. mod/assign/db/subplugins.json. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/assign/db/subplugins.json. Acesso em: 23 set. 2026.
+* MOODLE. Moodle source code. mod/data/db/subplugins.json. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/data/db/subplugins.json. Acesso em: 23 set. 2026.
+* MOODLE. Moodle source code. core_plugin_manager. Disponível em: https://github.com/moodle/moodle/blob/main/public/lib/classes/plugin_manager.php. Acesso em: 23 set. 2026.
 
 {% endraw %}

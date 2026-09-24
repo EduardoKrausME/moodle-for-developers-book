@@ -532,17 +532,11 @@ Quando essas respostas existem, Task API deixa de ser um truque para fugir de ti
 
 ## Referências técnicas consultadas
 
-Moodle Developer Resources. Task API, versões 4.5, 5.0 e documentação atual. Conceitos de Scheduled Tasks, Adhoc Tasks, cron por minuto, retries, execução como usuário, logs e limpeza de caches estáticos.
-
-Moodle Developer Resources. Scheduled Tasks e `db/tasks.php`. Estrutura das classes, configuração inicial de agenda e comportamento quando administradores personalizam a frequência.
-
-Moodle Developer Resources. Adhoc Tasks. `set_custom_data()`, métodos factory, `set_userid()`, `set_next_run_time()`, controle de tentativas e mecanismos de enfileiramento.
-
-Moodle Developer Resources. Lock API, versão 5.2. Lock factory, chaves de recurso, exclusividade entre processos e suporte a ambientes com múltiplos nós.
-
-Moodle Developer Resources. Moodle 2.7 release notes. Introdução da Task API e recomendação de migração do cron legado.
-
-Moodle Developer Resources. Task API. Remoção do cron legado no Moodle 4.3 e remoção de blocking tasks no Moodle 4.4.
-
+* Moodle Developer Resources. Task API, versões 4.5, 5.0 e documentação atual. Conceitos de Scheduled Tasks, Adhoc Tasks, cron por minuto, retries, execução como usuário, logs e limpeza de caches estáticos.
+* Moodle Developer Resources. Scheduled Tasks e `db/tasks.php`. Estrutura das classes, configuração inicial de agenda e comportamento quando administradores personalizam a frequência.
+* Moodle Developer Resources. Adhoc Tasks. `set_custom_data()`, métodos factory, `set_userid()`, `set_next_run_time()`, controle de tentativas e mecanismos de enfileiramento.
+* Moodle Developer Resources. Lock API, versão 5.2. Lock factory, chaves de recurso, exclusividade entre processos e suporte a ambientes com múltiplos nós.
+* Moodle Developer Resources. Moodle 2.7 release notes. Introdução da Task API e recomendação de migração do cron legado.
+* Moodle Developer Resources. Task API. Remoção do cron legado no Moodle 4.3 e remoção de blocking tasks no Moodle 4.4.
 
 {% endraw %}

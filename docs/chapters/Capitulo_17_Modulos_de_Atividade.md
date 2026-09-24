@@ -785,27 +785,17 @@ Módulo de atividade é onde várias decisões que estudamos separadamente come�
 
 O padrão que vale guardar é simples. A tabela do plugin armazena o que pertence à atividade, `course_modules` e os subsistemas do core armazenam o que pertence ao Moodle, `lib.php` implementa apenas os callbacks que o core ainda exige, classes internas cuidam da regra de negócio e a interface usa APIs modernas sem reconstruir recursos que já existem. Quando essa separação é respeitada, duplicar, restaurar, mover e configurar a atividade deixam de ser surpresas e passam a ser apenas parte do comportamento normal da plataforma.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-Moodle Developer Resources. Course overview integration, Moodle 5.0. https://moodledev.io/docs/5.0/apis/plugintypes/mod/courseoverview
-
-Moodle Developer Resources. Moodle 5.0 developer update, Activity overview page integration. https://moodledev.io/docs/5.0/devupdate
-
-Moodle Developer Resources. Activity modules. Documentação para Moodle 5.1. https://moodledev.io/docs/5.1/apis/plugintypes/mod
-
-Moodle Developer Resources. Form API usage. Documentação atual da Forms API e uso em Activity Modules. https://moodledev.io/docs/5.2/apis/subsystems/form/usage
-
-Moodle Developer Resources. Moodle 5.1 developer update. Alterações em Activity Modules, incluindo `FEATURE_MOD_OTHERPURPOSE`. https://moodledev.io/docs/5.1/devupdate
-
-Moodle Developer Resources. Activity completion API. Documentação da integração de módulos com conclusão. https://moodledev.io/docs/4.5/apis/core/activitycompletion
-
-Moodle Developer Resources. Groups API. Documentação de group modes e integração com atividades. https://moodledev.io/docs/5.0/apis/subsystems/group
-
-Moodle Developer Resources. Availability API. Controle de disponibilidade de atividades e seções. https://moodledev.io/docs/5.1/apis/subsystems/availability
-
-Moodle Developer Resources. Backup API. Estrutura de backup para activity modules. https://moodledev.io/docs/5.2/apis/subsystems/backup
-
-Moodle Developer Resources. Restore API. Restauração de dados de activity modules. https://moodledev.io/docs/5.0/apis/subsystems/backup/restore
-
+* Moodle Developer Resources. Course overview integration, Moodle 5.0. https://moodledev.io/docs/5.0/apis/plugintypes/mod/courseoverview
+* Moodle Developer Resources. Moodle 5.0 developer update, Activity overview page integration. https://moodledev.io/docs/5.0/devupdate
+* Moodle Developer Resources. Activity modules. Documentação para Moodle 5.1. https://moodledev.io/docs/5.1/apis/plugintypes/mod
+* Moodle Developer Resources. Form API usage. Documentação atual da Forms API e uso em Activity Modules. https://moodledev.io/docs/5.2/apis/subsystems/form/usage
+* Moodle Developer Resources. Moodle 5.1 developer update. Alterações em Activity Modules, incluindo `FEATURE_MOD_OTHERPURPOSE`. https://moodledev.io/docs/5.1/devupdate
+* Moodle Developer Resources. Activity completion API. Documentação da integração de módulos com conclusão. https://moodledev.io/docs/4.5/apis/core/activitycompletion
+* Moodle Developer Resources. Groups API. Documentação de group modes e integração com atividades. https://moodledev.io/docs/5.0/apis/subsystems/group
+* Moodle Developer Resources. Availability API. Controle de disponibilidade de atividades e seções. https://moodledev.io/docs/5.1/apis/subsystems/availability
+* Moodle Developer Resources. Backup API. Estrutura de backup para activity modules. https://moodledev.io/docs/5.2/apis/subsystems/backup
+* Moodle Developer Resources. Restore API. Restauração de dados de activity modules. https://moodledev.io/docs/5.0/apis/subsystems/backup/restore
 
 {% endraw %}

@@ -814,19 +814,13 @@ A tabela `question` deixou de ser a identidade completa da questão nas versões
 
 Se você guardar uma regra prática, guarde esta: para criar ou alterar questões, use as APIs do Question Bank e do qtype; para executar questões, use Question Engine; para manipular Quiz, use as APIs do `mod_quiz`. SQL direto é excelente para diagnóstico e relatórios específicos, mas é uma péssima ferramenta para substituir os contratos que mantêm essas três camadas sincronizadas.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Questions API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/question. Acesso em: setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Question type plugins. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/qtype. Acesso em: setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Question bank plugins. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/qbank. Acesso em: setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Question bank filters. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/qbank/filters. Acesso em: setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Question type plugin restore code. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/qtype/restore. Acesso em: setembro de 2026.
-
-MOODLE. Moodle source code. Core question engine, question usage, question type base and Quiz database schema. Disponível em: https://github.com/moodle/moodle. Acesso em: setembro de 2026.
-
+* MOODLE. Moodle Developer Resources. Questions API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/question. Acesso em: setembro de 2026.
+* MOODLE. Moodle Developer Resources. Question type plugins. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/qtype. Acesso em: setembro de 2026.
+* MOODLE. Moodle Developer Resources. Question bank plugins. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/qbank. Acesso em: setembro de 2026.
+* MOODLE. Moodle Developer Resources. Question bank filters. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/qbank/filters. Acesso em: setembro de 2026.
+* MOODLE. Moodle Developer Resources. Question type plugin restore code. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/qtype/restore. Acesso em: setembro de 2026.
+* MOODLE. Moodle source code. Core question engine, question usage, question type base and Quiz database schema. Disponível em: https://github.com/moodle/moodle. Acesso em: setembro de 2026.
 
 {% endraw %}

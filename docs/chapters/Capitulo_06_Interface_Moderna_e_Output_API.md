@@ -975,35 +975,20 @@ Interface moderna no Moodle não significa colocar mais JavaScript. Significa re
 
 ## Referências técnicas consultadas
 
-Moodle Developer Resources. Moodle 5.0 developer update, seção Bootstrap 5. https://moodledev.io/docs/5.0/devupdate
-
-Moodle Developer Resources. Bootstrap 5 migration. https://moodledev.io/docs/5.2/guides/bs5migration (migração iniciada no Moodle 5.0)
-
-MOODLE. Output renderers. MoodleDocs, documentação histórica do Moodle 2.0. Disponível em https://docs.moodle.org/dev/Output_renderers. Acesso em 23 set. 2026.
-
-MOODLE. Migrating your code to the 2.0 rendering API. MoodleDocs. Disponível em https://docs.moodle.org/dev/Migrating_your_code_to_the_2.0_rendering_API. Acesso em 23 set. 2026.
-
-MOODLE. Moodle 2.9. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/2.9. Acesso em 23 set. 2026.
-
-MOODLE. Templates. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/guides/templates. Acesso em 23 set. 2026.
-
-MOODLE. named_templatable Interface Reference. Moodle PHP Documentation. Disponível em https://phpdoc.moodledev.io/main/d8/df6/interfacecore_1_1output_1_1named__templatable.html. Acesso em 23 set. 2026.
-
-MOODLE. Output API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/apis/subsystems/output. Acesso em 23 set. 2026.
-
-MOODLE. Templates. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/guides/templates. Acesso em 23 set. 2026.
-
-MOODLE. JavaScript Modules. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/guides/javascript/modules. Acesso em 23 set. 2026.
-
-MOODLE. AJAX. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/guides/javascript/ajax. Acesso em 23 set. 2026.
-
-MOODLE. Modal Dialogues. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/guides/javascript/modal. Acesso em 23 set. 2026.
-
-MOODLE. Frontend Development. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/guides/frontend. Acesso em 23 set. 2026.
-
-MOODLE. Accessibility. Moodle Developer Resources. Disponível em https://moodledev.io/general/development/policies/accessibility. Acesso em 23 set. 2026.
-
-MOODLE. Moodle 5.2 Release Notes. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/5.2. Acesso em 23 set. 2026.
-
+* Moodle Developer Resources. Moodle 5.0 developer update, seção Bootstrap 5. https://moodledev.io/docs/5.0/devupdate
+* Moodle Developer Resources. Bootstrap 5 migration. https://moodledev.io/docs/5.2/guides/bs5migration (migração iniciada no Moodle 5.0)
+* MOODLE. Output renderers. MoodleDocs, documentação histórica do Moodle 2.0. Disponível em https://docs.moodle.org/dev/Output_renderers. Acesso em 23 set. 2026.
+* MOODLE. Migrating your code to the 2.0 rendering API. MoodleDocs. Disponível em https://docs.moodle.org/dev/Migrating_your_code_to_the_2.0_rendering_API. Acesso em 23 set. 2026.
+* MOODLE. Moodle 2.9. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/2.9. Acesso em 23 set. 2026.
+* MOODLE. Templates. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/guides/templates. Acesso em 23 set. 2026.
+* MOODLE. named_templatable Interface Reference. Moodle PHP Documentation. Disponível em https://phpdoc.moodledev.io/main/d8/df6/interfacecore_1_1output_1_1named__templatable.html. Acesso em 23 set. 2026.
+* MOODLE. Output API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/apis/subsystems/output. Acesso em 23 set. 2026.
+* MOODLE. Templates. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/guides/templates. Acesso em 23 set. 2026.
+* MOODLE. JavaScript Modules. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/guides/javascript/modules. Acesso em 23 set. 2026.
+* MOODLE. AJAX. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/guides/javascript/ajax. Acesso em 23 set. 2026.
+* MOODLE. Modal Dialogues. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/guides/javascript/modal. Acesso em 23 set. 2026.
+* MOODLE. Frontend Development. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/guides/frontend. Acesso em 23 set. 2026.
+* MOODLE. Accessibility. Moodle Developer Resources. Disponível em https://moodledev.io/general/development/policies/accessibility. Acesso em 23 set. 2026.
+* MOODLE. Moodle 5.2 Release Notes. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/5.2. Acesso em 23 set. 2026.
 
 {% endraw %}

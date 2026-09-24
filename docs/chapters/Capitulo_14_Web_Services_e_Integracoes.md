@@ -911,26 +911,17 @@ Na direção contrária, chamadas para APIs externas precisam de cliente isolado
 E, principalmente, não coloque a regra de negócio dentro da camada de transporte. A página PHP, a external function, o AJAX, a task, o webhook e uma rota REST nova podem todos precisar executar a mesma operação, e quando isso acontecer você vai agradecer por ter uma API interna do componente que sabe o que fazer sem depender de como a chamada chegou.
 
 ## Referencias
-
-Moodle Developer Resources. Dependency Injection, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/di
+* Moodle Developer Resources. Dependency Injection, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/di
 
 Moodle PHP Documentation. core\http_client, Moodle 5.0. https://phpdoc.moodledev.io/5.0/dc/dfe/classcore_1_1http__client.html
-
-Moodle Developer Resources. External Services. https://moodledev.io/docs/5.2/apis/subsystems/external
-
-Moodle Developer Resources. Function Definitions. https://moodledev.io/docs/5.2/apis/subsystems/external/functions
-
-Moodle Developer Resources. External services security. https://moodledev.io/docs/5.2/apis/subsystems/external/security
-
-Moodle Developer Resources. Service creation. https://moodledev.io/docs/5.2/apis/subsystems/external/advanced/custom-services
-
-Moodle Developer Resources. AJAX. https://moodledev.io/docs/5.2/guides/javascript/ajax
-
-Moodle Developer Resources. Routing. https://moodledev.io/docs/5.2/apis/subsystems/routing
-
-Moodle Developer Resources. Responses. https://moodledev.io/docs/5.2/apis/subsystems/routing/responses
+* Moodle Developer Resources. External Services. https://moodledev.io/docs/5.2/apis/subsystems/external
+* Moodle Developer Resources. Function Definitions. https://moodledev.io/docs/5.2/apis/subsystems/external/functions
+* Moodle Developer Resources. External services security. https://moodledev.io/docs/5.2/apis/subsystems/external/security
+* Moodle Developer Resources. Service creation. https://moodledev.io/docs/5.2/apis/subsystems/external/advanced/custom-services
+* Moodle Developer Resources. AJAX. https://moodledev.io/docs/5.2/guides/javascript/ajax
+* Moodle Developer Resources. Routing. https://moodledev.io/docs/5.2/apis/subsystems/routing
+* Moodle Developer Resources. Responses. https://moodledev.io/docs/5.2/apis/subsystems/routing/responses
 
 Moodle PHP Documentation. curl class. https://phpdoc.moodledev.io/main/da/d9f/classcurl.html
-
 
 {% endraw %}

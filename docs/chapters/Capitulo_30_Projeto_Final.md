@@ -1272,37 +1272,22 @@ Depois gere o ZIP final e faça três provas independentes. A primeira é instal
 
 O objetivo não é terminar com o maior plugin do livro. O objetivo é terminar com um plugin que você entende inteiro, do primeiro requisito ao último teste, e que outra pessoa consegue instalar, auditar, manter e atualizar sem depender da sua memória sobre como ele deveria funcionar.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Dependency Injection, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/di
-
-MOODLE. Moodle Developer Resources. Course overview integration, Moodle 5.0. https://moodledev.io/docs/5.0/apis/plugintypes/mod/courseoverview
-
-MOODLE. Moodle 5.0 developer update. Bootstrap 5, Activity overview e PHPUnit 11.4. https://moodledev.io/docs/5.0/devupdate
-
-MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.0/apis/plugintypes/mod. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Access API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/access. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Forms API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/form. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Files API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/files. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Output API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/output. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Gradebook API. Disponível em: https://moodledev.io/docs/5.0/apis/core/grade. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Activity completion API. Disponível em: https://moodledev.io/docs/5.0/apis/core/activitycompletion. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Privacy API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/privacy. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Backup API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/backup. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. PHPUnit. Disponível em: https://moodledev.io/general/development/tools/phpunit. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Behat. Disponível em: https://moodledev.io/general/development/tools/behat. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Coding style. Disponível em: https://moodledev.io/general/development/policies/codingstyle. Acesso em: 24 set. 2026.
-
+* MOODLE. Moodle Developer Resources. Dependency Injection, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/di
+* MOODLE. Moodle Developer Resources. Course overview integration, Moodle 5.0. https://moodledev.io/docs/5.0/apis/plugintypes/mod/courseoverview
+* MOODLE. Moodle 5.0 developer update. Bootstrap 5, Activity overview e PHPUnit 11.4. https://moodledev.io/docs/5.0/devupdate
+* MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.0/apis/plugintypes/mod. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Access API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/access. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Forms API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/form. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Files API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/files. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Output API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/output. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Gradebook API. Disponível em: https://moodledev.io/docs/5.0/apis/core/grade. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Activity completion API. Disponível em: https://moodledev.io/docs/5.0/apis/core/activitycompletion. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Privacy API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/privacy. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Backup API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/backup. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. PHPUnit. Disponível em: https://moodledev.io/general/development/tools/phpunit. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Behat. Disponível em: https://moodledev.io/general/development/tools/behat. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Coding style. Disponível em: https://moodledev.io/general/development/policies/codingstyle. Acesso em: 24 set. 2026.
 
 {% endraw %}

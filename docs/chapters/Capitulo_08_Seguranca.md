@@ -713,33 +713,22 @@ Também vale acompanhar as security releases do Moodle. Falhas reais corrigidas 
 
 ## Referências técnicas consultadas
 
-Moodle Developer Resources. Security guidelines. Disponível em: https://moodledev.io/general/development/policies/security
-
-Moodle Developer Resources. Cross-site request forgery. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-request-forgery
-
-Moodle Developer Resources. Cross-site scripting. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-scripting
-
-Moodle Developer Resources. SQL injection. Disponível em: https://moodledev.io/general/development/policies/security/sql-injection
-
-Moodle Developer Resources. Access API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/access
-
-Moodle Developer Resources. Roles API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/roles
-
-Moodle Developer Resources. External API security. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/external/security
-
-Moodle Developer Resources. AJAX. Disponível em: https://moodledev.io/docs/5.2/guides/javascript/ajax
-
-Moodle Developer Resources. File API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/files
-
-Moodle Developer Resources. File API internals. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/files/internals
-
-Moodle Developer Resources. Moodle 5.2.2 release notes. Disponível em: https://moodledev.io/general/releases/5.2/5.2.2
+* Moodle Developer Resources. Security guidelines. Disponível em: https://moodledev.io/general/development/policies/security
+* Moodle Developer Resources. Cross-site request forgery. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-request-forgery
+* Moodle Developer Resources. Cross-site scripting. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-scripting
+* Moodle Developer Resources. SQL injection. Disponível em: https://moodledev.io/general/development/policies/security/sql-injection
+* Moodle Developer Resources. Access API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/access
+* Moodle Developer Resources. Roles API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/roles
+* Moodle Developer Resources. External API security. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/external/security
+* Moodle Developer Resources. AJAX. Disponível em: https://moodledev.io/docs/5.2/guides/javascript/ajax
+* Moodle Developer Resources. File API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/files
+* Moodle Developer Resources. File API internals. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/files/internals
+* Moodle Developer Resources. Moodle 5.2.2 release notes. Disponível em: https://moodledev.io/general/releases/5.2/5.2.2
 
 Moodle Core. Implementação de require_login() em public/lib/moodlelib.php. Disponível em: https://github.com/moodle/moodle/blob/main/public/lib/moodlelib.php
 
 ```php
 Moodle Core. moodle_page::set_course() e moodle_page::set_cm() em public/lib/pagelib.php. Disponível em: https://github.com/moodle/moodle/blob/main/public/lib/pagelib.php
 ```
-
 
 {% endraw %}

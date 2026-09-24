@@ -1197,17 +1197,12 @@ Uma boa suíte deixa refatoração menos arriscada, encontra regressões de auto
 
 No próximo capítulo vamos subir um nível e usar Behat para testar aquilo que PHPUnit deliberadamente não enxerga bem: a jornada completa do usuário pela interface, incluindo navegação, formulários, modais, JavaScript e comportamento visível no navegador.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Writing PHPUnit tests, Moodle 5.1. Disponível em: https://moodledev.io/docs/5.1/guides/testing. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. PHPUnit. Disponível em: https://moodledev.io/general/development/tools/phpunit. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. PHPUnit 11 Upgrade. Disponível em: https://moodledev.io/general/development/tools/phpunit/upgrading-11. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. External services - Unit Testing. Disponível em: https://moodledev.io/docs/5.1/apis/subsystems/external/testing. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle core source. `advanced_testcase`. Disponível no repositório oficial Moodle em: https://github.com/moodle/moodle. Acesso em: 24 set. 2026.
-
+* MOODLE. Moodle Developer Resources. Writing PHPUnit tests, Moodle 5.1. Disponível em: https://moodledev.io/docs/5.1/guides/testing. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. PHPUnit. Disponível em: https://moodledev.io/general/development/tools/phpunit. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. PHPUnit 11 Upgrade. Disponível em: https://moodledev.io/general/development/tools/phpunit/upgrading-11. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. External services - Unit Testing. Disponível em: https://moodledev.io/docs/5.1/apis/subsystems/external/testing. Acesso em: 24 set. 2026.
+* MOODLE. Moodle core source. `advanced_testcase`. Disponível no repositório oficial Moodle em: https://github.com/moodle/moodle. Acesso em: 24 set. 2026.
 
 {% endraw %}

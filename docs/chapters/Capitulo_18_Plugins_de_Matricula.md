@@ -646,13 +646,10 @@ Depois teste quatro situações que muita implementação ignora: usuário com p
 
 Se o exercício funcionar somente no caso feliz em que cada curso possui uma instância, cada usuário possui exatamente um papel e a integração nunca falha, ele ainda não está pronto.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Enrolment plugins. Moodle Developer Resources, documentação 5.1. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/enrol. Acesso em setembro de 2026.
-
-MOODLE. Enrolment API. Moodle Developer Resources, documentação 5.0. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/enrol. Acesso em setembro de 2026.
-
-MOODLE. Core enrolment implementation, `lib/enrollib.php`. Repositório oficial Moodle no GitHub. Acesso em setembro de 2026.
-
+* MOODLE. Enrolment plugins. Moodle Developer Resources, documentação 5.1. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/enrol. Acesso em setembro de 2026.
+* MOODLE. Enrolment API. Moodle Developer Resources, documentação 5.0. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/enrol. Acesso em setembro de 2026.
+* MOODLE. Core enrolment implementation, `lib/enrollib.php`. Repositório oficial Moodle no GitHub. Acesso em setembro de 2026.
 
 {% endraw %}

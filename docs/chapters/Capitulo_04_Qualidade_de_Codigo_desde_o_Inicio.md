@@ -497,10 +497,7 @@ Por fim, faça um code review como se o plugin fosse de outra pessoa. Procure AP
 Esse exercício fecha uma ideia que vai acompanhar o restante do livro. Qualidade não é uma etapa de acabamento aplicada depois que a funcionalidade ficou pronta. Ela começa no primeiro arquivo, porque cada decisão de nome, namespace, tipo, dependência e responsabilidade define quanto trabalho teremos quando o plugin inevitavelmente precisar mudar.
 
 ## Referências técnicas adicionais
-
-Moodle Developer Resources. Dependency Injection, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/di
-
-Moodle Developer Resources. Clock API, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/clock
-
+* Moodle Developer Resources. Dependency Injection, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/di
+* Moodle Developer Resources. Clock API, Moodle 5.0. https://moodledev.io/docs/5.0/apis/core/clock
 
 {% endraw %}

@@ -673,18 +673,13 @@ Se existe uma ideia que vale carregar para os próximos capítulos é esta: a cl
 O melhor sinal de que o formulário está bem desenhado é conseguir trocar a interface sem reescrever a operação. Uma página normal, uma modal e uma API podem usar a mesma regra de negócio, cada uma cuidando apenas da forma como os dados entram e a resposta volta para quem chamou.
 
 ## 7.50 Referências técnicas consultadas
-
-Moodle Developer Resources. Forms API, versão 5.2 e documentação main. Disponível em `https://moodledev.io/docs/5.2/apis/subsystems/form` e `https://moodledev.io/docs/5.3/apis/subsystems/form`.
-
-Moodle Developer Resources. Form Usage. Disponível em `https://moodledev.io/docs/5.2/apis/subsystems/form/usage`.
-
-Moodle Developer Resources. Repeat elements. Disponível em `https://moodledev.io/docs/5.2/apis/subsystems/form/advanced/repeat-elements`.
-
-Moodle Developer Resources. Files in Forms e File API. Disponível em `https://moodledev.io/docs/5.0/apis/subsystems/form/usage/files` e `https://moodledev.io/docs/5.2/apis/subsystems/files`.
+* Moodle Developer Resources. Forms API, versão 5.2 e documentação main. Disponível em `https://moodledev.io/docs/5.2/apis/subsystems/form` e `https://moodledev.io/docs/5.3/apis/subsystems/form`.
+* Moodle Developer Resources. Form Usage. Disponível em `https://moodledev.io/docs/5.2/apis/subsystems/form/usage`.
+* Moodle Developer Resources. Repeat elements. Disponível em `https://moodledev.io/docs/5.2/apis/subsystems/form/advanced/repeat-elements`.
+* Moodle Developer Resources. Files in Forms e File API. Disponível em `https://moodledev.io/docs/5.0/apis/subsystems/form/usage/files` e `https://moodledev.io/docs/5.2/apis/subsystems/files`.
 
 Moodle PHP Documentation. `core_form\dynamic_form` e `moodleform_mod`. Disponível em `https://phpdoc.moodledev.io/`.
 
 Moodle Developer Documentation. Modal and AJAX forms. A documentação histórica continua útil para compreender `core_form\dynamic_form`, os métodos de acesso, carregamento de dados e processamento da submissão dinâmica.
-
 
 {% endraw %}

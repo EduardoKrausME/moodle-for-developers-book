@@ -466,19 +466,12 @@ Ao terminar o capítulo, você não precisa memorizar todos os tipos que o Moodl
 
 ## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Plugin types. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Local plugins. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/local. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/mod. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Filter plugins. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/filter. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Course format. Disponível em: https://moodledev.io/docs/5.0/apis/plugintypes/format. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle Developer Resources. Metadata. Disponível em: https://moodledev.io/general/development/tools/metadata. Acesso em: 23 set. 2026.
-
-MOODLE. Moodle source code. `lib/components.json`. Disponível em: https://github.com/moodle/moodle/blob/main/lib/components.json. Acesso em: 23 set. 2026.
-
+* MOODLE. Moodle Developer Resources. Plugin types. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Local plugins. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/local. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/mod. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Filter plugins. Disponível em: https://moodledev.io/docs/5.2/apis/plugintypes/filter. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Course format. Disponível em: https://moodledev.io/docs/5.0/apis/plugintypes/format. Acesso em: 23 set. 2026.
+* MOODLE. Moodle Developer Resources. Metadata. Disponível em: https://moodledev.io/general/development/tools/metadata. Acesso em: 23 set. 2026.
+* MOODLE. Moodle source code. `lib/components.json`. Disponível em: https://github.com/moodle/moodle/blob/main/lib/components.json. Acesso em: 23 set. 2026.
 
 {% endraw %}

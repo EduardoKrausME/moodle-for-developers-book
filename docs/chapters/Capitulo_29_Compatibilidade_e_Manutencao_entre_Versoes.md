@@ -1032,29 +1032,18 @@ O plugin mais fácil de manter não é o que contém mais checks de versão, é 
 
 Esse é o ponto em que manutenção deixa de ser reação a cada novo Moodle e passa a ser uma característica planejada do produto.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Moodle versions and release support. https://moodledev.io/general/releases/
-
-MOODLE. Moodle Developer Resources. PHP version policy. https://moodledev.io/general/development/policies/php
-
-MOODLE. Moodle Developer Resources. Deprecation policy. https://moodledev.io/general/development/policies/deprecation
-
-MOODLE. Moodle Developer Resources. Deprecation API. https://moodledev.io/docs/5.2/apis/core/deprecation
-
-MOODLE. Moodle Developer Resources. Moodle 4.5 developer update. https://moodledev.io/docs/4.5/devupdate
-
-MOODLE. Moodle Developer Resources. Moodle 5.0 developer update. https://moodledev.io/docs/5.0/devupdate
-
-MOODLE. Moodle Developer Resources. Moodle 5.1 developer update. https://moodledev.io/docs/5.1/devupdate
-
-MOODLE. Moodle Developer Resources. Moodle 5.2 developer update. https://moodledev.io/docs/5.2/devupdate
-
-MOODLE. Moodle Developer Resources. Code restructure. https://moodledev.io/docs/5.1/guides/restructure
-
-MOODLE. Moodle Developer Resources. Composer support for plugins. https://moodledev.io/docs/5.2/guides/composer
-
-MOODLE. Moodle Developer Resources. version.php. https://moodledev.io/docs/4.5/apis/commonfiles/version.php
-
+* MOODLE. Moodle Developer Resources. Moodle versions and release support. https://moodledev.io/general/releases/
+* MOODLE. Moodle Developer Resources. PHP version policy. https://moodledev.io/general/development/policies/php
+* MOODLE. Moodle Developer Resources. Deprecation policy. https://moodledev.io/general/development/policies/deprecation
+* MOODLE. Moodle Developer Resources. Deprecation API. https://moodledev.io/docs/5.2/apis/core/deprecation
+* MOODLE. Moodle Developer Resources. Moodle 4.5 developer update. https://moodledev.io/docs/4.5/devupdate
+* MOODLE. Moodle Developer Resources. Moodle 5.0 developer update. https://moodledev.io/docs/5.0/devupdate
+* MOODLE. Moodle Developer Resources. Moodle 5.1 developer update. https://moodledev.io/docs/5.1/devupdate
+* MOODLE. Moodle Developer Resources. Moodle 5.2 developer update. https://moodledev.io/docs/5.2/devupdate
+* MOODLE. Moodle Developer Resources. Code restructure. https://moodledev.io/docs/5.1/guides/restructure
+* MOODLE. Moodle Developer Resources. Composer support for plugins. https://moodledev.io/docs/5.2/guides/composer
+* MOODLE. Moodle Developer Resources. version.php. https://moodledev.io/docs/4.5/apis/commonfiles/version.php
 
 {% endraw %}

@@ -1120,23 +1120,15 @@ A tabela do plugin continua sendo fonte para os dados de domínio que permitem r
 
 Quando o plugin cria grade item corretamente, consegue reenviar suas notas, respeita override, utiliza a classe moderna `custom_completion`, atualiza o estado quando os fatos mudam e testa restore, ele passa a se comportar como parte real do Moodle e não como uma atividade isolada que por acaso exibe um número e um checkbox.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Activity completion API. Disponível em: https://moodledev.io/docs/4.5/apis/core/activitycompletion. Acesso em setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/mod. Acesso em setembro de 2026.
-
-MOODLE. Moodle PHP Documentation. Grade API e `grade_update()`. Disponível em: https://phpdoc.moodledev.io/main/da/d09/group__core__grades.html. Acesso em setembro de 2026.
-
-MOODLE. Moodle PHP Documentation. `grade_item`. Disponível em: https://phpdoc.moodledev.io/5.0/d0/d8b/classgrade__item.html. Acesso em setembro de 2026.
-
-MOODLE. Moodle PHP Documentation. `grade_grade`. Disponível em: https://phpdoc.moodledev.io/5.0/dc/df3/classgrade__grade.html. Acesso em setembro de 2026.
-
-MOODLE. Moodle PHP Documentation. `core_completion\\activity_custom_completion`. Disponível em: https://phpdoc.moodledev.io/. Acesso em setembro de 2026.
-
-MOODLE. Moodle source code. `mod/choice/classes/completion/custom_completion.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/choice/classes/completion/custom_completion.php. Acesso em setembro de 2026.
-
-MOODLE. Moodle source code. `mod/assign/lib.php`. Implementação de Gradebook callbacks. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/assign/lib.php. Acesso em setembro de 2026.
-
+* MOODLE. Moodle Developer Resources. Activity completion API. Disponível em: https://moodledev.io/docs/4.5/apis/core/activitycompletion. Acesso em setembro de 2026.
+* MOODLE. Moodle Developer Resources. Activity modules. Disponível em: https://moodledev.io/docs/5.1/apis/plugintypes/mod. Acesso em setembro de 2026.
+* MOODLE. Moodle PHP Documentation. Grade API e `grade_update()`. Disponível em: https://phpdoc.moodledev.io/main/da/d09/group__core__grades.html. Acesso em setembro de 2026.
+* MOODLE. Moodle PHP Documentation. `grade_item`. Disponível em: https://phpdoc.moodledev.io/5.0/d0/d8b/classgrade__item.html. Acesso em setembro de 2026.
+* MOODLE. Moodle PHP Documentation. `grade_grade`. Disponível em: https://phpdoc.moodledev.io/5.0/dc/df3/classgrade__grade.html. Acesso em setembro de 2026.
+* MOODLE. Moodle PHP Documentation. `core_completion\\activity_custom_completion`. Disponível em: https://phpdoc.moodledev.io/. Acesso em setembro de 2026.
+* MOODLE. Moodle source code. `mod/choice/classes/completion/custom_completion.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/choice/classes/completion/custom_completion.php. Acesso em setembro de 2026.
+* MOODLE. Moodle source code. `mod/assign/lib.php`. Implementação de Gradebook callbacks. Disponível em: https://github.com/moodle/moodle/blob/main/public/mod/assign/lib.php. Acesso em setembro de 2026.
 
 {% endraw %}

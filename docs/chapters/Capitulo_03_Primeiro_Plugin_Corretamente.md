@@ -779,25 +779,15 @@ No próximo capítulo entraremos em qualidade de código desde o início, porque
 
 ## Referências técnicas consultadas
 
-MOODLE. Common files. Moodle Developer Resources. Disponível em https://moodledev.io/docs/4.5/apis/commonfiles. Acesso em 23 set. 2026.
-
-MOODLE. version.php. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/commonfiles/version.php. Acesso em 23 set. 2026.
-
-MOODLE. Activity modules. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/plugintypes/mod. Acesso em 23 set. 2026.
-
-MOODLE. Coding style. Moodle Developer Resources. Disponível em https://moodledev.io/general/development/policies/codingstyle. Acesso em 23 set. 2026.
-
-MOODLE. Hooks API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/core/hooks. Acesso em 23 set. 2026.
-
-MOODLE. Cache API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/subsystems/muc. Acesso em 23 set. 2026.
-
-MOODLE. Function Declarations. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/apis/subsystems/external/description. Acesso em 23 set. 2026.
-
-MOODLE. Moodle App Plugins Development Guide. Moodle Developer Resources. Disponível em https://moodledev.io/general/app/development/plugins-development-guide. Acesso em 23 set. 2026.
-
-MOODLE. Moodle 5.0 developer update. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/devupdate. Acesso em 23 set. 2026.
-
-MOODLE. Moodle 5.1 developer update. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/devupdate. Acesso em 23 set. 2026.
-
+* MOODLE. Common files. Moodle Developer Resources. Disponível em https://moodledev.io/docs/4.5/apis/commonfiles. Acesso em 23 set. 2026.
+* MOODLE. version.php. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/commonfiles/version.php. Acesso em 23 set. 2026.
+* MOODLE. Activity modules. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/plugintypes/mod. Acesso em 23 set. 2026.
+* MOODLE. Coding style. Moodle Developer Resources. Disponível em https://moodledev.io/general/development/policies/codingstyle. Acesso em 23 set. 2026.
+* MOODLE. Hooks API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/core/hooks. Acesso em 23 set. 2026.
+* MOODLE. Cache API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/subsystems/muc. Acesso em 23 set. 2026.
+* MOODLE. Function Declarations. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/apis/subsystems/external/description. Acesso em 23 set. 2026.
+* MOODLE. Moodle App Plugins Development Guide. Moodle Developer Resources. Disponível em https://moodledev.io/general/app/development/plugins-development-guide. Acesso em 23 set. 2026.
+* MOODLE. Moodle 5.0 developer update. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/devupdate. Acesso em 23 set. 2026.
+* MOODLE. Moodle 5.1 developer update. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/devupdate. Acesso em 23 set. 2026.
 
 {% endraw %}

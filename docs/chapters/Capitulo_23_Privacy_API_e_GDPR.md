@@ -1055,21 +1055,14 @@ Quando o provider fica difícil de implementar, muitas vezes o problema não est
 
 A melhor implementação começa antes de `provider.php`. Começa quando você decide guardar apenas o necessário, modela ownership, usa contextos corretamente e não duplica dados que já pertencem a subsistemas do Moodle. Depois disso, metadata, exportação e exclusão deixam de ser um remendo e passam a ser apenas outra visão coerente da mesma arquitetura.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Privacy API. Moodle Developer Resources. https://moodledev.io/docs/5.2/apis/subsystems/privacy. Acesso em 24 set. 2026.
-
-MOODLE. Privacy API FAQ. Moodle Developer Resources. https://moodledev.io/docs/5.0/apis/subsystems/privacy/faq. Acesso em 24 set. 2026.
-
-MOODLE. Privacy API utilities. Moodle Developer Resources. https://moodledev.io/docs/5.0/apis/subsystems/privacy/utils. Acesso em 24 set. 2026.
-
-MOODLE. Core source: `core_privacy\local\metadata\collection`. https://github.com/moodle/moodle/blob/main/public/privacy/classes/local/metadata/collection.php. Acesso em 24 set. 2026.
-
-MOODLE. Core source: `core_privacy\local\request\writer`. https://github.com/moodle/moodle/blob/main/public/privacy/classes/local/request/writer.php. Acesso em 24 set. 2026.
-
-MOODLE. Core source: `mod_choice\privacy\provider`. https://github.com/moodle/moodle/blob/main/public/mod/choice/classes/privacy/provider.php. Acesso em 24 set. 2026.
-
-MOODLE. Core source: `mod_forum\privacy\provider`. https://github.com/moodle/moodle/blob/main/public/mod/forum/classes/privacy/provider.php. Acesso em 24 set. 2026.
-
+* MOODLE. Privacy API. Moodle Developer Resources. https://moodledev.io/docs/5.2/apis/subsystems/privacy. Acesso em 24 set. 2026.
+* MOODLE. Privacy API FAQ. Moodle Developer Resources. https://moodledev.io/docs/5.0/apis/subsystems/privacy/faq. Acesso em 24 set. 2026.
+* MOODLE. Privacy API utilities. Moodle Developer Resources. https://moodledev.io/docs/5.0/apis/subsystems/privacy/utils. Acesso em 24 set. 2026.
+* MOODLE. Core source: `core_privacy\local\metadata\collection`. https://github.com/moodle/moodle/blob/main/public/privacy/classes/local/metadata/collection.php. Acesso em 24 set. 2026.
+* MOODLE. Core source: `core_privacy\local\request\writer`. https://github.com/moodle/moodle/blob/main/public/privacy/classes/local/request/writer.php. Acesso em 24 set. 2026.
+* MOODLE. Core source: `mod_choice\privacy\provider`. https://github.com/moodle/moodle/blob/main/public/mod/choice/classes/privacy/provider.php. Acesso em 24 set. 2026.
+* MOODLE. Core source: `mod_forum\privacy\provider`. https://github.com/moodle/moodle/blob/main/public/mod/forum/classes/privacy/provider.php. Acesso em 24 set. 2026.
 
 {% endraw %}

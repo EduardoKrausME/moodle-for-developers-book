@@ -1384,23 +1384,15 @@ Sempre que você escrever um endpoint novo, pergunte de onde veio o ID, quem con
 
 Quando essas perguntas entram no desenvolvimento antes do code review, a maior parte das vulnerabilidades deste capítulo deixa de parecer uma lista de ataques e passa a ser apenas uma coleção de erros arquiteturais que você já sabe reconhecer.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Security. Disponível em: https://moodledev.io/general/development/policies/security. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Cross-site scripting. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-scripting. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Cross-site request forgery. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-request-forgery. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. External functions security. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/external/security. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. File API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/files. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Plugin contribution checklist. Disponível em: https://moodledev.io/general/community/plugincontribution/checklist. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Peer review. Disponível em: https://moodledev.io/general/development/process/peer-review. Acesso em: 24 set. 2026.
-
-OWASP FOUNDATION. OWASP Cheat Sheet Series. Disponível em: https://cheatsheetseries.owasp.org/. Acesso em: 24 set. 2026.
-
+* MOODLE. Moodle Developer Resources. Security. Disponível em: https://moodledev.io/general/development/policies/security. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Cross-site scripting. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-scripting. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Cross-site request forgery. Disponível em: https://moodledev.io/general/development/policies/security/crosssite-request-forgery. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. External functions security. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/external/security. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. File API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/files. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Plugin contribution checklist. Disponível em: https://moodledev.io/general/community/plugincontribution/checklist. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Peer review. Disponível em: https://moodledev.io/general/development/process/peer-review. Acesso em: 24 set. 2026.
+* OWASP FOUNDATION. OWASP Cheat Sheet Series. Disponível em: https://cheatsheetseries.owasp.org/. Acesso em: 24 set. 2026.
 
 {% endraw %}

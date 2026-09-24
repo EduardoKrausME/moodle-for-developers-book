@@ -1276,31 +1276,20 @@ O objetivo não é executar o maior número possível de ferramentas. É escolhe
 
 A partir daqui qualidade deixa de ser uma lembrança no final do desenvolvimento e passa a ser parte do fluxo normal de cada commit.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
 MOODLEHQ. Moodle Plugin CI. Documentação e templates de GitHub Actions. Disponível em: https://github.com/moodlehq/moodle-plugin-ci. Acesso em: 24 set. 2026.
 
 MOODLEHQ. Moodle Plugin CI. `gha.dist.yml`. Disponível em: https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. GitHub Actions integration. Disponível em: https://moodledev.io/general/development/tools/gha. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. NodeJS and Grunt. Disponível em: https://moodledev.io/general/development/tools/nodejs. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. PHP CodeSniffer. Disponível em: https://moodledev.io/general/development/tools/phpcs. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Plugin code prechecks. Disponível em: https://moodledev.io/general/community/plugincontribution/codeprechecks. Acesso em: 24 set. 2026.
-
-MOODLE. Moodle Developer Resources. Moodle 4.5, 5.0, 5.1 e 5.2 release requirements. Disponível em: https://moodledev.io/general/releases. Acesso em: 24 set. 2026.
-
-GITHUB. Workflow syntax for GitHub Actions. Disponível em: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax. Acesso em: 24 set. 2026.
-
-GITHUB. Dependency caching. Disponível em: https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching. Acesso em: 24 set. 2026.
-
-GITHUB. Workflow artifacts. Disponível em: https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts. Acesso em: 24 set. 2026.
-
-GITHUB. Secure use reference. Disponível em: https://docs.github.com/en/actions/reference/security/secure-use. Acesso em: 24 set. 2026.
-
-GITHUB. Dependabot version updates. Disponível em: https://docs.github.com/en/code-security/concepts/supply-chain-security/dependabot-version-updates. Acesso em: 24 set. 2026.
-
+* MOODLE. Moodle Developer Resources. GitHub Actions integration. Disponível em: https://moodledev.io/general/development/tools/gha. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. NodeJS and Grunt. Disponível em: https://moodledev.io/general/development/tools/nodejs. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. PHP CodeSniffer. Disponível em: https://moodledev.io/general/development/tools/phpcs. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Plugin code prechecks. Disponível em: https://moodledev.io/general/community/plugincontribution/codeprechecks. Acesso em: 24 set. 2026.
+* MOODLE. Moodle Developer Resources. Moodle 4.5, 5.0, 5.1 e 5.2 release requirements. Disponível em: https://moodledev.io/general/releases. Acesso em: 24 set. 2026.
+* GITHUB. Workflow syntax for GitHub Actions. Disponível em: https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax. Acesso em: 24 set. 2026.
+* GITHUB. Dependency caching. Disponível em: https://docs.github.com/en/actions/concepts/workflows-and-actions/dependency-caching. Acesso em: 24 set. 2026.
+* GITHUB. Workflow artifacts. Disponível em: https://docs.github.com/en/actions/concepts/workflows-and-actions/workflow-artifacts. Acesso em: 24 set. 2026.
+* GITHUB. Secure use reference. Disponível em: https://docs.github.com/en/actions/reference/security/secure-use. Acesso em: 24 set. 2026.
+* GITHUB. Dependabot version updates. Disponível em: https://docs.github.com/en/code-security/concepts/supply-chain-security/dependabot-version-updates. Acesso em: 24 set. 2026.
 
 {% endraw %}

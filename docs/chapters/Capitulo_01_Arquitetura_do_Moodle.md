@@ -541,23 +541,14 @@ Com o tempo você vai perceber que desenvolver para Moodle exige menos memória 
 
 ## Referências técnicas consultadas
 
-MOODLE. Moodle 5.1 release notes. Disponível em https://moodledev.io/general/releases/5.1. Acesso em 23 set. 2026.
-
-MOODLE. Code Restructure. Disponível em https://moodledev.io/docs/5.3/guides/restructure. Acesso em 23 set. 2026.
-
-MOODLE. Routing. Disponível em https://moodledev.io/docs/5.0/apis/subsystems/routing. Acesso em 23 set. 2026.
-
-MOODLE. Frankenstyle component names. Disponível em https://moodledev.io/general/development/policies/codingstyle/frankenstyle. Acesso em 23 set. 2026.
-
-MOODLE. File API. Disponível em https://moodledev.io/docs/5.1/apis/subsystems/files. Acesso em 23 set. 2026.
-
-MOODLE. Core APIs. Disponível em https://moodledev.io/docs/5.1/apis/core. Acesso em 23 set. 2026.
-
-MOODLE. Moodle PHP Documentation. Disponível em https://phpdoc.moodledev.io/main/. Acesso em 23 set. 2026.
-
-MOODLE. Implementação de require_login() em public/lib/moodlelib.php. Disponível em https://github.com/moodle/moodle/blob/main/public/lib/moodlelib.php. Acesso em 23 set. 2026.
-
-MOODLE. moodle_page::set_course() e moodle_page::set_cm() em public/lib/pagelib.php. Disponível em https://github.com/moodle/moodle/blob/main/public/lib/pagelib.php. Acesso em 23 set. 2026.
-
+* MOODLE. Moodle 5.1 release notes. Disponível em https://moodledev.io/general/releases/5.1. Acesso em 23 set. 2026.
+* MOODLE. Code Restructure. Disponível em https://moodledev.io/docs/5.3/guides/restructure. Acesso em 23 set. 2026.
+* MOODLE. Routing. Disponível em https://moodledev.io/docs/5.0/apis/subsystems/routing. Acesso em 23 set. 2026.
+* MOODLE. Frankenstyle component names. Disponível em https://moodledev.io/general/development/policies/codingstyle/frankenstyle. Acesso em 23 set. 2026.
+* MOODLE. File API. Disponível em https://moodledev.io/docs/5.1/apis/subsystems/files. Acesso em 23 set. 2026.
+* MOODLE. Core APIs. Disponível em https://moodledev.io/docs/5.1/apis/core. Acesso em 23 set. 2026.
+* MOODLE. Moodle PHP Documentation. Disponível em https://phpdoc.moodledev.io/main/. Acesso em 23 set. 2026.
+* MOODLE. Implementação de require_login() em public/lib/moodlelib.php. Disponível em https://github.com/moodle/moodle/blob/main/public/lib/moodlelib.php. Acesso em 23 set. 2026.
+* MOODLE. moodle_page::set_course() e moodle_page::set_cm() em public/lib/pagelib.php. Disponível em https://github.com/moodle/moodle/blob/main/public/lib/pagelib.php. Acesso em 23 set. 2026.
 
 {% endraw %}

@@ -884,21 +884,13 @@ Banco de dados no Moodle não é uma coleção de métodos para decorar. A DML p
 
 ## Referências técnicas consultadas
 
-MOODLE. Data manipulation API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/core/dml. Acesso em 23 set. 2026.
-
-MOODLE. Data definition API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/apis/core/dml/ddl. Acesso em 23 set. 2026.
-
-MOODLE. Transactions. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/apis/core/dml/delegated-transactions. Acesso em 23 set. 2026.
-
-MOODLE. Plugin Upgrades. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/guides/upgrade. Acesso em 23 set. 2026.
-
-MOODLE. XMLDB editor. Moodle Developer Resources. Disponível em https://moodledev.io/general/development/tools/xmldb. Acesso em 23 set. 2026.
-
-MOODLE. Common files. Moodle Developer Resources. Disponível em https://moodledev.io/docs/4.5/apis/commonfiles. Acesso em 23 set. 2026.
-
-MOODLE. core\\persistent Class Reference. Moodle PHP Documentation. Disponível em https://phpdoc.moodledev.io/main/df/d9f/classcore_1_1persistent.html. Acesso em 23 set. 2026.
-
-MOODLE. Moodle 5.2. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/5.2. Acesso em 23 set. 2026.
-
+* MOODLE. Data manipulation API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/apis/core/dml. Acesso em 23 set. 2026.
+* MOODLE. Data definition API. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.2/apis/core/dml/ddl. Acesso em 23 set. 2026.
+* MOODLE. Transactions. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.1/apis/core/dml/delegated-transactions. Acesso em 23 set. 2026.
+* MOODLE. Plugin Upgrades. Moodle Developer Resources. Disponível em https://moodledev.io/docs/5.0/guides/upgrade. Acesso em 23 set. 2026.
+* MOODLE. XMLDB editor. Moodle Developer Resources. Disponível em https://moodledev.io/general/development/tools/xmldb. Acesso em 23 set. 2026.
+* MOODLE. Common files. Moodle Developer Resources. Disponível em https://moodledev.io/docs/4.5/apis/commonfiles. Acesso em 23 set. 2026.
+* MOODLE. core\\persistent Class Reference. Moodle PHP Documentation. Disponível em https://phpdoc.moodledev.io/main/df/d9f/classcore_1_1persistent.html. Acesso em 23 set. 2026.
+* MOODLE. Moodle 5.2. Moodle Developer Resources. Disponível em https://moodledev.io/general/releases/5.2. Acesso em 23 set. 2026.
 
 {% endraw %}

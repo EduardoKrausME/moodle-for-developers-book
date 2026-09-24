@@ -635,29 +635,18 @@ Estas APIs são fáceis de subestimar porque nenhuma delas, isoladamente, parece
 
 No próximo capítulo vamos aprofundar Web Services e integrações, e muita coisa vista aqui volta a aparecer. A configuração guarda endpoint e políticas, strings alimentam erros e interface, Message API pode avisar falhas, Tasks retiram trabalho pesado da requisição e Events registram o que aconteceu. Quando essas peças já estão claras, integração externa deixa de ser um bloco estranho anexado ao plugin e passa a usar os mesmos contratos que o restante do Moodle.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle 5.0 developer update. Calendar: new human date renderers. https://moodledev.io/docs/5.0/devupdate
-
-MOODLE. Date and Time Output Classes. API disponível desde Moodle 5.0. https://moodledev.io/docs/5.1/apis/subsystems/output/humandate
-
-MOODLE. Custom fields API. https://moodledev.io/docs/4.5/apis/core/customfields
-
-MOODLE. Developer Resources. Core APIs. Disponível em: https://moodledev.io/docs/5.1/apis/core
-
-MOODLE. Developer Resources. Navigation API. Disponível em: https://moodledev.io/docs/4.5/apis/core/navigation
-
-MOODLE. Developer Resources. Message API. Disponível em: https://moodledev.io/docs/5.0/apis/core/message
-
-MOODLE. Developer Resources. Calendar API. Disponível em: https://moodledev.io/docs/5.0/apis/core/calendar
-
-MOODLE. Developer Resources. Groups API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/group
-
-MOODLE. Developer Resources. Preference API. Disponível em: https://moodledev.io/docs/5.2/apis/core/preference
-
-MOODLE. Developer Resources. Tag API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/tag
-
-MOODLE. Developer Resources. Templates. Disponível em: https://moodledev.io/docs/5.0/guides/templates
-
+* MOODLE. Moodle 5.0 developer update. Calendar: new human date renderers. https://moodledev.io/docs/5.0/devupdate
+* MOODLE. Date and Time Output Classes. API disponível desde Moodle 5.0. https://moodledev.io/docs/5.1/apis/subsystems/output/humandate
+* MOODLE. Custom fields API. https://moodledev.io/docs/4.5/apis/core/customfields
+* MOODLE. Developer Resources. Core APIs. Disponível em: https://moodledev.io/docs/5.1/apis/core
+* MOODLE. Developer Resources. Navigation API. Disponível em: https://moodledev.io/docs/4.5/apis/core/navigation
+* MOODLE. Developer Resources. Message API. Disponível em: https://moodledev.io/docs/5.0/apis/core/message
+* MOODLE. Developer Resources. Calendar API. Disponível em: https://moodledev.io/docs/5.0/apis/core/calendar
+* MOODLE. Developer Resources. Groups API. Disponível em: https://moodledev.io/docs/5.0/apis/subsystems/group
+* MOODLE. Developer Resources. Preference API. Disponível em: https://moodledev.io/docs/5.2/apis/core/preference
+* MOODLE. Developer Resources. Tag API. Disponível em: https://moodledev.io/docs/5.2/apis/subsystems/tag
+* MOODLE. Developer Resources. Templates. Disponível em: https://moodledev.io/docs/5.0/guides/templates
 
 {% endraw %}

@@ -851,15 +851,11 @@ Teste replay do mesmo token, token expirado, usuário inexistente, destino exter
 
 Depois explique por escrito por que os dois mecanismos podem ser chamados de SSO, mas apenas o primeiro é um `user_login()` clássico e o segundo é um handoff de sessão baseado em confiança entre sistemas.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-Moodle PHP Documentation. `auth_plugin_base` e infraestrutura de autenticação do core. https://phpdoc.moodledev.io/
-
-Moodle core source. `public/lib/authlib.php`, `public/auth/manual/auth.php`, `public/auth/db/auth.php` e `public/auth/oauth2/`. https://github.com/moodle/moodle/
-
-Moodle Developer Resources. Moodle 4.3 release notes e Multi-factor Authentication no core. https://moodledev.io/general/releases/4.3
-
-Catalyst IT. User key authentication plugin. Implementação de login por URL de uso único entre aplicação externa e Moodle. https://github.com/catalyst/moodle-auth_userkey
-
+* Moodle PHP Documentation. `auth_plugin_base` e infraestrutura de autenticação do core. https://phpdoc.moodledev.io/
+* Moodle core source. `public/lib/authlib.php`, `public/auth/manual/auth.php`, `public/auth/db/auth.php` e `public/auth/oauth2/`. https://github.com/moodle/moodle/
+* Moodle Developer Resources. Moodle 4.3 release notes e Multi-factor Authentication no core. https://moodledev.io/general/releases/4.3
+* Catalyst IT. User key authentication plugin. Implementação de login por URL de uso único entre aplicação externa e Moodle. https://github.com/catalyst/moodle-auth_userkey
 
 {% endraw %}

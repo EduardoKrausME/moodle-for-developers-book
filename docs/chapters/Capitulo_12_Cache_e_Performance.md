@@ -640,15 +640,10 @@ Se eu tivesse que deixar uma única regra seria esta: não cacheie porque algo e
 
 ## Referências técnicas consultadas
 
-Moodle PHP Documentation. core\session\manager::write_close(), Moodle 5.0. https://phpdoc.moodledev.io/5.0/
-
-Moodle Developer Resources. Cache API, documentação atual das versões 5.0 e 5.2. Conceitos de MUC, `db/caches.php`, modos Request, Session e Application, definições, stores, `staticacceleration`, `canuselocalstore`, TTL, locking, caches localizados e caches versionados.
-
-Moodle `config-dist.php`. Configuração de `cachedir`, `localcachedir`, diretórios compartilhados em cluster, cache configuration path e exemplos atuais de sessão Redis.
-
-Moodle Developer Resources. Profiling PHP. Integração com ferramentas do padrão XHProf e orientação sobre Xdebug em ambientes de produção.
-
-Valkey Documentation. RESP e guia de migração a partir de Redis OSS. Compatibilidade de protocolo e comportamento de clientes Redis com Valkey em versões compatíveis.
-
+* Moodle PHP Documentation. core\session\manager::write_close(), Moodle 5.0. https://phpdoc.moodledev.io/5.0/
+* Moodle Developer Resources. Cache API, documentação atual das versões 5.0 e 5.2. Conceitos de MUC, `db/caches.php`, modos Request, Session e Application, definições, stores, `staticacceleration`, `canuselocalstore`, TTL, locking, caches localizados e caches versionados.
+* Moodle `config-dist.php`. Configuração de `cachedir`, `localcachedir`, diretórios compartilhados em cluster, cache configuration path e exemplos atuais de sessão Redis.
+* Moodle Developer Resources. Profiling PHP. Integração com ferramentas do padrão XHProf e orientação sobre Xdebug em ambientes de produção.
+* Valkey Documentation. RESP e guia de migração a partir de Redis OSS. Compatibilidade de protocolo e comportamento de clientes Redis com Valkey em versões compatíveis.
 
 {% endraw %}

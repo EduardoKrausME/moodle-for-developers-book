@@ -491,15 +491,10 @@ Se eu pudesse resumir este capítulo numa regra prática seria esta. Não escolh
 
 ## Referências técnicas consultadas
 
-Moodle Developer Resources. Hooks API, versão 5.2. Documentação da API introduzida no Moodle 4.3, registro em `db/hooks.php`, prioridades, Hooks stoppable, atributos e migração de callbacks legados.
-
-Moodle Developer Resources. Development policies, seção Events. Observers recebem informação sobre eventos ocorridos e não devem modificar o dado do evento nem impedir a ação original.
-
-Moodle Developer Resources. Moodle 2.7 release notes. Conversão dos eventos do core para a nova Events API e depreciação de APIs antigas de logging.
-
-Moodle core. `public/lib/classes/event/course_viewed.php`, exemplo atual de Event com `init()`, CRUD, nível educacional, descrição, URL e validação de contexto.
-
-Moodle Developer Resources. Hooks API 4.5 e 5.x. Estratégia de compatibilidade entre callbacks legados e Hooks, incluindo `after_config`, `pre_block_delete`, `replaces_callbacks` e `deprecated_callback_replacement`.
-
+* Moodle Developer Resources. Hooks API, versão 5.2. Documentação da API introduzida no Moodle 4.3, registro em `db/hooks.php`, prioridades, Hooks stoppable, atributos e migração de callbacks legados.
+* Moodle Developer Resources. Development policies, seção Events. Observers recebem informação sobre eventos ocorridos e não devem modificar o dado do evento nem impedir a ação original.
+* Moodle Developer Resources. Moodle 2.7 release notes. Conversão dos eventos do core para a nova Events API e depreciação de APIs antigas de logging.
+* Moodle core. `public/lib/classes/event/course_viewed.php`, exemplo atual de Event com `init()`, CRUD, nível educacional, descrição, URL e validação de contexto.
+* Moodle Developer Resources. Hooks API 4.5 e 5.x. Estratégia de compatibilidade entre callbacks legados e Hooks, incluindo `after_config`, `pre_block_delete`, `replaces_callbacks` e `deprecated_callback_replacement`.
 
 {% endraw %}

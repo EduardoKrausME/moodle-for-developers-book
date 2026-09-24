@@ -988,21 +988,14 @@ Behat é valioso porque testa o Moodle no nível em que professores, alunos e ad
 
 Mas justamente por envolver browser e aplicação completa, é uma ferramenta cara. O segredo de uma boa suíte não é ter o maior número de cenários, mas escolher jornadas críticas, preparar estado com generators, usar selectors semânticos, evitar sleeps, reaproveitar steps do core e deixar detalhes de regra para PHPUnit. Quando essa divisão é respeitada, PHPUnit protege a lógica e Behat protege a experiência, e os dois juntos permitem alterar um plugin grande sem depender de uma maratona manual de cliques antes de cada release.
 
-## REFERÊNCIAS
+## Referências técnicas consultadas
 
-MOODLE. Moodle Developer Resources. Behat. Disponível em: https://moodledev.io/general/development/tools/behat. Acesso em setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Writing acceptance tests. Disponível em: https://moodledev.io/general/development/tools/behat/writing. Acesso em setembro de 2026.
-
-MOODLE. Moodle Developer Resources. Running acceptance tests. Disponível em: https://moodledev.io/general/development/tools/behat/running. Acesso em setembro de 2026.
-
-MOODLE. Moodle source code. `config-dist.php`, seção Behat support. Disponível em: https://github.com/moodle/moodle/blob/main/config-dist.php. Acesso em setembro de 2026.
-
-MOODLE. Moodle source code. `admin/tool/behat/cli/init.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/admin/tool/behat/cli/init.php. Acesso em setembro de 2026.
-
-MOODLE. Moodle source code. `admin/tool/behat/cli/run.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/admin/tool/behat/cli/run.php. Acesso em setembro de 2026.
-
-MOODLEHQ. Moodle Docker. Exemplos de execução de Behat em ambiente de desenvolvimento. Disponível em: https://github.com/moodlehq/moodle-docker. Acesso em setembro de 2026.
-
+* MOODLE. Moodle Developer Resources. Behat. Disponível em: https://moodledev.io/general/development/tools/behat. Acesso em setembro de 2026.
+* MOODLE. Moodle Developer Resources. Writing acceptance tests. Disponível em: https://moodledev.io/general/development/tools/behat/writing. Acesso em setembro de 2026.
+* MOODLE. Moodle Developer Resources. Running acceptance tests. Disponível em: https://moodledev.io/general/development/tools/behat/running. Acesso em setembro de 2026.
+* MOODLE. Moodle source code. `config-dist.php`, seção Behat support. Disponível em: https://github.com/moodle/moodle/blob/main/config-dist.php. Acesso em setembro de 2026.
+* MOODLE. Moodle source code. `admin/tool/behat/cli/init.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/admin/tool/behat/cli/init.php. Acesso em setembro de 2026.
+* MOODLE. Moodle source code. `admin/tool/behat/cli/run.php`. Disponível em: https://github.com/moodle/moodle/blob/main/public/admin/tool/behat/cli/run.php. Acesso em setembro de 2026.
+* MOODLEHQ. Moodle Docker. Exemplos de execução de Behat em ambiente de desenvolvimento. Disponível em: https://github.com/moodlehq/moodle-docker. Acesso em setembro de 2026.
 
 {% endraw %}

@@ -746,13 +746,10 @@ Isso não significa que agora todo projeto deve ser `local`. Significa que, depo
 
 Nos próximos capítulos vamos voltar aos tipos especializados e perceber justamente o contrário: muitas coisas que implementamos manualmente em um `local` aparecem prontas quando escolhemos `block`, `mod`, `enrol` ou `auth`, porque esses tipos possuem contratos próprios com o Moodle.
 
-## Referências
+## Referências técnicas consultadas
 
-Moodle Developer Resources. Local plugins. https://moodledev.io/docs/5.2/apis/plugintypes/local
-
-Moodle Developer Resources. Plugin types. https://moodledev.io/docs/5.2/apis/plugintypes
-
-Moodle Developer Resources. Component communication. https://moodledev.io/general/development/policies/component-communication
-
+* Moodle Developer Resources. Local plugins. https://moodledev.io/docs/5.2/apis/plugintypes/local
+* Moodle Developer Resources. Plugin types. https://moodledev.io/docs/5.2/apis/plugintypes
+* Moodle Developer Resources. Component communication. https://moodledev.io/general/development/policies/component-communication
 
 {% endraw %}
