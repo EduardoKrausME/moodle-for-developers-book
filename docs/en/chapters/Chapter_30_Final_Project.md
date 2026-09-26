@@ -8,6 +8,8 @@ That is why this chapter does not introduce a new API. Everything we will use ha
 
 The project will be `mod_checkpoint`, which appeared in several chapters as a partial example. Now it stops being an example and becomes a complete activity. The teacher creates a checkpoint inside the course, provides instructions, a due date, and the activity's value; the learner submits evidence as text and optionally a file; the teacher assesses it, records feedback and a grade; and Moodle updates Gradebook and Completion. The plugin also provides a small monitoring view, asynchronous notification, Web Service status lookup, personal-data export and deletion, backup/restore, and a test suite sufficient to prevent a simple change from destroying the main flow.
 
+The complete code for this final project is available at: [https://github.com/EduardoKrausME/moodle-for-developers-book-Final_Project](https://github.com/EduardoKrausME/moodle-for-developers-book-Final_Project).
+
 The most important rule of this chapter is simple. Do not add an API merely to say that it was used. Hooks, subplugins, cache, tasks, or Web Services should enter only when a real responsibility exists for them. A good final project demonstrates that you know how to use Moodle APIs, but also that you know when not to use each one.
 
 ## 30.1 The project goal
