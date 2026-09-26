@@ -2,7 +2,7 @@
 
 # 8. SECURITY
 
-![Moodle Security](image/cap08-moodle-security.svg)
+![Moodle Security](image/chapter08-moodle-security.png)
 
 Security in a Moodle plugin is often taught as a list of functions you need to remember to call: `require_login()`, `require_capability()`, `require_sesskey()`, `required_param()`, and a few more. The problem is that memorizing those functions does not make code secure, because almost every interesting vulnerability appears precisely when the right function was called in the wrong place, in the wrong context, or protecting a decision different from the one that actually needed protection.
 
@@ -145,7 +145,7 @@ There are exceptions where you genuinely need to work with roles, particularly i
 
 ## 8.6 Capabilities
 
-![Teacher permissions in Moodle](image/chapter08-teacher-permissions-in-moodle.png)
+![Teacher permissions in Moodle](image/chapter08-custom-teacher-permissions.png)
 
 A capability represents an action that can be allowed or denied in a context. Good names describe the action, not the type of user. `local_catalog:manageitems`, `mod_example:grade`, and `tool_sync:run` communicate what is being authorized, while names such as `local_catalog:teacher` mix authorization with an institutional role that may not even exist on another site.
 
