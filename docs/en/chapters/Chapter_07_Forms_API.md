@@ -2,7 +2,7 @@
 
 # 7. Forms API
 
-![Forms API](image/cap07-forms-api.svg)
+![Forms API](image/chapter07-forms-api.png)
 
 A form can look like one of the simplest parts of a Moodle plugin until you need to edit an existing record, validate a rule that depends on the database, receive files, preserve an HTML editor with embedded images, open the same form inside a modal, and prevent a duplicate submission from doing something harmful. At that point it becomes clear that a `<form>` with a few `<input>` elements does not solve the whole problem, because the difficult part was never drawing the field on the screen; it was making the complete lifecycle behave predictably inside Moodle.
 
