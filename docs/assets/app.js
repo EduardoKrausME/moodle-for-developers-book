@@ -265,9 +265,65 @@
         });
     }
 
-    function inline(s) {
-        s = esc(s);
+    function resolveMarkdownUrl(url) {
+        const value = String(url)
+            .trim()
+            .replace(/^<|>$/g, '');
 
+        if (!value) {
+            return '';
+        }
+
+        if (/^(?:#|mailto:|tel:)/i.test(value)) {
+            return value;
+        }
+
+        try {
+            const base = state.current
+                ? new URL(state.current.file, location.href)
+                : new URL(location.href);
+
+            const resolved = new URL(value, base);
+
+            if (!/^https?:$/.test(resolved.protocol)) {
+                return '';
+            }
+
+            return resolved.href;
+        } catch (err) {
+            return '';
+        }
+    }
+
+    function markdownLink(content, url) {
+        const href = resolveMarkdownUrl(url);
+
+        if (!href) {
+            return content;
+        }
+
+        let external = false;
+
+        try {
+            external = new URL(href, location.href).origin !== location.origin;
+        } catch (err) {
+            external = false;
+        }
+
+        return `<a href="${esc(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>${content}</a>`;
+    }
+
+    function markdownImage(alt, url) {
+        const src = resolveMarkdownUrl(url);
+
+        if (!src) {
+            return esc(alt);
+        }
+
+        return `<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" decoding="async">`;
+    }
+
+    function inline(s) {
         const stash = [];
 
         const hold = x =>
@@ -275,15 +331,42 @@
 
         s = s.replace(
             /`([^`]+)`/g,
-            (_, x) => hold(`<code>${x}</code>`)
+            (_, x) => hold(`<code>${esc(x)}</code>`)
         );
 
         s = s.replace(
-            /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-            (_, t, u) => hold(
-                `<a href="${esc(u)}" target="_blank" rel="noopener">${t}</a>`
+            /\[!\[([^\]]*)\]\(([^)]+)\)\]\(([^)]+)\)/g,
+            (_, alt, src, href) => hold(
+                markdownLink(
+                    markdownImage(alt, src),
+                    href
+                )
             )
         );
+
+        s = s.replace(
+            /!\[([^\]]*)\]\(([^)]+)\)/g,
+            (_, alt, src) => hold(
+                markdownImage(alt, src)
+            )
+        );
+
+        s = s.replace(
+            /\[([^\]]+)\]\(([^)]+)\)/g,
+            (_, t, u) => hold(
+                markdownLink(esc(t), u)
+            )
+        );
+
+        s = s.replace(
+            /(^|[\s(])(https?:\/\/[^\s<)]+)/g,
+            (m, p, u) =>
+                `${p}${hold(
+                    markdownLink(esc(u), u)
+                )}`
+        );
+
+        s = esc(s);
 
         s = s
             .replace(
@@ -294,14 +377,6 @@
                 /(^|\s)\*([^*]+)\*(?=\s|[.,;:!?]|$)/g,
                 '$1<em>$2</em>'
             );
-
-        s = s.replace(
-            /(^|[\s(])(https?:\/\/[^\s<)]+)/g,
-            (m, p, u) =>
-                `${p}${hold(
-                    `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a>`
-                )}`
-        );
 
         return s.replace(
             /\u0000(\d+)\u0000/g,
