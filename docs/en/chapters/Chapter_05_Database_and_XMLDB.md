@@ -1,6 +1,6 @@
 # 5 DATABASE AND XMLDB
 
-![Database and XMLDB](image/cap05-database-xmldb.png)
+![Database and XMLDB](image/chapter05-database-and-xmldb.png)
 
 The database is one of the areas where a Moodle plugin can look correct for months while still being built on poor decisions. You open the screen, save one record, query another, everything responds quickly in the development installation, and it feels finished. Then the plugin reaches an environment with millions of records, PostgreSQL instead of MariaDB, two concurrent tasks, and an upgrade coming from an old version, and suddenly you get duplicates, deadlocks, slow queries, and that classic support sentence: "it always worked here."
 
