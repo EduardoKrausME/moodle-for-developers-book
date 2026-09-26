@@ -2,6 +2,8 @@
 
 # 9. Files API and Moodledata
 
+![Files API and moodledata](image/cap09-files-api-moodledata.svg)
+
 If you open the moodledata directory of an installation and enter filedir expecting a structure resembling courses, activities, users, and filenames, the first impression is usually that something went wrong. Instead of folders with understandable names, you find directories such as 08/13 and, inside them, files called 081371cb102fa559e81993fddc230c79205232ce. There is no final-report.pdf, profile-photo.jpg, or lesson-material-3.zip. There is a collection of hashes that, when viewed only from disk, seems unrelated to what the user sees in Moodle.
 
 This is not disorganization, much less a strange aesthetic choice. It is exactly the opposite. Moodle separates the logical identity of a file from the physical way its content is stored, and this separation enables deduplication, component-based access control, consistent backup and restore, Unicode names, alternative storage, and even object storage without requiring every plugin to know the infrastructure where the bytes actually live. Once you understand this architecture, the Files API stops looking like a bureaucratic layer around file_put_contents() and starts making a great deal of sense.

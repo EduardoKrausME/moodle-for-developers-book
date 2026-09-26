@@ -1,5 +1,7 @@
 # 8 SECURITY
 
+![Moodle Security](image/cap08-moodle-security.svg)
+
 Security in a Moodle plugin is not a final checklist applied after the feature works. It is part of every decision involving input, authorization, output, files, SQL, external calls, tokens, and the relationship between an identifier received from the browser and the real object being accessed.
 
 Moodle already gives developers strong building blocks: the Access API, contexts and capabilities, parameter cleaning, `sesskey`, DML parameter binding, Mustache escaping, the File API, HTTP infrastructure, and standard authentication. Those mechanisms only work when they are applied to the correct resource and threat. A page can call `require_login()` and still expose another user's records through an IDOR vulnerability.

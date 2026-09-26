@@ -2,6 +2,8 @@
 
 # 10. Events, callbacks, and Hooks
 
+![Events, Callbacks and Hooks](image/cap10-events-callbacks-hooks.svg)
+
 If you have worked with Moodle for a while, you have probably opened a `lib.php` looking for a function with a very long name, found a `db/events.php` registering an observer and, on a newer branch, encountered a `db/hooks.php` pointing to a class that receives a Hook object. All three mechanisms exist to let one part of Moodle react to what another part is doing, but they were created at different times, solve different problems, and, when treated as synonyms, the code becomes confusing very quickly.
 
 The most common mistake is reducing everything to a question such as "which one runs my code when something happens?". All three can execute code in response to something, but that does not mean they have the same semantics. An Event normally describes something that has already happened, records that fact, and allows observers to react. A Hook deliberately opens an extension point inside a flow and may allow other components to add, change, or even stop something, depending on that Hook's contract. A legacy callback is a historical convention in which core looks for a known function in plugins and calls it when execution reaches that point.
