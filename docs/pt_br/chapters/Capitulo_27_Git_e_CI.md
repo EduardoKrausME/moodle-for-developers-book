@@ -6,7 +6,7 @@ No Capítulo 4 nós falamos de qualidade como uma responsabilidade do desenvolve
 
 É aqui que Git e CI deixam de ser ferramentas de infraestrutura e passam a fazer parte da arquitetura do plugin. Git registra o histórico, organiza manutenção entre versões e cria pontos reproduzíveis de release, enquanto Continuous Integration executa automaticamente aquilo que o projeto considera obrigatório para aceitar uma mudança. O objetivo não é criar um workflow bonito no GitHub, é transformar regras que hoje dependem de disciplina em verificações que rodam sempre.
 
-Neste capítulo vamos continuar usando `mod_checkpoint`. No Capítulo 25 ele ganhou testes PHPUnit, no 26 ganhou jornadas Behat e agora vamos colocar tudo isso em um pipeline real com GitHub Actions e Moodle Plugin CI. O mesmo pipeline também executará PHP lint, Coding Style, PHPDoc, Plugin Validate, savepoints, Mustache, Grunt, PHPUnit e Behat, além de testar combinações selecionadas de Moodle, PHP e banco. No final, uma tag aprovada poderá gerar um ZIP reproduzível sem alguém abrir o gerenciador de arquivos e compactar a pasta manualmente.
+Neste capítulo vamos continuar usando `mod_checkpoint`. No Capítulo 25 ele ganhou testes PHPUnit, no 26 ganhou jornadas Behat e agora vamos colocar tudo isso em um pipeline real com GitHub Actions e Moodle Plugin CI. O mesmo pipeline também executará PHP lint, Coding Style, PHPDoc, `validate` do Moodle Plugin CI, Moodle Plugin Validate, savepoints, Mustache, Grunt, PHPUnit e Behat, além de testar combinações selecionadas de Moodle, PHP e banco. No final, uma tag aprovada poderá gerar um ZIP reproduzível sem alguém abrir o gerenciador de arquivos e compactar a pasta manualmente.
 
 ## 27.1 Git não é apenas backup de código
 
@@ -556,7 +556,7 @@ Documentação de código pode parecer detalhe até uma API pública ficar ambí
 
 CI impede que o padrão se degrade silenciosamente.
 
-## 27.46 Plugin Validate
+## 27.46 `validate` do Moodle Plugin CI
 
 ```
 - name: Validate plugin
@@ -567,7 +567,41 @@ Validate verifica metadata, estrutura e vários requisitos formais do plugin. El
 
 Não trate um `validate` verde como selo de plugin seguro.
 
-## 27.47 Savepoints
+## 27.47 Moodle Plugin Validate
+
+O comando acima pertence ao Moodle Plugin CI. Ele não deve ser confundido com o [Moodle Plugin Validate](https://github.com/EduardoKrausME/moodle-plugin-validate), que é um validador estático separado e consegue inspecionar o plugin antes mesmo de o Moodle ser instalado.
+
+Essa diferença é útil dentro do CI. O `moodle-plugin-ci validate` roda dentro do ambiente preparado pelo Moodle Plugin CI e verifica o plugin usando aquela infraestrutura. Já o Moodle Plugin Validate trabalha diretamente sobre os arquivos do repositório, não inicializa o Moodle e, por isso, consegue interromper o pipeline mais cedo quando encontra erros simples que não justificam gastar tempo montando todo o ambiente de testes.
+
+Na raiz do projeto ele verifica requisitos básicos de empacotamento, como arquivo de licença, README, `version.php`, um `$plugin->component` válido e um `$plugin->version` numérico e positivo. Ele também cruza o arquivo base de idioma com metadados que frequentemente ficam inconsistentes durante o desenvolvimento, incluindo `pluginname`, capabilities declaradas em `db/access.php`, providers de mensagens, definições de cache, referências literais da Privacy API e chamadas literais de `get_string()` para o componente atual.
+
+Uma área particularmente útil é a validação de subplugins. Quando existe `db/subplugins.json`, o validador confere a estrutura JSON, as chaves aceitas, nomes de tipos de subplugin, caminhos, strings obrigatórias e a consistência entre as declarações antigas em `plugintypes` e as modernas em `subplugintypes`. Depois, cada subplugin empacotado é analisado separadamente, incluindo seu próprio `version.php`, nome do componente, número de versão, dependência explícita do plugin pai e compatibilidade dessa dependência com a versão do pai entregue no mesmo repositório.
+
+O validador também gera alguns warnings de arquitetura sem transformar toda recomendação em erro fatal. Por exemplo, ele pode avisar sobre endpoints AJAX legados e grandes fragmentos HTML construídos diretamente em JavaScript. Essa separação é importante: um nome de componente inválido deve quebrar o pipeline, enquanto um cheiro de arquitetura pode merecer revisão sem necessariamente bloquear uma correção urgente.
+
+Como a análise é estática, ela pode rodar imediatamente depois do checkout e da configuração do PHP:
+
+```yaml
+- name: Validar plugin Moodle estaticamente
+  uses: EduardoKrausME/moodle-plugin-validate@main
+  with:
+    plugin: ./plugin
+```
+
+Para um workflow de produção mantido por muito tempo, prefira uma tag imutável ou um commit SHA assim que o projeto publicar uma versão estável, em vez de acompanhar `@main` indefinidamente. O ponto principal aqui é a posição dessa verificação: antes de `moodle-plugin-ci install`. Não faz sentido gastar tempo criando um ambiente Moodle completo quando o repositório já possui uma string de idioma ausente, uma declaração de subplugin malformada ou metadados inválidos que uma análise estática consegue detectar em segundos.
+
+Ele também pode ser executado localmente sem depender da GitHub Action. O repositório atualmente expõe o binário de linha de comando como `bin/moodle-string-validate`:
+
+```bash
+php bin/moodle-string-validate /caminho/para/plugin
+php bin/moodle-string-validate /caminho/para/plugin --format=github
+```
+
+O formato GitHub gera annotations no workflow, enquanto o formato de texto imprime cada verificação executada como `OK`, `WARNING` ou `ERROR`. Erros retornam exit code `1`, warnings não fazem o build falhar e problemas de argumentos ou execução retornam `2`.
+
+Esse validador não substitui Moodle Plugin CI, PHPCS, PHPUnit, Behat nem um teste real de instalação. O ganho está em obter feedback antes e validar erros específicos de repositórios de plugins Moodle que são fáceis de introduzir, mas caros de descobrir apenas depois que todo o ambiente foi montado. Em um pipeline sério, os dois validadores se complementam em vez de disputar a mesma função.
+
+## 27.48 Savepoints
 
 ```
 - name: Check upgrade savepoints
@@ -578,7 +612,7 @@ Essa etapa verifica erros comuns em `db/upgrade.php`, especialmente inconsistên
 
 É exatamente o tipo de falha que pode passar despercebida em instalação limpa e aparecer somente no cliente que está atualizando uma versão antiga.
 
-## 27.48 Mustache lint
+## 27.49 Mustache lint
 
 ```
 - name: Mustache Lint
@@ -589,7 +623,7 @@ Template quebrado pode não ser exercitado pelo PHPUnit e só aparecer ao abrir 
 
 Lint barato deve rodar antes dos testes de navegador.
 
-## 27.49 JavaScript e Grunt
+## 27.50 JavaScript e Grunt
 
 ```
 - name: Grunt
@@ -600,7 +634,7 @@ O toolchain do Moodle utiliza Grunt para lint e build de JavaScript e CSS. Depen
 
 Se você altera `amd/src` e esquece de regenerar `amd/build`, o CI deveria perceber.
 
-## 27.50 ESLint
+## 27.51 ESLint
 
 Quando o plugin precisa de uma verificação JavaScript específica, também pode executar as tarefas do Grunt direcionadas ao código correspondente.
 
@@ -608,7 +642,7 @@ O objetivo não é ter "mais um linter", mas garantir que o fonte entregue respe
 
 Nunca corrija automaticamente arquivos e faça commit dentro do CI normal. Pipeline deve verificar o commit recebido, não produzir silenciosamente um commit diferente.
 
-## 27.51 PHPUnit
+## 27.52 PHPUnit
 
 ```
 - name: PHPUnit tests
@@ -619,7 +653,7 @@ Tudo que foi construído no Capítulo 25 vira agora gate de merge.
 
 Um teste que só roda no notebook do desenvolvedor é útil; um teste que roda em todo pull request é uma política de qualidade.
 
-## 27.52 Behat
+## 27.53 Behat
 
 ```
 - name: Behat features
@@ -631,7 +665,7 @@ Behat é mais caro, então você pode escolher rodá-lo apenas em algumas combin
 
 Não precisa abrir Chrome oito vezes para provar a mesma jornada se os outros jobs já cobrem PHP e bancos.
 
-## 27.53 Não rode Behat em toda combinação sem pensar
+## 27.54 Não rode Behat em toda combinação sem pensar
 
 Uma estratégia comum é executar lint e PHPUnit em toda matrix e Behat apenas em uma combinação principal:
 
@@ -646,7 +680,7 @@ Isso reduz tempo e custo sem abandonar cobertura de interface.
 
 Se existe comportamento específico de banco visível na jornada, então justifique uma segunda combinação.
 
-## 27.54 Faildump de Behat
+## 27.55 Faildump de Behat
 
 Quando Behat falha no CI, screenshot e dump do navegador são muito mais úteis do que apenas "step failed".
 
@@ -663,7 +697,7 @@ Quando Behat falha no CI, screenshot e dump do navegador são muito mais úteis 
 
 Artefato existe para diagnóstico depois que o runner já foi destruído.
 
-## 27.55 Artifact não é cache
+## 27.56 Artifact não é cache
 
 Cache acelera execução reaproveitando dependências. Artifact preserva saída de um job.
 
@@ -671,7 +705,7 @@ Use cache para downloads reconstruíveis, como pacotes Composer. Use artifact pa
 
 Misturar os dois conceitos cria workflows difíceis de manter e pode introduzir risco de supply chain.
 
-## 27.56 Cache de Composer
+## 27.57 Cache de Composer
 
 Runners hospedados nascem limpos, então baixar as mesmas dependências toda vez custa tempo.
 
@@ -679,13 +713,13 @@ Você pode guardar o diretório de cache do Composer com `actions/cache`, usando
 
 Não cacheie secrets, tokens, arquivos de configuração sensíveis ou uma instalação Moodle inteira sem entender as consequências.
 
-## 27.57 Cache precisa poder falhar
+## 27.58 Cache precisa poder falhar
 
 O pipeline deve funcionar com cache miss. Se apagar todos os caches faz o CI quebrar, você transformou cache em dependência oculta.
 
 Cache é otimização. Fonte de verdade continua sendo manifestos, lock files e scripts reproduzíveis.
 
-## 27.58 Segurança de cache
+## 27.59 Segurança de cache
 
 Cache restaurado deve ser tratado como conteúdo não confiável, principalmente em workflows que recebem pull requests externos.
 
@@ -693,7 +727,7 @@ Não permita que um PR não confiável escreva cache que depois será executado 
 
 CI também tem superfície de ataque.
 
-## 27.59 Composer no CI
+## 27.60 Composer no CI
 
 Para dependências do próprio repositório:
 
@@ -706,7 +740,7 @@ Evite `composer update` no job normal porque isso altera o conjunto de versões 
 
 Dependência nova deve entrar por um PR separado, com lock file revisado e CI verde.
 
-## 27.60 Dependências do Moodle Plugin CI
+## 27.61 Dependências do Moodle Plugin CI
 
 O próprio Moodle Plugin CI é uma ferramenta externa e evolui. Usar `^4` acompanha a linha 4.x, enquanto pinagem exata aumenta reprodutibilidade.
 
@@ -714,7 +748,7 @@ Existe um trade-off. Pin rígido envelhece e pode ficar incompatível com runner
 
 Uma política saudável combina pinagem consciente com atualização automatizada revisada.
 
-## 27.61 Dependabot
+## 27.62 Dependabot
 
 Dependabot pode abrir PRs para atualizar dependências e Actions.
 
@@ -736,7 +770,7 @@ updates:
 
 Se o plugin possui `package.json`, você pode adicionar `npm` também.
 
-## 27.62 Dependabot não substitui revisão
+## 27.63 Dependabot não substitui revisão
 
 Uma PR automática ainda precisa passar pelo mesmo CI e ser revisada, principalmente em atualização major.
 
@@ -744,13 +778,13 @@ Não configure auto-merge irrestrito apenas porque o autor da PR é um bot. Muda
 
 Automação reduz trabalho repetitivo, não remove responsabilidade.
 
-## 27.63 Atualizando GitHub Actions
+## 27.64 Atualizando GitHub Actions
 
 Dependabot consegue acompanhar referências como `actions/checkout`, `actions/cache` e `actions/upload-artifact`.
 
 Isso é importante porque actions antigas deixam de ser suportadas e runners mudam. Pipeline também é software e precisa de manutenção.
 
-## 27.64 Pin por SHA
+## 27.65 Pin por SHA
 
 Para ambientes com requisito de segurança maior, GitHub recomenda fixar actions de terceiros por commit SHA completo porque tag pode ser movida.
 
@@ -762,7 +796,7 @@ uses: actions/checkout@<sha-completo>
 
 A desvantagem é legibilidade e manutenção, por isso ferramentas como Dependabot se tornam ainda mais úteis para abrir PRs atualizando esses SHAs de forma revisável.
 
-## 27.65 `continue-on-error`
+## 27.66 `continue-on-error`
 
 O template do Moodle Plugin CI costuma deixar algumas análises opcionais como PHP Mess Detector sem quebrar o job:
 
@@ -774,7 +808,7 @@ Use isso apenas quando a ferramenta é informativa. Não coloque PHPUnit, PHPCS 
 
 Uma regra que pode falhar sem bloquear não é gate.
 
-## 27.66 Falhar build em erro
+## 27.67 Falhar build em erro
 
 O comportamento desejado para uma verificação obrigatória é simples: exit code diferente de zero precisa falhar o job.
 
@@ -786,7 +820,7 @@ moodle-plugin-ci phpcs || true
 
 Isso produz uma pipeline verde que imprime erros em vermelho, que é pior do que não ter CI porque cria confiança falsa.
 
-## 27.67 `fail-fast: false`
+## 27.68 `fail-fast: false`
 
 Em matrix, `fail-fast: false` permite que outras combinações continuem mesmo depois de uma falhar.
 
@@ -799,7 +833,7 @@ Isso é útil porque você quer saber se o problema ocorre só em PostgreSQL, s�
 
 Cancelar tudo na primeira falha economiza minutos, mas perde diagnóstico.
 
-## 27.68 Timeout
+## 27.69 Timeout
 
 Jobs devem possuir limite razoável:
 
@@ -811,7 +845,7 @@ Sem timeout, um Behat travado, download preso ou banco indisponível pode consum
 
 Timeout também ajuda a detectar regressão de performance da suíte.
 
-## 27.69 Concurrency
+## 27.70 Concurrency
 
 Se um desenvolvedor envia cinco commits rapidamente para o mesmo PR, normalmente você não precisa terminar os cinco workflows antigos.
 
@@ -819,7 +853,7 @@ GitHub Actions permite agrupar execuções por branch ou PR e cancelar a anterio
 
 Isso economiza runner e entrega feedback do commit atual mais rápido.
 
-## 27.70 Pull request como gate
+## 27.71 Pull request como gate
 
 A melhor utilização de CI aparece quando a branch principal exige status checks verdes antes do merge.
 
@@ -827,7 +861,7 @@ Se a equipe pode ignorar a pipeline e fazer push direto em `main`, CI vira relat
 
 Branch protection ou rulesets devem exigir os jobs realmente importantes.
 
-## 27.71 Não deixe o gate depender de job instável
+## 27.72 Não deixe o gate depender de job instável
 
 Se um Behat flaky bloqueia metade dos PRs por motivo aleatório, a equipe começa a ignorar o CI.
 
@@ -835,7 +869,7 @@ Corrija ou isole o teste instável. Um gate confiável precisa falhar por causa 
 
 Os princípios do Capítulo 26 valem aqui com ainda mais força.
 
-## 27.72 Instalação limpa
+## 27.73 Instalação limpa
 
 Uma release precisa instalar em um Moodle limpo. O processo padrão do Moodle Plugin CI já instala o plugin durante a preparação e por isso encontra vários problemas de schema e metadata.
 
@@ -843,7 +877,7 @@ Mesmo assim, se seu projeto possui scripts especiais ou dependências extras, cr
 
 Isso encontra o clássico caso em que o repositório possui um arquivo que o script de ZIP esqueceu de incluir.
 
-## 27.73 Teste de upgrade
+## 27.74 Teste de upgrade
 
 Instalação limpa não testa `db/upgrade.php`. Para isso você precisa partir de uma versão anterior instalada.
 
@@ -859,7 +893,7 @@ rodar verificações pós-upgrade
 
 Savepoints ajuda, mas não substitui esse teste.
 
-## 27.74 Upgrade test automatizado
+## 27.75 Upgrade test automatizado
 
 Uma pipeline pode baixar uma tag anterior do próprio plugin, instalar, inserir dados de fixture, trocar para o commit atual e executar o upgrade.
 
@@ -867,7 +901,7 @@ Esse job é mais caro e não precisa rodar em todas as combinações. Uma combin
 
 Plugins com schema complexo deveriam considerar upgrade test um requisito de release.
 
-## 27.75 Testar o ZIP, não apenas o repositório
+## 27.76 Testar o ZIP, não apenas o repositório
 
 O maior teste de empacotamento é instalar o próprio artefato que será publicado.
 
@@ -875,7 +909,7 @@ Se o pipeline testa a árvore Git e depois um script diferente remove arquivos a
 
 A etapa de release deveria montar o ZIP, extrair em ambiente limpo e rodar pelo menos validate e instalação antes de anexar o artefato.
 
-## 27.76 Gerando ZIP
+## 27.77 Gerando ZIP
 
 Um script simples pode preparar a estrutura:
 
@@ -898,7 +932,7 @@ zip -r ../mod_checkpoint.zip checkpoint
 
 A lista de exclusões precisa respeitar runtime dependencies do plugin.
 
-## 27.77 Nome da pasta dentro do ZIP
+## 27.78 Nome da pasta dentro do ZIP
 
 Para `mod_checkpoint`, o pacote precisa resultar em uma pasta `checkpoint` com os arquivos do plugin.
 
@@ -910,7 +944,7 @@ unzip -l build/mod_checkpoint.zip
 
 Um ZIP com `repository-main/checkpoint` ou com todos os arquivos soltos no root pode falhar no fluxo de instalação mesmo que o código esteja perfeito.
 
-## 27.78 ZIP reproduzível
+## 27.79 ZIP reproduzível
 
 Idealmente, duas execuções sobre o mesmo commit deveriam produzir o mesmo conteúdo lógico.
 
@@ -918,7 +952,7 @@ Não coloque timestamps desnecessários, logs locais, `.DS_Store`, arquivos temp
 
 O pacote deve ser consequência determinística do commit e da receita de build.
 
-## 27.79 Arquivos gerados precisam estar atualizados
+## 27.80 Arquivos gerados precisam estar atualizados
 
 Antes do ZIP, valide se assets compilados correspondem ao fonte. Uma estratégia é rodar o build e verificar se `git diff --exit-code` continua limpo.
 
@@ -931,7 +965,7 @@ Se o build modifica `amd/build`, alguém esqueceu de versionar o resultado corre
 
 Esse teste evita release com JavaScript antigo apesar do fonte novo estar no repositório.
 
-## 27.80 Artefato de release
+## 27.81 Artefato de release
 
 Depois de gerar o ZIP, publique como artifact do workflow:
 
@@ -945,7 +979,7 @@ Depois de gerar o ZIP, publique como artifact do workflow:
 
 Artifact é útil para revisão e download mesmo antes de criar GitHub Release.
 
-## 27.81 Workflow de release
+## 27.82 Workflow de release
 
 Um workflow separado pode responder apenas a tags:
 
@@ -960,7 +994,7 @@ Ele deveria reconstruir ou reaproveitar checks essenciais, validar que tag e `ve
 
 Não dependa de "o CI do PR estava verde três dias atrás" se a tag pode ter sido criada em outro commit.
 
-## 27.82 Release só de commit verde
+## 27.83 Release só de commit verde
 
 Uma proteção ainda melhor é permitir tag formal apenas de commit que já passou pelos checks obrigatórios.
 
@@ -968,7 +1002,7 @@ Isso pode ser uma regra de processo ou automação da organização.
 
 O objetivo é impedir que alguém tague um commit local não revisado e contorne todo o pipeline.
 
-## 27.83 Changelog
+## 27.84 Changelog
 
 Release deve explicar o que mudou de forma útil para quem atualiza.
 
@@ -983,7 +1017,7 @@ Fixed
 
 Não use apenas a lista bruta de commits se os commits são detalhes internos demais para o administrador.
 
-## 27.84 Versionamento de banco e release
+## 27.85 Versionamento de banco e release
 
 Uma mudança em `install.xml` para instalações novas normalmente exige pensar também em `upgrade.php` para instalações existentes e aumentar `$plugin->version`.
 
@@ -991,7 +1025,7 @@ CI pode verificar savepoints, mas a equipe precisa revisar semanticamente se a m
 
 Esse é um ótimo ponto de checklist de pull request.
 
-## 27.85 Branch de release não substitui tag
+## 27.86 Branch de release não substitui tag
 
 Uma branch se move; uma tag de release deveria ser imutável.
 
@@ -999,7 +1033,7 @@ Uma branch se move; uma tag de release deveria ser imutável.
 
 Use tag ou release identificável.
 
-## 27.86 PR de dependência
+## 27.87 PR de dependência
 
 Atualização de Composer, npm ou GitHub Actions deveria entrar como PR própria quando possível.
 
@@ -1007,7 +1041,7 @@ Isso deixa claro que uma falha veio da dependência e não de uma alteração fu
 
 Dependabot automatiza justamente esse tipo de manutenção, mas a separação continua importante para diagnóstico.
 
-## 27.87 Checks rápidos e checks caros
+## 27.88 Checks rápidos e checks caros
 
 Uma pipeline madura não precisa colocar tudo em um único job sequencial.
 
@@ -1025,7 +1059,7 @@ Lint falha rápido, unit matrix cobre compatibilidade, Behat testa jornada, upgr
 
 Jobs independentes também podem rodar em paralelo.
 
-## 27.88 `needs`
+## 27.89 `needs`
 
 Quando uma etapa depende de outra, use `needs`.
 
@@ -1041,7 +1075,7 @@ Assim o ZIP só nasce depois dos gates relevantes.
 
 Não use dependência artificial entre jobs que poderiam rodar em paralelo.
 
-## 27.89 Job de lint separado
+## 27.90 Job de lint separado
 
 Executar PHPCS e validate uma vez é suficiente. Não precisa repetir os mesmos linters em oito combinações de banco se eles não dependem de banco.
 
@@ -1055,7 +1089,7 @@ behat            1 ou 2 jobs
 
 Isso reduz custo e tempo de feedback.
 
-## 27.90 Matrix de PHPUnit
+## 27.91 Matrix de PHPUnit
 
 PHPUnit é onde a matrix de compatibilidade mais entrega valor, porque executa rápido comparado ao browser e toca banco e APIs reais.
 
@@ -1063,7 +1097,7 @@ Se uma query não é portável, PostgreSQL encontra. Se o código usa feature de
 
 Esse é o coração do CI de plugin Moodle.
 
-## 27.91 Job futuro não bloqueante
+## 27.92 Job futuro não bloqueante
 
 Uma técnica útil é testar periodicamente contra a branch `main` do Moodle para descobrir incompatibilidades antes da próxima release.
 
@@ -1071,7 +1105,7 @@ Esse job pode começar como informativo, sem bloquear merge, porque o core em de
 
 Isso reduz sustos no mês da atualização.
 
-## 27.92 Scheduled CI
+## 27.93 Scheduled CI
 
 Dependências e Moodle mudam mesmo quando seu plugin não recebe commits. Um workflow semanal ou mensal pode detectar regressão externa.
 
@@ -1083,7 +1117,7 @@ on:
 
 Escolha horário sem significado especial para evitar picos comuns de cron em minuto zero.
 
-## 27.93 CI e secrets
+## 27.94 CI e secrets
 
 Pull requests públicos não devem receber secrets de produção. Integrações externas usadas em teste deveriam ter credenciais próprias e escopo mínimo, ou serem mockadas quando possível.
 
@@ -1091,7 +1125,7 @@ Se um job depende de secret indisponível para forks, separe-o dos checks básic
 
 Não use `pull_request_target` apenas para "resolver" acesso a secrets rodando código do PR.
 
-## 27.94 Produção não é ambiente de CI
+## 27.95 Produção não é ambiente de CI
 
 Nunca configure o pipeline para testar contra banco de cliente, bucket de produção ou API destrutiva real.
 
@@ -1099,7 +1133,7 @@ CI precisa ser descartável e reproduzível. Se a integração externa não poss
 
 O pipeline deve poder rodar vinte vezes sem causar vinte matrículas, vinte cobranças ou vinte emails reais.
 
-## 27.95 Um pipeline completo para `mod_checkpoint`
+## 27.96 Um pipeline completo para `mod_checkpoint`
 
 Uma estrutura possível:
 
@@ -1171,6 +1205,11 @@ jobs:
           ini-values: max_input_vars=5000, opcache.enable_cli=1
           coverage: none
 
+      - name: Validação estática do plugin Moodle
+        uses: EduardoKrausME/moodle-plugin-validate@main
+        with:
+          plugin: ./plugin
+
       - name: Initialise Moodle Plugin CI
         run: |
           composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^4
@@ -1196,7 +1235,7 @@ jobs:
 
 Esse exemplo ainda pode ser refinado separando linters da matrix, mas já transforma a política em código executável.
 
-## 27.96 Adicionando Behat sem multiplicar custo
+## 27.97 Adicionando Behat sem multiplicar custo
 
 No mesmo job, acrescente condição:
 
@@ -1212,7 +1251,7 @@ No mesmo job, acrescente condição:
 
 Assim Behat continua protegendo a jornada principal sem quadruplicar o tempo da matrix.
 
-## 27.97 Separando lint da matrix
+## 27.98 Separando lint da matrix
 
 Em projeto maior eu prefiro um job `lint` independente e outro `phpunit` com matrix. Isso evita rodar PHPCS quatro vezes.
 
@@ -1232,7 +1271,7 @@ lint
 
 O package só aparece quando todos os gates necessários estiverem verdes.
 
-## 27.98 Checklist de uma release
+## 27.99 Checklist de uma release
 
 Antes de publicar uma tag, o projeto deveria conseguir responder automaticamente a quase tudo:
 
@@ -1241,7 +1280,8 @@ version.php atualizado
 upgrade.php coerente
 PHPCS verde
 PHPDoc verde
-Validate verde
+Moodle Plugin Validate verde
+Moodle Plugin CI validate verde
 Savepoints verdes
 Mustache verde
 Grunt verde
@@ -1254,13 +1294,13 @@ ZIP reinstalado em ambiente limpo
 
 Quanto menos itens dependerem de "lembrei de rodar", mais previsível é a release.
 
-## 27.99 Exercício - pipeline completo do projeto
+## 27.100 Exercício - pipeline completo do projeto
 
 Pegue `mod_checkpoint` dos capítulos anteriores e transforme o repositório em um projeto que não permite merge de código quebrado.
 
 Crie `.gitignore`, defina a estratégia de branches e documente quais versões Moodle são suportadas. Adicione `version.php` coerente com uma release `1.0.0` e crie uma tag de teste sem publicá-la ainda.
 
-Monte um GitHub Actions com um job de lint executando PHP lint, PHPCS, PHPDoc, Plugin Validate, savepoints, Mustache e Grunt. Depois crie uma matrix PHPUnit com pelo menos duas versões Moodle, menor e maior PHP suportados e PostgreSQL/MariaDB. Adicione Behat em apenas uma combinação principal.
+Monte um GitHub Actions com um job de lint executando PHP lint, PHPCS, PHPDoc, Moodle Plugin Validate, `validate` do Moodle Plugin CI, savepoints, Mustache e Grunt. Depois crie uma matrix PHPUnit com pelo menos duas versões Moodle, menor e maior PHP suportados e PostgreSQL/MariaDB. Adicione Behat em apenas uma combinação principal.
 
 Crie um segundo workflow de release acionado por tag. Ele deve verificar se a tag `vX.Y.Z` corresponde a `$plugin->release`, garantir que a árvore está limpa depois do build frontend, gerar `mod_checkpoint-X.Y.Z.zip`, listar o conteúdo do ZIP e publicá-lo como artifact.
 
@@ -1268,7 +1308,7 @@ Depois provoque intencionalmente seis falhas: erro de sintaxe PHP, warning de PH
 
 Por fim, crie uma alteração em `install.xml` acompanhada de `upgrade.php`, instale a tag anterior, rode upgrade automatizado para o commit atual e confirme que os dados antigos continuam válidos. Quando isso funcionar, o pipeline deixou de ser decoração no README e passou a proteger de verdade a manutenção do plugin.
 
-## 27.100 Fechando o capítulo
+## 27.101 Fechando o capítulo
 
 Git organiza a história do plugin, mas CI transforma essa história em um processo verificável. Branches definem linhas de manutenção, tags tornam releases reproduzíveis, `version.php` controla upgrades e a pipeline impede que uma mudança avance sem passar pelas regras que o projeto decidiu exigir.
 
@@ -1278,6 +1318,7 @@ A partir daqui qualidade deixa de ser uma lembrança no final do desenvolvimento
 
 ## Referências técnicas consultadas
 
+* KRAUS, Eduardo. Moodle Plugin Validate. Validador estático para estrutura, metadados, subplugins, strings de idioma, referências da Privacy API e verificações selecionadas de qualidade de código em plugins Moodle. Disponível em: https://github.com/EduardoKrausME/moodle-plugin-validate. Acesso em: 26 set. 2026.
 MOODLEHQ. Moodle Plugin CI. Documentação e templates de GitHub Actions. Disponível em: https://github.com/moodlehq/moodle-plugin-ci. Acesso em: 24 set. 2026.
 
 MOODLEHQ. Moodle Plugin CI. `gha.dist.yml`. Disponível em: https://github.com/moodlehq/moodle-plugin-ci/blob/main/gha.dist.yml. Acesso em: 24 set. 2026.
