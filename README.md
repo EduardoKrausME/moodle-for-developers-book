@@ -55,14 +55,14 @@ The chapters can be read in sequence as a book or used individually as a practic
 
 ## Chapters
 
-1. [Moodle Architecture](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_01_Moodle_Architecture.html)
-2. [Moodle Plugin Types](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_02_Moodle_Plugin_Types.html)
-3. [Your First Plugin, Done Right](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_03_Your_First_Plugin_Done_Right.html)
-4. [Code Quality from the Start](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_04_Code_Quality_from_the_Start.html)
-5. [Database and XMLDB](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_05_Database_and_XMLDB.html)
-6. [Modern Interfaces and the Output API](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_06_Modern_Interfaces_and_Output_API.html)
-7. [Forms API](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_07_Forms_API.html)
-8. [Security](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_08_Security.html)
+1. [Moodle Architecture](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_01_Arquitetura_do_Moodle.html)
+2. [Moodle Plugin Types](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_02_Tipos_de_Plugins_Moodle.html)
+3. [Your First Plugin, Done Right](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_03_Primeiro_Plugin_Corretamente.html)
+4. [Code Quality from the Start](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_04_Qualidade_de_Codigo_desde_o_Inicio.html)
+5. [Database and XMLDB](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_05_Banco_de_Dados_e_XMLDB.html)
+6. [Modern Interfaces and the Output API](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_06_Interface_Moderna_e_Output_API.html)
+7. [Forms API](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_07_Forms_API.html)
+8. [Security](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_08_Seguranca.html)
 9. [Files API and Moodledata](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_09_Files_API_and_Moodledata.html)
 10. [Events, Callbacks and Hooks](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_10_Events_Callbacks_and_Hooks.html)
 11. [Cron, Tasks and Asynchronous Processing](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_11_Cron_Tasks_and_Asynchronous_Processing.html)
