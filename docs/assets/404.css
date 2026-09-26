@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 :root {
     color-scheme: dark;
     --bg: #07090c;
@@ -89,12 +91,12 @@ body {
 .bar span:last-child {
     margin-left: auto;
     color: #5f6976;
-    font: 500 11px JetBrains Mono, monospace
+    font: 500 14px JetBrains Mono, Roboto Mono, monospace
 }
 
 .console {
     padding: 26px 28px 24px;
-    font: 500 14px/1.75 JetBrains Mono, Consolas, monospace;
+    font: 500 14px/1.75 JetBrains Mono, Roboto Mono, Consolas, monospace;
     min-height: 360px
 }
 
@@ -135,14 +137,14 @@ body {
 }
 
 .final h1 {
-    font: 800 26px/1.2 Inter;
+    font: 800 30px/1.2 Inter;
     margin: 0 0 7px
 }
 
 .final p {
     margin: 0;
     color: var(--muted);
-    font: 400 16px/1.6 Inter
+    font: 400 17px/1.6 Inter
 }
 
 .actions {
@@ -159,7 +161,7 @@ body {
     background: var(--orange);
     padding: 9px 13px;
     border-radius: 7px;
-    font: 700 12px Inter
+    font: 700 16px Inter
 }
 
 .btn.secondary {
