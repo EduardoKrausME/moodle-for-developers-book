@@ -74,7 +74,6 @@
             code: 'código',
             copy: 'Copiar',
             copied: 'Copiado',
-            openImage: '⛶ Ampliar imagem',
             closeImage: 'Fechar imagem',
             openOriginal: '↗ Abrir original em nova aba',
             loading: 'Carregando capítulo…',
@@ -97,7 +96,6 @@
             code: 'code',
             copy: 'Copy',
             copied: 'Copied',
-            openImage: '⛶ Enlarge image',
             closeImage: 'Close image',
             openOriginal: '↗ Open original in new tab',
             loading: 'Loading chapter…',
@@ -1072,32 +1070,7 @@
                     img.alt
                 );
             });
-
-            const actions = document.createElement('span');
-
-            actions.className = 'tools';
-            actions.style.marginBottom = '10px';
-
-            const button = document.createElement('button');
-
-            button.type = 'button';
-            button.className = 'icon-btn';
-            button.textContent = TEXT.openImage;
-            button.setAttribute(
-                'aria-label',
-                TEXT.openImage
-            );
-
-            button.onclick = () => openImageModal(
-                url,
-                img.alt
-            );
-
-            actions.appendChild(button);
-            paragraph.insertBefore(
-                actions,
-                content
-            );
+            paragraph.insertBefore(content);
         });
     }
 
