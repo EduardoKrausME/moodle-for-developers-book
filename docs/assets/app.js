@@ -74,6 +74,7 @@
             code: 'código',
             copy: 'Copiar',
             copied: 'Copiado',
+            openNewTab: '↗ Abrir em nova aba',
             loading: 'Carregando capítulo…',
             chapter: 'CAPÍTULO',
             reading: 'min de leitura',
@@ -94,6 +95,7 @@
             code: 'code',
             copy: 'Copy',
             copied: 'Copied',
+            openNewTab: '↗ Open in new tab',
             loading: 'Loading chapter…',
             chapter: 'CHAPTER',
             reading: 'min read',
@@ -750,6 +752,7 @@
             buildToc();
             buildNav(c);
             bindCode();
+            bindRenderedImages();
 
             const sectionId = location.hash
                 ? decodeURIComponent(location.hash.slice(1))
@@ -953,6 +956,100 @@
                 err
             );
         }
+    }
+
+
+    function bindRenderedImages() {
+        qsa('#chapterBody img').forEach(img => {
+            const link = img.parentElement?.tagName === 'A'
+                ? img.parentElement
+                : null;
+
+            const content = link || img;
+            const paragraph = content.parentElement;
+
+            if (
+                !paragraph ||
+                paragraph.tagName !== 'P' ||
+                paragraph.children.length !== 1 ||
+                paragraph.textContent.trim() ||
+                paragraph.dataset.imageActions === 'true'
+            ) {
+                return;
+            }
+
+            const url =
+                link?.href ||
+                img.currentSrc ||
+                img.src;
+
+            if (!url) {
+                return;
+            }
+
+            paragraph.dataset.imageActions = 'true';
+
+            const actions = document.createElement('span');
+
+            actions.className = 'tools';
+            actions.style.marginBottom = '10px';
+
+            const button = document.createElement('button');
+
+            button.type = 'button';
+            button.className = 'icon-btn';
+            button.textContent = TEXT.openNewTab;
+            button.setAttribute(
+                'aria-label',
+                TEXT.openNewTab
+            );
+
+            button.onclick = () => {
+                const width = Math.min(
+                    screen.availWidth || 1400,
+                    1400
+                );
+
+                const height = Math.min(
+                    screen.availHeight || 900,
+                    900
+                );
+
+                const left = Math.max(
+                    0,
+                    Math.round(
+                        ((screen.availWidth || width) - width) / 2
+                    )
+                );
+
+                const top = Math.max(
+                    0,
+                    Math.round(
+                        ((screen.availHeight || height) - height) / 2
+                    )
+                );
+
+                window.open(
+                    url,
+                    '_blank',
+                    [
+                        'popup=yes',
+                        `width=${width}`,
+                        `height=${height}`,
+                        `left=${left}`,
+                        `top=${top}`,
+                        'noopener',
+                        'noreferrer'
+                    ].join(',')
+                );
+            };
+
+            actions.appendChild(button);
+            paragraph.insertBefore(
+                actions,
+                content
+            );
+        });
     }
 
     function bindCode() {
