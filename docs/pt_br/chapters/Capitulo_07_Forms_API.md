@@ -2,7 +2,7 @@
 
 # 7. Forms API
 
-![Forms API](image/cap07-forms-api.svg)
+![Forms API](image/cap07-forms-api.png)
 
 Formulário parece uma das partes mais simples de um plugin Moodle até você precisar editar um registro existente, validar uma regra que depende do banco, receber arquivos, manter um editor HTML com imagens, abrir o mesmo formulário dentro de uma modal e impedir que uma submissão duplicada faça besteira. Nesse momento fica claro que um `<form>` com alguns `<input>` não resolve o problema inteiro, porque a parte difícil nunca foi desenhar o campo na tela, mas fazer o ciclo completo funcionar de forma previsível dentro do Moodle.
 
