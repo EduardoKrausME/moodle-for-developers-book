@@ -960,7 +960,7 @@
                 `${words.toLocaleString(TEXT.locale)} ${TEXT.words}`;
 
             document.title =
-                `${c.id} · ${title} — Moodle Developer`;
+                `${c.id} · ${title} - Moodle Developer`;
 
             qs('#chapterBody').innerHTML =
                 markdown(md);

@@ -369,7 +369,7 @@ Cache may reduce part of this, but the real correction is normally redesigning t
 
 Caching N+1 is like adding a turbocharger to a car with the handbrake on. It may go faster, but the main problem is still there.
 
-## 12.25 Recordsets — revisiting Chapter 5
+## 12.25 Recordsets - revisiting Chapter 5
 
 When you need to iterate over many records, a recordset avoids loading the entire result into memory at once. This does not magically make the query cheap, but it changes the memory-consumption profile.
 
@@ -397,7 +397,7 @@ Also consider the cost of `COUNT(*)` when the dataset is enormous and filters ar
 
 When you control product and architecture, do not treat UX and performance as teams that never talk to each other.
 
-## 12.27 Indexes — revisiting Chapter 5
+## 12.27 Indexes - revisiting Chapter 5
 
 An index exists so the database does not need to examine an absurd number of rows to answer frequent queries. That does not mean creating an index for every field appearing in a `WHERE`.
 
@@ -612,7 +612,7 @@ If the cause is still unclear, profiling comes in. And if SQL is suspicious, `EX
 
 This process looks slower than installing Redis, but usually saves time because you fix the actual bottleneck.
 
-## 12.48 Exercise — receive a slow page and identify the bottlenecks
+## 12.48 Exercise - receive a slow page and identify the bottlenecks
 
 Create or receive a fictitious plugin with an intentionally poor report page. It should load all courses using `get_records()`, run one extra query per course to count users, fetch external configuration over HTTP inside the loop, build the entire list, and only then display the first fifty items.
 

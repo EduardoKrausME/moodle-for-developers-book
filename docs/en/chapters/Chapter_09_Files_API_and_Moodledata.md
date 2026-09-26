@@ -12,7 +12,7 @@ The classic mistake for developers coming to Moodle from simpler PHP application
 
 In this chapter I will use a recurring example called mod_biblioteca, a fictitious activity with private documents per record. The name is irrelevant, but the problem is real because we need to create files, list files, allow editing, work with draft areas, generate URLs, and prevent a student from altering the address and downloading the document from another record. Once this flow is clear, practically the entire Files API becomes much more predictable.
 
-## 9.1 Moodledata — revisiting Chapter 1
+## 9.1 Moodledata - revisiting Chapter 1
 
 In Chapter 1 we already saw that `$CFG->dataroot` points to the installation data directory and that this directory must not be published directly by the web server. Here we need to go further because moodledata is not simply "the folder where uploads live." It brings together areas with completely different characteristics, some permanent and others disposable, some shared in a cluster and others suitable for local storage on each node.
 
@@ -611,7 +611,7 @@ Some mistakes recur so often that they are worth recognizing by smell. The first
 
 There is also a seventh, more subtle mistake: doing everything correctly with the Files API but later, in a specific integration, assuming `$file->get_contenthash()` can be turned into a pathname under `filedir`. That detail couples the plugin to the default backend and is usually only discovered during migration to object storage, when the installation has already become far too large for a relaxed fix.
 
-## 9.47 Exercise — private file library with access control
+## 9.47 Exercise - private file library with access control
 
 To close the chapter, create a private library inside a plugin where each record belongs to a course and has several documents. The form should use filemanager, prepare existing files in draft during editing, and save the final set after submission. Each record should use its own id as `itemid` and the filearea may be called `document`.
 

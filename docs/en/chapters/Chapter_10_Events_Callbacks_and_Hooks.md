@@ -475,7 +475,7 @@ First ask whether you are announcing a fact or opening an extension point. If th
 
 Then ask about coupling and cost. A heavy observer should probably only queue a task. A Hook with mutable data needs a clear contract. A mandatory callback should forward into a class. And any solution beginning with editing a core file needs to justify why no official extension point works, because in most cases there is a better alternative or a path to create one.
 
-## 10.55 Exercise — migrating a legacy callback
+## 10.55 Exercise - migrating a legacy callback
 
 Create a fictitious plugin that initially uses the legacy `after_config` callback to register a simple initialization. Keep the real logic in `classes/service/bootstrap.php` and make the callback in `lib.php` only call that class. Then register the `\core\hook\after_config` Hook in `db/hooks.php`, pointing to a callback class that calls the same service.
 

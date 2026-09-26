@@ -634,7 +634,7 @@ The plugin decides where truth comes from, how instances are mapped, which polic
 
 This separation is what lets an enrolment plugin remain compatible with the rest of Moodle. The more it replaces the Enrolment API with custom SQL, the more it becomes a parallel enrolment system inside Moodle.
 
-## 18.64 Exercise — enrolment synchronized with an external system
+## 18.64 Exercise - enrolment synchronized with an external system
 
 Create a `enrol_academicsync` plugin representing classes coming from an academic system. Every instance must have an external identifier, default role, a policy for users removed from the source, and an option enabling or disabling synchronization.
 

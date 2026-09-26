@@ -514,7 +514,7 @@ Moodle administration provides Task logs, Scheduled Task configuration, and visi
 
 A cron process that "is running" can still be unhealthy. If ten thousand jobs arrive every minute and infrastructure processes only five thousand, the queue grows continuously. The problem is capacity, not binary availability.
 
-## 11.42 Exercise — import thousands of records without blocking an HTTP request
+## 11.42 Exercise - import thousands of records without blocking an HTTP request
 
 Create a fictitious plugin that receives a CSV with at least 50,000 rows. The form should only validate the upload, save the file using the Files API, create an import record, and queue an Adhoc Task. The HTTP response must finish quickly and the page should show that the import is pending.
 

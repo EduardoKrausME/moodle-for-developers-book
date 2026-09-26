@@ -6,7 +6,7 @@ Ao longo dos capítulos são abordados arquitetura, tipos de plugins, banco de d
 
 Os capítulos podem ser lidos em sequência, como um livro, ou utilizados individualmente como material de consulta durante o desenvolvimento.
 
-[**Acessar o livro — Moodle para Desenvolvedores**](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/)
+[**Acessar o livro - Moodle para Desenvolvedores**](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/)
 
 ## Capítulos
 
@@ -51,7 +51,7 @@ Across the chapters, the book covers architecture, plugin types, databases, XMLD
 
 The chapters can be read in sequence as a book or used individually as a practical reference during development.
 
-[**Read the book — Moodle for Developers**](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_01_Moodle_architecture.html)
+[**Read the book - Moodle for Developers**](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_01_Moodle_architecture.html)
 
 ## Chapters
 

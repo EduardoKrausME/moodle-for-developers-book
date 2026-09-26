@@ -769,7 +769,7 @@ blocks/quicklinks/
 
 The structure is not the objective. It is a consequence of the responsibilities the plugin acquired.
 
-## 16.47 Complete example — objective
+## 16.47 Complete example - objective
 
 Let us create a `block_coursepulse` block showing a small summary of the current course. It will display the number of visible activities and a link to a detailed page. Every instance can choose its own title and a maximum number of displayed items.
 
@@ -1085,7 +1085,7 @@ When the rule lives outside the main class, the same service can be used by a fu
 
 This also improves testing. You do not need to instantiate the entire block system just to validate a business rule that can be tested directly in a class.
 
-## 16.59 Exercise — create a configurable, contextual block
+## 16.59 Exercise - create a configurable, contextual block
 
 Create a plugin named `block_courseoverviewplus` with the following requirements.
 

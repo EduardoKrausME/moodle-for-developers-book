@@ -769,7 +769,7 @@ Before calling a module complete, create an instance, edit every field, move it 
 
 If the module has JavaScript or AJAX, also test network failures and repeated submissions. If it integrates with an external service, turn that service off and see how the activity behaves. A `mod` lives inside an ecosystem, so the happy path represents only part of the test.
 
-## 17.71 Exercise — create a complete activity
+## 17.71 Exercise - create a complete activity
 
 Create `mod_checkpoint` with a question defined by the teacher and a short learner answer. The teacher can decide whether the activity is graded, define opening and closing times, enable groups, and configure completion by submission. The learner sees the question in `view.php`, submits an answer, and may edit it while the activity remains open.
 

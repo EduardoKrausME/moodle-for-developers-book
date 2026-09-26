@@ -839,7 +839,7 @@ Before considering authentication complete, clearly answer who the identity sour
 
 If there is a CMS or student portal, add more questions: who may issue login links, how long the key lives, how single use is guaranteed, which field identifies the user, which destinations are allowed, how replay is blocked, and what happens when the same link is opened twice.
 
-## 19.77 Exercise — two different SSOs
+## 19.77 Exercise - two different SSOs
 
 Implement two distinct proofs of concept.
 

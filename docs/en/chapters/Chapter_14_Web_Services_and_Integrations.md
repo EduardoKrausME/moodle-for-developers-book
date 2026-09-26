@@ -873,7 +873,7 @@ When reviewing a Moodle integration, some signs make me stop immediately: a hard
 
 None of these problems requires sophisticated architecture to avoid. They require treating integration as a critical boundary rather than a `curl` that happened to return `200` on your laptop.
 
-## 14.60 Exercise — secure REST and ESM client
+## 14.60 Exercise - secure REST and ESM client
 
 The exercise in this chapter is to create an external function for a fictitious `local_coursecatalog` plugin that returns course details to authorized users and can be called by Moodle's own frontend using `core/ajax`.
 

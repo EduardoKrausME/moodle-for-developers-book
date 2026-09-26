@@ -621,7 +621,7 @@ One rule worth keeping from this chapter is this: if Moodle exposes a public API
 
 This is not an absolute prohibition on SQL. There are reports where you genuinely need to query core data, but when performing an operation in a subsystem, its API is normally the correct contract.
 
-## 13.62 Exercise — turn an isolated page into a real Moodle page
+## 13.62 Exercise - turn an isolated page into a real Moodle page
 
 Take a report page that currently reads parameters from GET, builds URLs through concatenation, hardcodes text in PHP, renders breadcrumbs in HTML, stores sorting preference in its own table, sends email directly, and builds the entire CSV in memory. The task is to refactor it without changing the functional requirement.
 
