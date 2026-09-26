@@ -391,7 +391,7 @@ a {
     height: calc(100% - 52px);
     display: grid;
     place-items: center;
-    padding: 18px;
+    padding: 0;
     overflow: auto;
     background: var(--surface-2);
 }
