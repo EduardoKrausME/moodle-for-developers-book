@@ -527,7 +527,14 @@
             external = false;
         }
 
-        return `<a href="${esc(href)}"${external ? ' target="_blank" rel="noopener"' : ''}>${content}</a>`;
+        const externalAttributes = external
+            ? ' target="_blank" rel="noopener noreferrer"'
+            : '';
+        const externalIcon = external
+            ? ' <span class="external-link-icon" aria-hidden="true">↗</span>'
+            : '';
+
+        return `<a href="${esc(href)}"${externalAttributes}>${content}${externalIcon}</a>`;
     }
 
     function markdownImage(alt, url) {
