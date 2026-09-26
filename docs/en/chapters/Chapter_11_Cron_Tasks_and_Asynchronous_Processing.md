@@ -119,7 +119,7 @@ The correct design normally uses batches, cursors, recordsets, or some progress 
 
 ## 11.9 Administrative frequency configuration
 
-![Moodle scheduled tasks administration](image/chapter11-moodle-scheduled-tasks-administration.png)
+![Moodle scheduled tasks administration](image/chapter11-moodle-scheduled-tasks.png)
 
 Scheduled Tasks appear in Moodle administration and administrators can change the schedule, disable execution, and inspect task information. This matters because a plugin does not know every infrastructure environment where it will be installed.
 
