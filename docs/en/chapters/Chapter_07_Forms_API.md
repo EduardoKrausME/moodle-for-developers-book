@@ -548,7 +548,7 @@ Even so, a Dynamic Form is not a generic Web Service. If the feature must be con
 
 ## 7.40 `moodleform_mod`
 
-![Moodle activity settings](image/cap07-configuracoes-de-atividade-no-moodle.png)
+![Moodle activity settings](image/chapter07-moodle-activity-settings.png)
 
 `moodleform_mod` is the specialization used by the create/edit form for Activity Modules. It understands concepts a generic `moodleform` does not, including the course, course module, common activity settings, groups, availability, completion, and the standard elements of a module form.
 

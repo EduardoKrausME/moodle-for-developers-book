@@ -172,8 +172,6 @@ Also consider cardinality. A global cache with one huge entry per user, course, 
 
 ![Moodle cache configuration](image/chapter12-moodle-cache-configuration.png)
 
-![Configuracao de cache no moodle](image/cap12-configuracao-de-cache-no-moodle.png)
-
 A store is the physical implementation holding values. Moodle has specific plugin types for this, such as `cachestore`, and an installation can have several stores configured and mapped to different definitions.
 
 Plugin code should not normally choose the store. Your job is to describe the cache. The administrator knows topology, available memory, cluster layout, latency, and operational requirements and is therefore better placed to decide where each definition should live.
