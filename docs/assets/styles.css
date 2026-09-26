@@ -321,6 +321,10 @@ a {
     text-underline-offset: 3px
 }
 
+.chapter-body img {
+    max-width: 100%;
+}
+
 .chapter-body code:not(pre code) {
     font: 500 .88em JetBrains Mono, monospace;
     background: var(--surface-2);
