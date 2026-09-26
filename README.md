@@ -76,12 +76,12 @@ The chapters can be read in sequence as a book or used individually as a practic
 19. [Authentication Plugins](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_19_Authentication_Plugins.html)
 20. [Subplugins](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_20_Subplugins.html)
 21. [Gradebook and Completion](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_21_Gradebook_and_Completion.html)
-22. Question Engine and Quiz *(translation pending)*
-23. Privacy API and GDPR *(translation pending)*
-24. Backup and Restore *(translation pending)*
-25. PHPUnit *(translation pending)*
-26. Behat *(translation pending)*
-27. Git and CI *(translation pending)*
-28. Applied Offensive Security *(translation pending)*
+22. [Question Engine and Quiz](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_22_Question_Engine_and_Quiz.html)
+23. [Privacy API and GDPR](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_23_Privacy_API_and_GDPR.html)
+24. [Backup and Restore](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_24_Backup_and_Restore.html)
+25. [PHPUnit](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_25_PHPUnit.html)
+26. [Behat](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_26_Behat.html)
+27. [Git and CI](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_27_Git_and_CI.html)
+28. [Applied Offensive Security](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_28_Applied_Offensive_Security.html)
 29. [Compatibility and Maintenance Across Versions](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_29_Compatibility_and_Maintenance_between_Versions.html)
-30. Final Project *(translation pending)*
+30. [Final Project](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_30_Final_Project.html)
