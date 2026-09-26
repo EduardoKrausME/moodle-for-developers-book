@@ -1,12 +1,12 @@
 (() => {
-    const CHAPTERS = {
+    const CHAPTERS_PT_BR = {
         'Capitulo_01_Arquitetura_do_Moodle.md': 'Arquitetura do Moodle',
         'Capitulo_02_Tipos_de_Plugins_Moodle.md': 'Tipos de plugins Moodle',
         'Capitulo_03_Primeiro_Plugin_Corretamente.md': 'Primeiro plugin corretamente',
         'Capitulo_04_Qualidade_de_Codigo_desde_o_Inicio.md': 'Qualidade de código desde o início',
         'Capitulo_05_Banco_de_Dados_e_XMLDB.md': 'Banco de dados e XMLDB',
         'Capitulo_06_Interface_Moderna_e_Output_API.md': 'Interface moderna e Output API',
-        'Capitulo_07_Forms_API.md': 'Forms API',
+        'Chapter_07_Forms_API.md': 'Forms API',
         'Capitulo_08_Seguranca.md': 'Segurança',
         'Capitulo_09_Files_API_e_Moodledata.md': 'Files API e Moodledata',
         'Capitulo_10_Events_Callbacks_e_Hooks.md': 'Events, callbacks e Hooks',
@@ -38,18 +38,18 @@
         'Capitulo_03_Primeiro_Plugin_Corretamente.md': 'Your first plugin, done right',
         'Capitulo_04_Qualidade_de_Codigo_desde_o_Inicio.md': 'Code quality from the start',
         'Capitulo_05_Banco_de_Dados_e_XMLDB.md': 'Database and XMLDB',
-        'Capitulo_06_Interface_Moderna_e_Output_API.md': 'Modern interface and Output API',
+        'Chapter_06_Modern_Interfaces_and_Output_API.md': 'Modern Interfaces and the Output API',
         'Capitulo_07_Forms_API.md': 'Forms API',
-        'Capitulo_08_Seguranca.md': 'Security',
-        'Capitulo_09_Files_API_e_Moodledata.md': 'Files API and Moodledata',
-        'Capitulo_10_Events_Callbacks_e_Hooks.md': 'Events, callbacks and Hooks',
-        'Capitulo_11_Cron_Tasks_e_Processamento_Assincrono.md': 'Cron, Tasks and asynchronous processing',
-        'Capitulo_12_Cache_e_Performance.md': 'Cache and performance',
-        'Capitulo_13_APIs_Transversais_Essenciais.md': 'Essential cross-cutting APIs',
-        'Capitulo_14_Web_Services_e_Integracoes.md': 'Web Services and integrations',
-        'Capitulo_15_Plugin_Local.md': 'Local plugin',
-        'Capitulo_16_Blocos.md': 'Blocks',
-        'Capitulo_17_Modulos_de_Atividade.md': 'Activity modules',
+        'Chapter_08_Security.md': 'Security',
+        'Chapter_09_Files_API_and_Moodledata.md': 'Files API and Moodledata',
+        'Chapter_10_Events_Callbacks_and_Hooks.md': 'Events, callbacks and Hooks',
+        'Chapter_11_Cron_Tasks_and_Asynchronous_Processing.md': 'Cron, Tasks and asynchronous processing',
+        'Chapter_12_Cache_and_Performance.md': 'Cache and performance',
+        'Chapter_13_Essential_Cross_Cutting_APIs.md': 'Essential cross-cutting APIs',
+        'Chapter_14_Web_Services_and_Integrations.md': 'Web Services and integrations',
+        'Chapter_15_Local_Plugin.md': 'Local plugin',
+        'Chapter_16_Blocks.md': 'Blocks',
+        'Chapter_17_Activity_Modules.md': 'Activity modules',
         'Capitulo_18_Plugins_de_Matricula.md': 'Enrolment plugins',
         'Capitulo_19_Plugins_de_Autenticacao.md': 'Authentication plugins',
         'Capitulo_20_Subplugins.md': 'Subplugins',
@@ -113,9 +113,7 @@
         }
     }[LANGUAGE];
 
-    if (LANGUAGE === 'en') {
-        Object.assign(CHAPTERS, CHAPTERS_EN);
-    }
+    const CHAPTERS = LANGUAGE === 'en' ? CHAPTERS_EN : CHAPTERS_PT_BR;
 
     const state = {
         current: null,
