@@ -453,6 +453,8 @@ Se você precisa descobrir onde a atividade está, mover ou reorganizar módulos
 
 ## 17.37 O seletor de atividades
 
+![Janela de atividade no Moodle](image/cap17-janela-de-atividade-no-moodle.png)
+
 Quando o professor ativa edição e pede para adicionar uma atividade ou recurso, o seu módulo entra no activity chooser. O nome, ícone, capabilities e propósito influenciam essa experiência.
 
 A capability `mod/example:addinstance` controla quem pode criar a atividade, enquanto `FEATURE_MOD_PURPOSE` ajuda o Moodle a classificá-la. Em Moodle 5.1, o activity chooser também foi refatorado internamente e passou a utilizar novos atributos na renderização dos course formats, o que reforça um ponto importante: plugins de atividade deveriam depender do contrato público do chooser, não de detalhes de HTML do tema ou do formato.

@@ -170,6 +170,8 @@ Também cuide de cardinalidade. Um cache global com uma entrada enorme por usuá
 
 ## 12.10 Cache stores
 
+![Configuração de cache no Moodle](image/cap12-configuracao-de-cache-no-moodle.png)
+
 Store é a implementação física que guarda os valores. Moodle possui tipos de plugin específicos para isso, como `cachestore`, e a instalação pode ter diferentes stores configuradas e mapeadas para definições distintas.
 
 O desenvolvedor do plugin não deveria escolher a store em código normal. Seu trabalho é descrever o cache. O administrador conhece topologia, memória disponível, cluster, latência e requisitos operacionais, portanto ele está em posição melhor para decidir onde cada definição deve morar.

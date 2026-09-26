@@ -18,6 +18,8 @@ Misturar essas responsabilidades costuma produzir código frágil. Se um plugin 
 
 ## 22.2 Question Bank
 
+![Banco de questões do curso](image/cap22-banco-de-questoes-do-curso.png)
+
 O Question Bank é a camada em que professores criam, organizam, editam e gerenciam questões reutilizáveis. A partir do Moodle 4.0 ele deixou de ser apenas uma interface sobre a tabela `question` e ganhou uma arquitetura explícita de entradas, versões e plugins `qbank`.
 
 Isso é importante porque a identidade lógica da questão e a versão concreta que será tentada não são mais exatamente a mesma coisa. Uma questão chamada "Capital do Brasil" pode possuir cinco versões ao longo do tempo, mas continuar representando a mesma entrada no banco de questões.

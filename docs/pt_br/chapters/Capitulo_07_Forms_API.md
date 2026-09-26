@@ -548,6 +548,8 @@ Ainda assim, Dynamic Form não é Web Service genérico. Se sua funcionalidade p
 
 ## 7.40 `moodleform_mod`
 
+![Configurações de atividade no Moodle](image/cap07-configuracoes-de-atividade-no-moodle.png)
+
 `moodleform_mod` é a especialização usada pelo formulário de criação e edição de Activity Modules. Ele conhece conceitos que um `moodleform` genérico não conhece, como curso, course module, configuração comum de atividades, grupos, disponibilidade, conclusão e elementos padronizados do formulário de módulo.
 
 Por isso não faz sentido herdar de `moodleform_mod` em um plugin local ou admin tool só porque ele "tem mais recursos". A classe pertence ao ciclo de vida de Activity Modules e carrega expectativas específicas do `modedit.php` e das callbacks do tipo `mod`.

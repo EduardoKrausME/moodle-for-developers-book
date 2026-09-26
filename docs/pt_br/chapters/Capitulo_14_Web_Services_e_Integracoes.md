@@ -150,6 +150,8 @@ Essa separação permite controlar quais funções determinada integração pode
 
 ## 14.8 Serviço pré-definido ou serviço configurado pelo administrador
 
+![Administração de serviços externos no Moodle](image/cap14-administracao-de-servicos-externos-no-moodle.png)
+
 O plugin pode declarar um serviço em `db/services.php`.
 
 ```php

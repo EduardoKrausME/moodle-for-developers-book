@@ -119,6 +119,8 @@ O desenho correto normalmente usa lotes, cursores, recordsets ou algum marcador 
 
 ## 11.9 Configuração administrativa da frequência
 
+![Administração de tarefas agendadas do Moodle](image/cap11-administracao-de-tarefas-agendadas-do-moodle.png)
+
 Scheduled Tasks aparecem na administração do Moodle e o administrador pode alterar agenda, desabilitar execução e observar informações relacionadas à tarefa. Isso é importante porque plugin não conhece toda a infraestrutura onde será instalado.
 
 Talvez você ache razoável sincronizar um ERP a cada minuto, mas o endpoint do cliente aceite apenas cem chamadas por hora. Talvez uma limpeza noturna seja barata num ambiente e pesada em outro. Permitir ajuste administrativo faz parte da arquitetura da Task API.

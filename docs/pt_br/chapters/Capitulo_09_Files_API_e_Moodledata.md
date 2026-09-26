@@ -228,6 +228,8 @@ Essa é outra razão para não chamar `is_dir()` ou `scandir()` em `filedir`. Vo
 
 ## 9.24 Filepicker
 
+![Seletor de arquivos no Moodle](image/cap09-seletor-de-arquivos-no-moodle.png)
+
 O `filepicker` é adequado quando o formulário precisa receber um arquivo de forma pontual. Ele integra a seleção com os repositories disponíveis no Moodle e coloca o arquivo na draft area do usuário. O arquivo ainda não está na filearea permanente do seu plugin nesse momento.
 
 Essa diferença entre selecionar e salvar é fundamental. O componente de formulário cuida da experiência de upload, mas a sua regra de negócio continua responsável por mover ou salvar o conteúdo da draft area para o destino definitivo no momento certo.

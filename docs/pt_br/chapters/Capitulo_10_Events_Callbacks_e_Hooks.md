@@ -352,6 +352,8 @@ Quando a ordem importa, documente a razão e mantenha o comportamento previsíve
 
 ## 10.36 Hooks Overview
 
+![Visão geral dos Hooks no Moodle](image/cap10-visao-geral-dos-hooks-no-moodle.png)
+
 Uma vantagem prática da Hooks API é a página de overview disponível para administradores e desenvolvedores. Ela lista Hooks descobertos e callbacks registrados, permitindo enxergar quem está reagindo a determinado ponto sem sair procurando nomes de função em todos os `lib.php` da instalação.
 
 Essa visibilidade muda bastante suporte em ambientes grandes. Quando uma customização interfere no fluxo, você consegue começar pelo Hook, ver consumidores e prioridades, em vez de depender apenas de grep no código. Hooks dentro do namespace padrão `*[component]\hook\*` são descobertos automaticamente, enquanto localizações não padronizadas exigem discovery agent.
