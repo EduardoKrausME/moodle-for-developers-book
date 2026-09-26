@@ -455,7 +455,7 @@ If you need to discover where the activity is, move it, or reorganize modules, u
 
 ## 17.37 The activity chooser
 
-![Moodle activity chooser window](image/chapter17-moodle-activity-chooser-window.png)
+![Moodle activity chooser window](image/chapter17-moodle-activity-chooser.png)
 
 When a teacher enables editing and asks to add an activity or resource, your module enters the activity chooser. Name, icon, capabilities, and purpose influence that experience.
 
