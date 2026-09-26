@@ -788,6 +788,58 @@ Você pode corrigir uma classe e publicar novo ZIP. Corrigir dados migrados inco
 
 Antes de alterar formato de JSON, enum, identificador externo ou semântica de coluna, pense em como versões antigas já persistiram esses valores.
 
+### Caso real: restore estruturalmente correto com links apontando para a origem
+
+Compatibilidade de dados não envolve apenas colunas e formatos. Conteúdo rico também pode carregar identificadores e URLs que deixam de ser válidos quando uma atividade é duplicada, importada ou restaurada em outro curso ou outra instalação.
+
+Considere uma activity que possui campos como `intro`, solução, material de apoio ou instruções e permite que o professor insira links para a própria atividade. No site de origem pode existir algo assim:
+
+```text
+https://moodle-a.exemplo/mod/videodiagnostic/view.php?id=123
+```
+
+O `123` é o `course_modules.id` da instância original. Depois de backup e restore, a nova atividade pode receber `course_modules.id = 456`. Se o plugin transportar apenas o texto literal, todos os registros podem ser restaurados corretamente e o processo terminar sem exception, mas o HTML continua apontando para `id=123`.
+
+Esse bug é especialmente traiçoeiro porque o backup parece funcionar. A atividade existe, os dados aparecem e os arquivos podem ter sido restaurados, porém o conteúdo continua carregando uma referência física da instalação anterior. Em outro domínio o problema costuma aparecer como link para o site antigo; no mesmo domínio ele pode ser ainda pior, porque `id=123` talvez exista e leve o usuário para outra atividade completamente diferente.
+
+Um sinal claro de implementação incompleta é uma task de backup com algo equivalente a:
+
+```php
+public static function encode_content_links($content) {
+    return $content;
+}
+```
+
+enquanto a task de restore mantém:
+
+```php
+public static function define_decode_rules() {
+    return [];
+}
+
+public static function define_decode_contents() {
+    return [];
+}
+```
+
+O backup XML pode estar perfeito e ainda assim o contrato de portabilidade estar quebrado.
+
+Activity modules que armazenam URLs internas em conteúdo precisam codificar essas referências no backup e decodificá-las no restore. Para uma URL em que `id` representa o course module, a task de backup transforma o endereço em um placeholder transportável e a task de restore declara uma regra baseada no mapping `course_module`.
+
+O ponto central é entender o significado do identificador, não apenas reconhecer a URL. Em:
+
+```text
+/mod/videodiagnostic/view.php?id=123
+```
+
+`id` normalmente representa o `cmid`, portanto deve seguir o mapping de `course_module`. Se outra rota usar um ID da tabela própria da activity ou de uma entidade filha, a regra precisa utilizar o mapping correspondente. Copiar o número antigo literalmente não é compatibilidade, é apenas torcer para que o banco de destino tenha a mesma coincidência de IDs.
+
+Também não adianta criar `define_decode_rules()` e esquecer `define_decode_contents()`. O restore decoder precisa saber em quais tabelas e campos deve procurar os placeholders. Se links podem aparecer em `intro`, `solution` e `material`, mas apenas `intro` entra na lista de conteúdos a decodificar, os outros campos continuam carregando URLs da origem.
+
+Por isso um teste de compatibilidade de backup precisa mudar pelo menos uma das duas coordenadas que o código antigo pode ter assumido: o identificador ou o domínio. Um cenário simples é criar a activity no site A com `cmid = 123`, inserir no editor um link para ela mesma, fazer backup e restaurar no site B onde ela recebe `cmid = 456`. O conteúdo restaurado deve apontar para o site B e para `id=456`.
+
+Esse teste encontra uma classe de problema que instalação limpa, PHPUnit isolado e até restore no mesmo curso podem esconder. Quando um plugin promete que uma activity pode ser duplicada ou transportada por backup, URLs internas também fazem parte dos dados que precisam permanecer semanticamente corretos.
+
 ## 29.77 Migração deve ser forward-only
 
 Moodle não trabalha com downgrade automático de schema de plugin.
@@ -1045,5 +1097,6 @@ Esse é o ponto em que manutenção deixa de ser reação a cada novo Moodle e p
 * MOODLE. Moodle Developer Resources. Code restructure. https://moodledev.io/docs/5.1/guides/restructure
 * MOODLE. Moodle Developer Resources. Composer support for plugins. https://moodledev.io/docs/5.2/guides/composer
 * MOODLE. Moodle Developer Resources. version.php. https://moodledev.io/docs/4.5/apis/commonfiles/version.php
+* MOODLE. Moodle Developer Resources. Backup API. https://moodledev.io/docs/5.2/apis/subsystems/backup
 
 {% endraw %}
