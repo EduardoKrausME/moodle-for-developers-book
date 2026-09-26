@@ -1354,6 +1354,18 @@ O Plugin Validate ajuda a encontrar problemas de estrutura, metadata e práticas
 
 Passar nele não significa que o plugin está correto, seguro ou rápido. É uma camada da validação, não a certificação do produto.
 
+Também é importante não transformar toda mensagem do validador em regra obrigatória do Moodle. Um exemplo concreto é a recomendação de colocar classes internas do componente em `classes/local/`. Essa pasta **não é obrigatória**. A documentação oficial de Coding Style diz que apenas o primeiro nível do namespace é obrigatório e que `\\local` pode ser usado no segundo nível quando o mantenedor quiser organizar as classes em namespaces adicionais; o próprio texto observa que, para a maioria dos componentes, manter as classes diretamente no namespace raiz do plugin é suficiente.
+
+Portanto, uma classe própria do plugin pode perfeitamente ficar, por exemplo, em `classes/manager.php` com namespace `mod_checkpoint`, sem ser movida artificialmente para `classes/local/manager.php` apenas para satisfazer uma recomendação automática. Se o validador apontar a ausência de `classes/local/` como problema mesmo quando a estrutura utilizada é válida, essa é uma regra que **não precisa ser seguida**. Não altere uma arquitetura correta apenas para fazer desaparecer um aviso que não corresponde a uma exigência da plataforma.
+
+Essa divergência já apareceu no processo oficial de revisão de plugins, como pode ser visto no CONTRIB-9824:
+
+https://moodle.atlassian.net/browse/CONTRIB-9824
+
+A referência normativa para decidir a estrutura continua sendo o Coding Style do Moodle, especialmente as regras de namespaces, e não a interpretação isolada de uma ferramenta de validação:
+
+https://moodledev.io/general/development/policies/codingstyle
+
 ## 30.81 PHPDoc
 
 Documente API pública, classes de extensão, métodos cujo contrato não seja óbvio e estruturas relevantes.
