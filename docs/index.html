@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="Moodle para Desenvolvedores, livro digital de Eduardo Kraus sobre desenvolvimento de plugins Moodle.">
+    <meta name="description"
+          content="Moodle para Desenvolvedores / Moodle for Developers, livro digital de Eduardo Kraus sobre desenvolvimento de plugins Moodle.">
     <meta name="theme-color" content="#10161d">
-    <title>Moodle para Desenvolvedores — Eduardo Kraus</title>
+    <title>Moodle para Desenvolvedores / Moodle for Developers — Eduardo Kraus</title>
     <style>
         :root {
             color-scheme: light dark;
@@ -26,78 +27,158 @@
         }
 
         main {
-            width: min(920px, calc(100% - 32px));
+            width: min(1180px, calc(100% - 32px));
             margin: 48px auto;
         }
 
-        .book {
-            background: #fff;
+        .hero {
+            margin-bottom: 28px;
+            padding: clamp(28px, 5vw, 52px);
             border: 1px solid #d0d7de;
-            border-radius: 12px;
-            padding: clamp(24px, 5vw, 48px);
+            border-radius: 16px;
+            background: #fff;
             box-shadow: 0 1px 2px rgba(31, 35, 40, .06);
+        }
+
+        .hero-kicker {
+            margin: 0 0 10px;
+            color: #636c76;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 850px;
+            margin: 0;
+            font-size: clamp(34px, 6vw, 58px);
+            line-height: 1.05;
+            letter-spacing: -.03em;
+        }
+
+        .hero p {
+            max-width: 76ch;
+            margin: 20px 0 0;
+            color: #59636e;
+            font-size: 17px;
+        }
+
+        .editions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .edition {
+            overflow: hidden;
+            border: 1px solid #d0d7de;
+            border-radius: 16px;
+            background: #fff;
+            box-shadow: 0 1px 2px rgba(31, 35, 40, .05);
+        }
+
+        .edition-header {
+            padding: 28px 30px 24px;
+            border-bottom: 1px solid #d8dee4;
         }
 
         .language {
             display: inline-flex;
+            align-items: center;
             padding: 4px 10px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             border: 1px solid #d0d7de;
             border-radius: 999px;
-            font-size: 13px;
-            font-weight: 700;
-            letter-spacing: .04em;
-        }
-
-        h1 {
-            margin: 0 0 18px;
-            font-size: clamp(30px, 5vw, 46px);
-            line-height: 1.12;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .06em;
         }
 
         h2 {
-            margin-top: 36px;
-            border-bottom: 1px solid #d8dee4;
-            padding-bottom: 8px;
+            margin: 0;
+            font-size: 28px;
+            line-height: 1.2;
         }
 
-        p {
-            max-width: 78ch;
+        .edition-header p {
+            min-height: 78px;
+            margin: 14px 0 18px;
+            color: #636c76;
         }
 
         .open-book {
-            display: inline-block;
-            margin: 10px 0 8px;
-            padding: 10px 16px;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            min-height: 42px;
+            padding: 9px 15px;
+            border-radius: 9px;
             background: #0969da;
             color: #fff;
-            font-weight: 700;
+            font-weight: 750;
             text-decoration: none;
         }
 
+        .open-book:hover {
+            text-decoration: underline;
+        }
+
+        .chapters {
+            padding: 24px 30px 30px;
+        }
+
+        .chapters h3 {
+            margin: 0 0 14px;
+            font-size: 14px;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
         ol {
+            display: grid;
+            gap: 4px;
+            margin: 0;
             padding-left: 28px;
         }
 
         li {
-            margin: 6px 0;
+            padding: 3px 0;
+        }
+
+        li::marker {
+            color: #8c959f;
+            font-variant-numeric: tabular-nums;
         }
 
         li a {
             color: #0969da;
             text-decoration: none;
+            text-underline-offset: 3px;
         }
 
-        li a:hover,
-        .open-book:hover {
+        li a:hover {
             text-decoration: underline;
         }
 
         footer {
-            margin-top: 24px;
+            margin-top: 26px;
             color: #636c76;
             font-size: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 860px) {
+            main {
+                margin-top: 24px;
+            }
+
+            .editions {
+                grid-template-columns: 1fr;
+            }
+
+            .edition-header p {
+                min-height: 0;
+            }
         }
 
         @media (prefers-color-scheme: dark) {
@@ -107,43 +188,57 @@
                 color: #e6edf3;
             }
 
-            .book {
+            .hero,
+            .edition {
                 background: #161b22;
                 border-color: #30363d;
                 box-shadow: none;
             }
 
-            .language,
-            h2 {
+            .edition-header {
                 border-color: #30363d;
+            }
+
+            .hero-kicker,
+            .hero p,
+            .edition-header p,
+            footer {
+                color: #8b949e;
+            }
+
+            .language {
+                border-color: #3d444d;
             }
 
             li a {
                 color: #58a6ff;
             }
 
-            footer {
-                color: #8b949e;
+            li::marker {
+                color: #6e7681;
             }
         }
     </style>
 </head>
 <body>
 <main>
-    <article class="book">
-        <span class="language">PT-BR</span>
-        <h1>Moodle para Desenvolvedores</h1>
+    <header class="hero">
+        <p class="hero-kicker">Eduardo Kraus · Digital book</p>
+        <h1>Moodle para Desenvolvedores / Moodle for Developers</h1>
+        <p>Um guia prático de desenvolvimento Moodle, disponível em português e inglês. Escolha a edição e use os capítulos em sequência ou como referência durante o desenvolvimento.</p>
+    </header>
 
-        <p>Este livro é um guia prático para quem deseja desenvolver para Moodle entendendo não apenas como criar um plugin, mas também como a plataforma funciona internamente, quais APIs devem ser utilizadas e quais decisões fazem diferença quando o código precisa continuar funcionando em produção.</p>
-
-        <p>Ao longo dos capítulos são abordados arquitetura, tipos de plugins, banco de dados, XMLDB, Forms API, Output API, segurança, arquivos, eventos, tarefas agendadas, cache, Web Services, módulos de atividade, autenticação, matrícula, testes automatizados, Git, integração contínua e manutenção entre diferentes versões do Moodle.</p>
-
-        <p>Os capítulos podem ser lidos em sequência, como um livro, ou utilizados individualmente como material de consulta durante o desenvolvimento.</p>
-
-        <a class="open-book" href="pt_br/">Acessar o livro — Moodle para Desenvolvedores</a>
-
-        <h2>Capítulos</h2>
-        <ol>
+    <div class="editions">
+        <section class="edition" lang="pt-BR">
+            <div class="edition-header">
+                <span class="language">PT-BR</span>
+                <h2>Moodle para Desenvolvedores</h2>
+                <p>Arquitetura, APIs, segurança, plugins, testes, integração contínua e manutenção de código Moodle em produção.</p>
+                <a class="open-book" href="pt_br/">Acessar o livro</a>
+            </div>
+            <div class="chapters">
+                <h3>30 capítulos</h3>
+                <ol>
                     <li><a href="pt_br/Capitulo_01_Arquitetura_do_Moodle.html">Arquitetura do Moodle</a></li>
                     <li><a href="pt_br/Capitulo_02_Tipos_de_Plugins_Moodle.html">Tipos de Plugins Moodle</a></li>
                     <li><a href="pt_br/Capitulo_03_Primeiro_Plugin_Corretamente.html">Primeiro Plugin Corretamente</a></li>
@@ -174,10 +269,56 @@
                     <li><a href="pt_br/Capitulo_28_Seguranca_Ofensiva_Aplicada.html">Segurança Ofensiva Aplicada</a></li>
                     <li><a href="pt_br/Capitulo_29_Compatibilidade_e_Manutencao_entre_Versoes.html">Compatibilidade e Manutenção entre Versões</a></li>
                     <li><a href="pt_br/Capitulo_30_Projeto_Final.html">Projeto Final</a></li>
-        </ol>
+                </ol>
+            </div>
+        </section>
 
-        <footer>Moodle Developer · Eduardo Kraus</footer>
-    </article>
+        <section class="edition" lang="en">
+            <div class="edition-header">
+                <span class="language">EN</span>
+                <h2>Moodle for Developers</h2>
+                <p>Architecture, APIs, security, plugins, testing, continuous integration, and maintaining Moodle code in production.</p>
+                <a class="open-book" href="en/">Read the book</a>
+            </div>
+            <div class="chapters">
+                <h3>30 chapters</h3>
+                <ol>
+                    <li><a href="en/Chapter_01_Moodle_Architecture.html">Moodle Architecture</a></li>
+                    <li><a href="en/Chapter_02_Moodle_Plugin_Types.html">Moodle Plugin Types</a></li>
+                    <li><a href="en/Chapter_03_Your_First_Plugin_Done_Right.html">Your First Plugin, Done Right</a></li>
+                    <li><a href="en/Chapter_04_Code_Quality_from_the_Start.html">Code Quality from the Start</a></li>
+                    <li><a href="en/Chapter_05_Database_and_XMLDB.html">Database and XMLDB</a></li>
+                    <li><a href="en/Chapter_06_Modern_Interfaces_and_Output_API.html">Modern Interfaces and the Output API</a></li>
+                    <li><a href="en/Chapter_07_Forms_API.html">Forms API</a></li>
+                    <li><a href="en/Chapter_08_Security.html">Security</a></li>
+                    <li><a href="en/Chapter_09_Files_API_and_Moodledata.html">Files API and Moodledata</a></li>
+                    <li><a href="en/Chapter_10_Events_Callbacks_and_Hooks.html">Events, Callbacks and Hooks</a></li>
+                    <li><a href="en/Chapter_11_Cron_Tasks_and_Asynchronous_Processing.html">Cron, Tasks and Asynchronous Processing</a></li>
+                    <li><a href="en/Chapter_12_Cache_and_Performance.html">Cache and Performance</a></li>
+                    <li><a href="en/Chapter_13_Essential_Cross_Cutting_APIs.html">Essential Cross-Cutting APIs</a></li>
+                    <li><a href="en/Chapter_14_Web_Services_and_Integrations.html">Web Services and Integrations</a></li>
+                    <li><a href="en/Chapter_15_Local_Plugin.html">Local Plugin</a></li>
+                    <li><a href="en/Chapter_16_Blocks.html">Blocks</a></li>
+                    <li><a href="en/Chapter_17_Activity_Modules.html">Activity Modules</a></li>
+                    <li><a href="en/Chapter_18_Enrolment_Plugins.html">Enrolment Plugins</a></li>
+                    <li><a href="en/Chapter_19_Authentication_Plugins.html">Authentication Plugins</a></li>
+                    <li><a href="en/Chapter_20_Subplugins.html">Subplugins</a></li>
+                    <li><a href="en/Chapter_21_Gradebook_and_Completion.html">Gradebook and Completion</a></li>
+                    <li><a href="en/Chapter_22_Question_Engine_and_Quiz.html">Question Engine and Quiz</a></li>
+                    <li><a href="en/Chapter_23_Privacy_API_and_GDPR.html">Privacy API and GDPR</a></li>
+                    <li><a href="en/Chapter_24_Backup_and_Restore.html">Backup and Restore</a></li>
+                    <li><a href="en/Chapter_25_PHPUnit.html">PHPUnit</a></li>
+                    <li><a href="en/Chapter_26_Behat.html">Behat</a></li>
+                    <li><a href="en/Chapter_27_Git_and_CI.html">Git and CI</a></li>
+                    <li><a href="en/Chapter_28_Applied_Offensive_Security.html">Applied Offensive Security</a></li>
+                    <li><a href="en/Chapter_29_Compatibility_and_Maintenance_Across_Versions.html">Compatibility and Maintenance Across Versions</a></li>
+                    <li><a href="en/Chapter_30_Final_Project.html">Final Project</a></li>
+                </ol>
+            </div>
+        </section>
+    </div>
+
+    <footer>Moodle Developer · Eduardo Kraus</footer>
 </main>
 </body>
 </html>
