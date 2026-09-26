@@ -680,14 +680,11 @@ If there is one idea worth carrying into the next chapters, it is this: the form
 The best sign that a form is well designed is that you can change the interface without rewriting the operation. A normal page, a modal, and an API can all use the same business rule, each one handling only how data enter and how the response returns to the caller.
 
 ## 7.50 Technical references consulted
-
-* Moodle Developer Resources. Forms API, version 5.2 and main documentation. Available at `https://moodledev.io/docs/5.2/apis/subsystems/form` and `https://moodledev.io/docs/5.3/apis/subsystems/form`.
-* Moodle Developer Resources. Form Usage. Available at `https://moodledev.io/docs/5.2/apis/subsystems/form/usage`.
-* Moodle Developer Resources. Repeat elements. Available at `https://moodledev.io/docs/5.2/apis/subsystems/form/advanced/repeat-elements`.
-* Moodle Developer Resources. Files in Forms and File API. Available at `https://moodledev.io/docs/5.0/apis/subsystems/form/usage/files` and `https://moodledev.io/docs/5.2/apis/subsystems/files`.
-
-Moodle PHP Documentation. `core_form\dynamic_form` and `moodleform_mod`. Available at `https://phpdoc.moodledev.io/`.
-
-Moodle Developer Documentation. Modal and AJAX forms. The historical documentation remains useful for understanding `core_form\dynamic_form`, its access methods, data loading, and dynamic submission processing.
+* Moodle Developer Resources. Forms API, version 5.2 and main documentation. Available at [https://moodledev.io/docs/5.2/apis/subsystems/form](https://moodledev.io/docs/5.2/apis/subsystems/form) and [https://moodledev.io/docs/5.3/apis/subsystems/form](https://moodledev.io/docs/5.3/apis/subsystems/form).
+* Moodle Developer Resources. Form Usage. Available at [https://moodledev.io/docs/5.2/apis/subsystems/form/usage](https://moodledev.io/docs/5.2/apis/subsystems/form/usage).
+* Moodle Developer Resources. Repeat elements. Available at [https://moodledev.io/docs/5.2/apis/subsystems/form/advanced/repeat-elements](https://moodledev.io/docs/5.2/apis/subsystems/form/advanced/repeat-elements).
+* Moodle Developer Resources. Files in Forms and File API. Available at [https://moodledev.io/docs/5.0/apis/subsystems/form/usage/files](https://moodledev.io/docs/5.0/apis/subsystems/form/usage/files) and [https://moodledev.io/docs/5.2/apis/subsystems/files](https://moodledev.io/docs/5.2/apis/subsystems/files).
+* Moodle PHP Documentation. `core_form\dynamic_form` and `moodleform_mod`. Available at [https://phpdoc.moodledev.io/](https://phpdoc.moodledev.io/).
+* Moodle Developer Documentation. Modal and AJAX forms. The historical documentation remains useful for understanding `core_form\dynamic_form`, its access methods, data loading, and dynamic submission processing.
 
 {% endraw %}
