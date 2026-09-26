@@ -2,7 +2,7 @@
 
 # 8. Segurança
 
-![Segurança no Moodle](image/cap08-seguranca-moodle.svg)
+![Segurança no Moodle](image/cap08-seguranca-moodle.png)
 
 Segurança em plugin Moodle costuma ser ensinada como uma lista de funções que você deve lembrar de chamar: `require_login()`, `require_capability()`, `require_sesskey()`, `required_param()` e mais algumas. O problema é que decorar essas funções não torna o código seguro, porque quase toda vulnerabilidade interessante aparece justamente quando a função certa foi chamada no lugar errado, no contexto errado ou protegendo uma decisão diferente daquela que realmente precisava ser protegida.
 
