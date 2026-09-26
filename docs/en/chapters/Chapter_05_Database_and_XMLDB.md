@@ -587,6 +587,8 @@ This neutral definition is also why you should not edit `install.xml` as if it w
 
 ## 5.35 XMLDB Editor
 
+![Moodle XMLDB Editor](image/cap05-editor-xmldb-do-moodle.png)
+
 The XMLDB Editor is available among administration's development tools and lets you create or load a component's `install.xml`, edit tables, and generate upgrade snippets.
 
 The correct practice for changing schema is to open the editor, modify the definition, save the updated `install.xml`, and use the option to generate PHP code for the corresponding change. This greatly reduces the chance of manually writing an `xmldb_field` whose attributes differ from the final schema.

@@ -145,6 +145,8 @@ There are exceptions where you genuinely need to work with roles, particularly i
 
 ## 8.6 Capabilities
 
+![Teacher permissions in Moodle](image/cap08-permissoes-do-professor.png)
+
 A capability represents an action that can be allowed or denied in a context. Good names describe the action, not the type of user. `local_catalog:manageitems`, `mod_example:grade`, and `tool_sync:run` communicate what is being authorized, while names such as `local_catalog:teacher` mix authorization with an institutional role that may not even exist on another site.
 
 The capability should also have granularity that matches the risk. Creating a single `local_plugin:manage` capability and using it to view data, edit settings, delete records, and export information may be enough in a tiny plugin, but it begins to constrain administration as soon as some users should perform only part of those actions.

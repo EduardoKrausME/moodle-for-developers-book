@@ -2,7 +2,7 @@
 
 # 10. Events, callbacks, and Hooks
 
-![Events, Callbacks and Hooks](image/cap10-events-callbacks-hooks.png)
+![Events, Callbacks and Hooks](image/chapter10-events-callbacks-hooks.png)
 
 If you have worked with Moodle for a while, you have probably opened a `lib.php` looking for a function with a very long name, found a `db/events.php` registering an observer and, on a newer branch, encountered a `db/hooks.php` pointing to a class that receives a Hook object. All three mechanisms exist to let one part of Moodle react to what another part is doing, but they were created at different times, solve different problems, and, when treated as synonyms, the code becomes confusing very quickly.
 
@@ -351,6 +351,10 @@ Hook callbacks are ordered from highest to lowest priority. This is useful when 
 When order matters, document why and keep behavior predictable. Priority should solve coordination expected by the API, not a silent race among customizations nobody can understand six months later.
 
 ## 10.36 Hooks Overview
+
+![Hooks overview in Moodle](image/chapter10-hooks-overview-in-moodle.png)
+
+![Visao geral dos hooks no moodle](image/cap10-visao-geral-dos-hooks-no-moodle.png)
 
 One practical advantage of the Hooks API is the overview page available to administrators and developers. It lists discovered Hooks and registered callbacks, letting you see who reacts to a given extension point without searching every `lib.php` in the installation for function names.
 

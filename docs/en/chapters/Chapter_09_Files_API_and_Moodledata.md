@@ -228,6 +228,8 @@ This is another reason not to call `is_dir()` or `scandir()` on `filedir`. You w
 
 ## 9.24 Filepicker
 
+![Moodle file picker](image/cap09-seletor-de-arquivos-no-moodle.png)
+
 `filepicker` is appropriate when the form needs to receive a file for a one-off operation. It integrates selection with Moodle repositories and puts the file into the user's draft area. At that point the file is not yet in your plugin's permanent filearea.
 
 This difference between selecting and saving is fundamental. The form component handles the upload experience, but your business rule remains responsible for moving or saving content from the draft area to its final destination at the correct time.

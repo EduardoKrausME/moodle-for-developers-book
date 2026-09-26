@@ -2,7 +2,7 @@
 
 # 14 WEB SERVICES AND INTEGRATIONS
 
-![Web Services and Integrations](image/cap14-web-services-integrations.png)
+![Web Services and Integrations](image/chapter14-web-services-and-integrations.png)
 
 There comes a point when Moodle stops talking only to itself. An ERP needs to enrol students, a financial system needs to report that an invoice was paid, an application needs to retrieve course data, an external dashboard needs to read indicators, the frontend needs to save a change without reloading the page and, suddenly, the class that until yesterday was called only by a PHP page becomes a boundary between different systems. That is exactly when a very common mistake appears: the developer takes a function that already exists, puts something into `db/services.php`, generates a token, and considers the integration solved.
 
@@ -149,6 +149,10 @@ local_integracao_update_order
 This separation lets you control which functions a particular integration may use rather than handing every consumer the entire universe of functions available on the site.
 
 ## 14.8 Predefined service or administrator-configured service
+
+![Moodle external services administration](image/chapter14-moodle-external-services-administration.png)
+
+![Administracao de servicos externos no moodle](image/cap14-administracao-de-servicos-externos-no-moodle.png)
 
 The plugin can declare a service in `db/services.php`.
 

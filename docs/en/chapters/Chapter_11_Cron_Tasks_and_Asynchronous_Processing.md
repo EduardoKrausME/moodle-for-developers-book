@@ -2,7 +2,7 @@
 
 # 11. Cron, Tasks, and asynchronous processing
 
-![Cron, Tasks and Asynchronous Processing](image/cap11-cron-tasks-async.png)
+![Cron, Tasks and Asynchronous Processing](image/chapter11-cron-tasks-asynchronous-processing.png)
 
 When a page takes twenty seconds to respond, the problem is not always the SQL query or the server. Very often the code is simply doing, in the wrong place, work that should never have happened inside the user's request. Importing ten thousand records, converting files, synchronizing enrolments, calling an external API for hundreds of users, generating heavy reports, or sending thousands of messages may work inside a `view.php`, but working once in a development environment does not make that acceptable architecture.
 
@@ -118,6 +118,10 @@ Leaving the HTTP request solves browser timeout, but it does not make memory and
 The correct design normally uses batches, cursors, recordsets, or some progress marker, allowing the task to process a controlled amount of data, release resources, and continue later when necessary.
 
 ## 11.9 Administrative frequency configuration
+
+![Moodle scheduled tasks administration](image/chapter11-moodle-scheduled-tasks-administration.png)
+
+![Administracao de tarefas agendadas do moodle](image/cap11-administracao-de-tarefas-agendadas-do-moodle.png)
 
 Scheduled Tasks appear in Moodle administration and administrators can change the schedule, disable execution, and inspect task information. This matters because a plugin does not know every infrastructure environment where it will be installed.
 
