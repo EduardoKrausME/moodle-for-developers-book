@@ -251,31 +251,11 @@
             location.hash;
     };
 
-    function initLanguageUi() {
-        const text = LANGUAGE_UI_TEXT[LANGUAGE] ||
-            LANGUAGE_UI_TEXT.pt_br;
-        const preferred = window.BOOK_PREFERRED_LANGUAGE ||
-            LANGUAGE;
+    function updateLanguageLinks() {
         const languageLinks = {
             pt_br: qs('#languagePtBr'),
             en: qs('#languageEn')
         };
-
-        document.documentElement.lang = text.htmlLang;
-        qs('#skipLink').textContent = text.skip;
-        qs('#menuBtn').setAttribute('aria-label', text.menu);
-        qs('#brandBy').textContent = text.by;
-        qs('#edition').textContent = text.edition;
-        qs('#summaryLabel').textContent = text.summary;
-        qs('#chapterLabel').textContent = text.chapter;
-        qs('#fontMinus').title = text.decrease;
-        qs('#fontPlus').title = text.increase;
-        qs('#loadingLabel').textContent = text.loading;
-        qs('#tocLabel').textContent = text.toc;
-        qs('#languageSwitcher').setAttribute(
-            'aria-label',
-            LANGUAGE === 'en' ? 'Language' : 'Idioma'
-        );
 
         Object.entries(languageLinks).forEach(
             ([targetLanguage, link]) => {
@@ -302,6 +282,31 @@
                     : 'Tradução em português indisponível para este capítulo';
             }
         );
+    }
+
+    function initLanguageUi() {
+        const text = LANGUAGE_UI_TEXT[LANGUAGE] ||
+            LANGUAGE_UI_TEXT.pt_br;
+        const preferred = window.BOOK_PREFERRED_LANGUAGE ||
+            LANGUAGE;
+
+        document.documentElement.lang = text.htmlLang;
+        qs('#skipLink').textContent = text.skip;
+        qs('#menuBtn').setAttribute('aria-label', text.menu);
+        qs('#brandBy').textContent = text.by;
+        qs('#edition').textContent = text.edition;
+        qs('#summaryLabel').textContent = text.summary;
+        qs('#chapterLabel').textContent = text.chapter;
+        qs('#fontMinus').title = text.decrease;
+        qs('#fontPlus').title = text.increase;
+        qs('#loadingLabel').textContent = text.loading;
+        qs('#tocLabel').textContent = text.toc;
+        qs('#languageSwitcher').setAttribute(
+            'aria-label',
+            LANGUAGE === 'en' ? 'Language' : 'Idioma'
+        );
+
+        updateLanguageLinks();
 
         if (preferred === LANGUAGE) {
             return;
@@ -885,6 +890,7 @@
         }
 
         state.current = c;
+        updateLanguageLinks();
 
         qs('#chapterBody').innerHTML = `
             <div class="loading">
