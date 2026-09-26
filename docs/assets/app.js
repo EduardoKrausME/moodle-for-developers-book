@@ -74,7 +74,9 @@
             code: 'código',
             copy: 'Copiar',
             copied: 'Copiado',
-            openNewTab: '↗ Abrir em nova aba',
+            openImage: '⛶ Ampliar imagem',
+            closeImage: 'Fechar imagem',
+            openOriginal: '↗ Abrir original em nova aba',
             loading: 'Carregando capítulo…',
             chapter: 'CAPÍTULO',
             reading: 'min de leitura',
@@ -95,7 +97,9 @@
             code: 'code',
             copy: 'Copy',
             copied: 'Copied',
-            openNewTab: '↗ Open in new tab',
+            openImage: '⛶ Enlarge image',
+            closeImage: 'Close image',
+            openOriginal: '↗ Open original in new tab',
             loading: 'Loading chapter…',
             chapter: 'CHAPTER',
             reading: 'min read',
@@ -959,6 +963,78 @@
     }
 
 
+    function getImageModal() {
+        let modal = qs('#imageModal');
+
+        if (modal) {
+            return modal;
+        }
+
+        modal = document.createElement('dialog');
+        modal.id = 'imageModal';
+        modal.className = 'image-modal';
+        modal.setAttribute(
+            'aria-label',
+            TEXT.closeImage
+        );
+
+        modal.innerHTML = `
+            <div class="image-modal-toolbar">
+                <a
+                    class="image-modal-original"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    ${TEXT.openOriginal}
+                </a>
+
+                <button
+                    type="button"
+                    class="image-modal-close"
+                    aria-label="${esc(TEXT.closeImage)}"
+                >
+                    ×
+                </button>
+            </div>
+
+            <div class="image-modal-body">
+                <img alt="">
+            </div>
+        `;
+
+        modal.querySelector(
+            '.image-modal-close'
+        ).onclick = () => modal.close();
+
+        modal.addEventListener('click', e => {
+            if (e.target === modal) {
+                modal.close();
+            }
+        });
+
+        document.body.appendChild(modal);
+
+        return modal;
+    }
+
+    function openImageModal(url, alt) {
+        const modal = getImageModal();
+        const image = modal.querySelector(
+            '.image-modal-body img'
+        );
+        const original = modal.querySelector(
+            '.image-modal-original'
+        );
+
+        image.src = url;
+        image.alt = alt || '';
+        original.href = url;
+
+        if (!modal.open) {
+            modal.showModal();
+        }
+    }
+
     function bindRenderedImages() {
         qsa('#chapterBody img').forEach(img => {
             const link = img.parentElement?.tagName === 'A'
@@ -979,7 +1055,6 @@
             }
 
             const url =
-                link?.href ||
                 img.currentSrc ||
                 img.src;
 
@@ -988,6 +1063,15 @@
             }
 
             paragraph.dataset.imageActions = 'true';
+            img.classList.add('image-zoomable');
+
+            content.addEventListener('click', e => {
+                e.preventDefault();
+                openImageModal(
+                    url,
+                    img.alt
+                );
+            });
 
             const actions = document.createElement('span');
 
@@ -998,51 +1082,16 @@
 
             button.type = 'button';
             button.className = 'icon-btn';
-            button.textContent = TEXT.openNewTab;
+            button.textContent = TEXT.openImage;
             button.setAttribute(
                 'aria-label',
-                TEXT.openNewTab
+                TEXT.openImage
             );
 
-            button.onclick = () => {
-                const width = Math.min(
-                    screen.availWidth || 1400,
-                    1400
-                );
-
-                const height = Math.min(
-                    screen.availHeight || 900,
-                    900
-                );
-
-                const left = Math.max(
-                    0,
-                    Math.round(
-                        ((screen.availWidth || width) - width) / 2
-                    )
-                );
-
-                const top = Math.max(
-                    0,
-                    Math.round(
-                        ((screen.availHeight || height) - height) / 2
-                    )
-                );
-
-                window.open(
-                    url,
-                    '_blank',
-                    [
-                        'popup=yes',
-                        `width=${width}`,
-                        `height=${height}`,
-                        `left=${left}`,
-                        `top=${top}`,
-                        'noopener',
-                        'noreferrer'
-                    ].join(',')
-                );
-            };
+            button.onclick = () => openImageModal(
+                url,
+                img.alt
+            );
 
             actions.appendChild(button);
             paragraph.insertBefore(
