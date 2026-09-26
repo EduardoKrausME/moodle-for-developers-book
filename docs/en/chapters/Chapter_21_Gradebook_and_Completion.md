@@ -670,12 +670,15 @@ Do not create a separate table for this kind of configuration unless necessary b
 
 The activity form needs to let a teacher enable rules inside the standard completion section. For this `moodleform_mod` provides `add_completion_rules()`.
 
+Since Moodle 4.3 there is one detail that cannot be ignored: elements added by custom completion rules need to use the suffix provided by the form. `moodleform_mod` itself exposes `get_suffix()` through the Completion infrastructure, and that suffix needs to be part of the element names returned by `add_completion_rules()`.
+
 ```php
 public function add_completion_rules(): array {
     $mform = $this->_form;
+    $suffix = $this->get_suffix();
 
-    $submit = $this->get_suffixed_name('completionsubmit');
-    $feedback = $this->get_suffixed_name('completionfeedback');
+    $submit = 'completionsubmit' . $suffix;
+    $feedback = 'completionfeedback' . $suffix;
 
     $mform->addElement(
         'checkbox',
@@ -695,38 +698,71 @@ public function add_completion_rules(): array {
 }
 ```
 
-On modern versions the suffix matters because the completion section changed to avoid duplicate IDs.
+The important point is not merely producing a different HTML `id`. The name returned by the rule is part of the contract used by the core Completion forms.
 
-## 21.51 `get_suffixed_name()`
+## 21.51 `get_suffix()` and the `wrong suffix` error
 
-Since the completion form was rebuilt in modern versions, custom rules need to work with suffixed form names.
+Before Moodle 4.3 it was common to find plugins adding fields directly like this:
 
-Do not simply use `completionsubmit` for every element assuming the DOM will never contain duplication.
+```php
+$mform->addElement('checkbox', 'completiondiagnostic', ...);
+$mform->addElement('text', 'completionpercent', ...);
 
-This is one of those compatibility details where copying Moodle 3.9 plugin code into Moodle 5.x can produce strange behavior without an obvious PHP error.
+return ['completiondiagnostic', 'completionpercent'];
+```
+
+This code can appear correct when the developer tests only the normal activity creation or editing form, especially because in that context the suffix may be empty. The problem appears when the same custom-rule form is reused by administrative Completion screens.
+
+Since Moodle 4.3, core checks whether every element returned by `add_completion_rules()` contains the value of `get_suffix()`. When the name is wrong, Moodle logs a debugging message equivalent to:
+
+```text
+Custom completion rule ... has wrong suffix and has been removed from the form.
+```
+
+and removes the rule from that form. This is therefore not an aesthetic recommendation or an optional protection against duplicate IDs: a plugin that declares support for Moodle 4.3 or later while still returning unsuffixed names is implementing the current Completion API contract incorrectly.
+
+The correct approach is to obtain the suffix once and use it in every name related to that element:
+
+```php
+$suffix = $this->get_suffix();
+
+$diagnostic = 'completiondiagnostic' . $suffix;
+$percent = 'completionpercent' . $suffix;
+
+$mform->addElement('checkbox', $diagnostic, ...);
+$mform->addElement('text', $percent, ...);
+
+return [$diagnostic, $percent];
+```
+
+If the plugin supports only Moodle 4.4 or later, for example with `$plugin->requires = 2024042200`, there is no backward-compatibility reason to keep the implementation without the suffix.
+
+Also be careful with examples that use a helper named `get_suffixed_name()`. That method is not provided by `moodleform_mod`; when it appears in an example, it is usually a helper declared by the plugin itself. For new code, using `get_suffix()` directly makes it explicit which part belongs to the Moodle API and avoids copying an auxiliary method without its implementation.
 
 ## 21.52 `completion_rule_enabled()`
 
-The form needs to report whether at least one custom rule was enabled:
+The form needs to report whether at least one custom rule was enabled, and here the names need to follow exactly the same logic used in `add_completion_rules()`:
 
 ```php
 public function completion_rule_enabled($data): bool {
-    $submit = $this->get_suffixed_name('completionsubmit');
-    $feedback = $this->get_suffixed_name('completionfeedback');
+    $suffix = $this->get_suffix();
 
-    return !empty($data[$submit]) || !empty($data[$feedback]);
+    return !empty($data['completionsubmit' . $suffix])
+        || !empty($data['completionfeedback' . $suffix]);
 }
 ```
 
-This participates in automatic-mode validation and prevents the teacher selecting automatic completion with no effective conditions.
+A particularly unpleasant mistake is fixing only `add_completion_rules()` while still reading `$data['completionsubmit']` without the suffix. The interface starts displaying the rule correctly, but validation may conclude that no condition was enabled.
 
-## 21.53 `get_data()` and suffixed fields
+The same discipline applies to any form code that references these elements, including `setType()`, `setDefault()`, `hideIf()`, `disabledIf()`, and data post-processing.
 
-Depending on how custom elements are built, it may be necessary to normalize suffixed names before saving them into the final activity object.
+## 21.53 Post-processing and suffixed fields
 
-Do not blindly copy `get_data()` overrides from old modules. First understand how your Moodle branch handles custom-completion forms and only adjust when values are not arriving in the expected format.
+Do not blindly copy old `get_data()` overrides. In `moodleform_mod`, differences in form processing should follow the current class flow and, when the plugin needs to manipulate a custom rule, it should use the same `get_suffix()` applied when the element was created.
 
-This is a sensitive compatibility point between versions.
+The important detail is to keep one contract throughout the form: if `add_completion_rules()` creates `completionpercent . $suffix`, any validation or post-processing executed in that context needs to look for exactly `completionpercent . $suffix`.
+
+This is the kind of mistake that passes superficial tests because the normal activity form may continue to work while bulk editing, default completion configuration, or another screen that reuses the custom rules silently removes the field. Therefore, when supporting Moodle 4.3 or later, also test the administrative Completion forms with `DEBUG_DEVELOPER` enabled.
 
 ## 21.54 `get_coursemodule_info()` and `customdata`
 
