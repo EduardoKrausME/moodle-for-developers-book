@@ -84,7 +84,7 @@
         'Chapter_26_Behat.md': 'Behat',
         'Chapter_27_Git_and_CI.md': 'Git and CI',
         'Chapter_28_Applied_Offensive_Security.md': 'Applied offensive security',
-        'Chapter_29_Compatibility_and_Maintenance_Across_Versions.md': 'Compatibility and maintenance across versions',
+        'Chapter_29_Compatibility_and_Maintenance_between_Versions.md': 'Compatibility and maintenance across versions',
         'Chapter_30_Final_Project.md': 'Final project'
     };
 
