@@ -232,7 +232,7 @@
 
         const getChapterNumber = () => {
             const currentPage = decodeURIComponent(location.pathname.split('/').pop() || '');
-            const pageMatch = currentPage.match(/(?:Capitulo|Chapter)_(\\d{2})_/i);
+            const pageMatch = currentPage.match(/(?:Capitulo|Chapter)_(\d{2})_/i);
 
             if (pageMatch) {
                 return pageMatch[1];
@@ -259,7 +259,7 @@
                 return null;
             }
 
-            const languageRoot = location.pathname.match(/^(.*\\/)(?:pt_br|en)\\/[^/]*$/i);
+            const languageRoot = location.pathname.match(/^(.*\/)(?:pt_br|en)\/[^/]*$/i);
 
             if (!languageRoot) {
                 return null;
@@ -314,26 +314,19 @@
             return;
         }
 
-        const target = location.pathname.replace(
-            /\/(pt_br|en)(?=\/|$)/i,
-            '/' + preferred
-        ) + location.search + location.hash;
+        const target = getLanguageUrl(preferred);
 
-        fetch(target, {method: 'HEAD', cache: 'no-store'})
-            .then(response => {
-                if (!response.ok) {
-                    return;
-                }
+        if (!target) {
+            return;
+        }
 
-                const preferredText = strings[preferred];
-                const notice = document.querySelector('#languageNotice');
-                document.querySelector('#languageNoticeText').textContent = preferredText.notice;
-                const link = document.querySelector('#languageNoticeLink');
-                link.textContent = preferredText.switchText;
-                link.href = target;
-                notice.classList.add('visible');
-            })
-            .catch(() => {});
+        const preferredText = strings[preferred];
+        const notice = document.querySelector('#languageNotice');
+        document.querySelector('#languageNoticeText').textContent = preferredText.notice;
+        const link = document.querySelector('#languageNoticeLink');
+        link.textContent = preferredText.switchText;
+        link.href = target;
+        notice.classList.add('visible');
     })();
 </script>
 <script src="../assets/app.js" defer></script>
