@@ -220,8 +220,10 @@ A versão do plugin precisa refletir a política de compatibilidade definida no 
 ```php
 <?php
 
+// Impede a execução direta do arquivo fora do bootstrap do Moodle.
 defined('MOODLE_INTERNAL') || die();
 
+// Declara os metadados usados pelo Moodle durante instalação e upgrade.
 $plugin->component = 'mod_checkpoint';
 $plugin->version = 2026092400;
 $plugin->requires = 2024100700;
@@ -243,6 +245,7 @@ O erro comum é tratar `install.xml` como schema vivo e editar apenas ele depois
 Configuração global só deve guardar o que realmente vale para todas as instâncias. Neste projeto podemos ter um limite padrão de arquivo e uma configuração global para notificação após avaliação.
 
 ```php
+// Adiciona uma configuração administrativa global para habilitar notificações após a avaliação.
 $settings->add(new admin_setting_configcheckbox(
     'mod_checkpoint/notifygrade',
     get_string('notifygrade', 'mod_checkpoint'),
@@ -272,9 +275,13 @@ mod/checkpoint:manage
 Quase tudo neste plugin opera em `context_module`.
 
 ```php
+// Carrega o course module e falha imediatamente se o ID não existir.
 $cm = get_coursemodule_from_id('checkpoint', $id, 0, false, MUST_EXIST);
+
+// Resolve o contexto do módulo, que é o contexto correto para as capabilities da atividade.
 $context = context_module::instance($cm->id);
 
+// Exige login no curso e valida a permissão de visualização dentro do módulo.
 require_login($cm->course, false, $cm);
 require_capability('mod/checkpoint:view', $context);
 ```
@@ -286,23 +293,37 @@ A capability precisa ser verificada no contexto onde a ação realmente acontece
 O formulário de configuração da atividade deve conter apenas propriedades da instância.
 
 ```php
+/**
+ * Formulário de configuração de uma instância do Checkpoint.
+ */
 class mod_checkpoint_mod_form extends moodleform_mod {
+    /**
+     * Define os campos específicos e os elementos padrão da atividade.
+     *
+     * @return void
+     */
     public function definition() {
+        // Obtém a instância do formulário Moodle mantida pela classe base.
         $mform = $this->_form;
 
+        // Define o nome obrigatório da atividade e aplica o tipo de parâmetro adequado.
         $mform->addElement('text', 'name', get_string('checkpointname', 'mod_checkpoint'));
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
+        // Inclui os campos padrão de introdução da atividade.
         $this->standard_intro_elements();
 
+        // Permite configurar um prazo opcional para a entrega.
         $mform->addElement('date_time_selector', 'duedate', get_string('duedate', 'mod_checkpoint'), [
             'optional' => true,
         ]);
 
+        // Define quais formatos de evidência poderão ser enviados pelo aluno.
         $mform->addElement('checkbox', 'allowtext', get_string('allowtext', 'mod_checkpoint'));
         $mform->addElement('checkbox', 'allowfile', get_string('allowfile', 'mod_checkpoint'));
 
+        // Acrescenta nota, configurações comuns do módulo e os botões de ação.
         $this->standard_grading_coursemodule_elements();
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();
@@ -315,13 +336,23 @@ class mod_checkpoint_mod_form extends moodleform_mod {
 Se texto e arquivo forem ambos desativados, o aluno não terá o que enviar. Essa regra pertence à validação do formulário.
 
 ```php
+/**
+ * Valida as combinações de configuração da atividade.
+ *
+ * @param array $data Dados submetidos pelo formulário.
+ * @param array $files Arquivos submetidos pelo formulário.
+ * @return array Erros encontrados, indexados pelo nome do campo.
+ */
 public function validation($data, $files) {
+    // Preserva primeiro as validações fornecidas pela implementação padrão do Moodle.
     $errors = parent::validation($data, $files);
 
+    // Impede uma atividade em que nenhum tipo de entrega esteja habilitado.
     if (empty($data['allowtext']) && empty($data['allowfile'])) {
         $errors['allowtext'] = get_string('error:nosubmissiontype', 'mod_checkpoint');
     }
 
+    // Retorna todos os erros para que o Moodle os associe aos campos do formulário.
     return $errors;
 }
 ```
@@ -335,9 +366,19 @@ Validação de formulário não substitui autorização no endpoint que processa
 O ideal é manter esses callbacks pequenos e transferir regra para classes testáveis.
 
 ```php
+/**
+ * Cria uma nova instância da atividade.
+ *
+ * @param stdClass $data Dados validados da instância.
+ * @param moodleform_mod|null $mform Formulário usado na criação, quando disponível.
+ * @return int ID da nova instância.
+ */
 function checkpoint_add_instance(stdClass $data, ?moodleform_mod $mform = null): int {
-$manager = \core\di::get(\mod_checkpoint\local\manager::class);
-return $manager->create_instance($data);
+    // Obtém o serviço pelo container para manter as dependências centralizadas no manager.
+    $manager = \core\di::get(\mod_checkpoint\local\manager::class);
+
+    // Delega a persistência e as regras de criação à camada de serviço.
+    return $manager->create_instance($data);
 }
 ```
 
@@ -348,25 +389,61 @@ A classe manager centraliza as transições importantes, mas agora ela também a
 ```php
 namespace mod_checkpoint\local;
 
+/**
+ * Centraliza as regras de negócio e as transições de estado do Checkpoint.
+ */
 final class manager {
+    /**
+     * Cria o serviço com dependências explícitas e substituíveis em testes.
+     *
+     * @param \moodle_database $db Camada de acesso ao banco de dados.
+     * @param \core\clock $clock Relógio usado nas regras dependentes de tempo.
+     */
     public function __construct(
         private readonly \moodle_database $db,
         private readonly \core\clock $clock,
     ) {
     }
 
+    /**
+     * Registra ou atualiza a entrega de um aluno.
+     *
+     * @param int $checkpointid ID da atividade.
+     * @param int $userid ID do aluno.
+     * @param array $data Dados da entrega.
+     * @return int ID da entrega persistida.
+     */
     public function submit(int $checkpointid, int $userid, array $data): int {
+        // Usa o relógio injetado para manter regras de tempo determinísticas nos testes.
         $now = $this->clock->time();
-        // Validar, persistir, arquivos, event e completion.
+
+        // Valida a entrega, persiste os dados, processa arquivos e atualiza os estados derivados.
     }
 
+    /**
+     * Avalia uma entrega e publica os efeitos derivados da avaliação.
+     *
+     * @param int $submissionid ID da entrega.
+     * @param int $graderid ID do avaliador.
+     * @param float $grade Nota atribuída.
+     * @param string $feedback Feedback textual da avaliação.
+     * @return void
+     */
     public function grade(int $submissionid, int $graderid, float $grade, string $feedback): void {
+        // Captura o instante da avaliação a partir da mesma fonte de tempo usada pelo domínio.
         $now = $this->clock->time();
-        // Persistir avaliação, Gradebook, event e task.
+
+        // Persiste a avaliação e sincroniza Gradebook, evento e notificação assíncrona.
     }
 
+    /**
+     * Reabre uma entrega previamente enviada ou avaliada.
+     *
+     * @param int $submissionid ID da entrega.
+     * @return void
+     */
     public function reopen(int $submissionid): void {
-        // Alterar estado e invalidar dados derivados.
+        // Altera o estado da entrega e invalida qualquer dado derivado que não continue válido.
     }
 }
 ```
@@ -378,7 +455,14 @@ O banco e o relógio deixam de ser dependências invisíveis. Isso permite que u
 O checkpoint possui data limite, portanto tempo faz parte do domínio e precisa ser testável. Em vez de comparar duedate com time() em vários arquivos, concentre a regra em serviço e use $this->clock->time(). Um teste consegue então simular antes, exatamente no limite e depois do prazo sem esperar o relógio real avançar.
 
 ```php
+/**
+ * Verifica se a atividade já ultrapassou a data limite.
+ *
+ * @param \stdClass $checkpoint Registro da atividade.
+ * @return bool Verdadeiro quando existe prazo e ele já foi ultrapassado.
+ */
 private function is_late(\stdClass $checkpoint): bool {
+    // Considera atraso apenas quando a atividade possui data limite configurada.
     return $checkpoint->duedate > 0
         && $this->clock->time() > $checkpoint->duedate;
 }
@@ -389,10 +473,12 @@ private function is_late(\stdClass $checkpoint): bool {
 Enviar uma entrega pode envolver tabela, Files API, Event e Completion. A transação deve proteger apenas o que é transacional no banco e não pode ficar aberta durante chamada externa lenta.
 
 ```php
+// Abre uma transação apenas para o conjunto de alterações que precisa ser atômico.
 $transaction = $DB->start_delegated_transaction();
 
-// Alterações de banco relacionadas.
+// Executa aqui as alterações de banco que devem confirmar ou falhar em conjunto.
 
+// Confirma a transação antes de iniciar operações externas ou potencialmente lentas.
 $transaction->allow_commit();
 ```
 
@@ -405,13 +491,24 @@ O aluno precisa de um Moodle form próprio, separado do `mod_form`.
 ```php
 namespace mod_checkpoint\form;
 
+/**
+ * Formulário usado pelo aluno para enviar a evidência do Checkpoint.
+ */
 class submission_form extends \moodleform {
+    /**
+     * Define os campos disponíveis para a submissão.
+     *
+     * @return void
+     */
     public function definition() {
+        // Obtém o objeto de formulário fornecido pela classe base.
         $mform = $this->_form;
 
+        // Adiciona o editor de texto para a evidência textual.
         $mform->addElement('editor', 'submissiontext', get_string('submissiontext', 'mod_checkpoint'));
         $mform->setType('submissiontext', PARAM_RAW);
 
+        // Adiciona a área de arquivo e o botão que conclui o envio.
         $mform->addElement('filemanager', 'evidence_filemanager', get_string('evidence', 'mod_checkpoint'));
         $mform->addElement('submit', 'submitbutton', get_string('submit'));
     }
@@ -456,15 +553,29 @@ Essa escolha torna backup, restore, pluginfile e exclusão muito mais previsíve
 Servir o arquivo exige autenticação e autorização.
 
 ```php
+/**
+ * Entrega arquivos protegidos armazenados na file area da atividade.
+ *
+ * @param stdClass $course Registro do curso.
+ * @param stdClass $cm Registro do course module.
+ * @param context $context Contexto associado ao arquivo.
+ * @param string $filearea Nome da file area solicitada.
+ * @param array $args Argumentos restantes da URL do arquivo.
+ * @param bool $forcedownload Indica se o navegador deve baixar o arquivo.
+ * @param array $options Opções adicionais de entrega.
+ * @return bool Retorna false quando o arquivo não pode ser servido.
+ */
 function checkpoint_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
+    // Garante que o acesso ao arquivo ocorra dentro de uma sessão autenticada no curso.
     require_login($course, true, $cm);
 
+    // Rejeita qualquer contexto ou file area que não pertença à evidência do módulo.
     if ($context->contextlevel !== CONTEXT_MODULE || $filearea !== 'evidence') {
         return false;
     }
 
-    // Validar itemid, dono da entrega ou capability de avaliação.
-    // Localizar stored_file e chamar send_stored_file().
+    // Valida o itemid e confirma que o usuário é dono da entrega ou possui capability de avaliação.
+    // Localiza o stored_file autorizado e encerra a resposta com send_stored_file().
 }
 ```
 
@@ -483,12 +594,14 @@ Essa regra precisa ser testada explicitamente, porque `pluginfile()` é um dos p
 A página pode preparar um objeto de output:
 
 ```php
+// Monta o objeto de output com os dados de domínio já preparados para apresentação.
 $status = new \mod_checkpoint\output\student_status(
     checkpoint: $checkpoint,
     submission: $submission,
     canedit: $canedit,
 );
 
+// Entrega a renderização ao renderer do Moodle em vez de produzir HTML manualmente.
 echo $OUTPUT->render($status);
 ```
 
@@ -501,7 +614,17 @@ A classe de output transforma domínio em dados simples para Mustache.
 ```php
 namespace mod_checkpoint\output;
 
+/**
+ * Prepara o estado do aluno para renderização pelo template Mustache.
+ */
 final class student_status implements \renderable, \templatable {
+    /**
+     * Cria o objeto de output com os dados necessários para a interface.
+     *
+     * @param \stdClass $checkpoint Registro da atividade.
+     * @param \stdClass|null $submission Entrega atual do aluno, quando existente.
+     * @param bool $canedit Indica se a entrega ainda pode ser editada.
+     */
     public function __construct(
         private readonly \stdClass $checkpoint,
         private readonly ?\stdClass $submission,
@@ -509,7 +632,14 @@ final class student_status implements \renderable, \templatable {
     ) {
     }
 
+    /**
+     * Exporta dados simples para consumo pelo template Mustache.
+     *
+     * @param \renderer_base $output Renderer ativo do Moodle.
+     * @return array Dados normalizados para o template.
+     */
     public function export_for_template(\renderer_base $output): array {
+        // Formata os valores antes de expô-los ao template.
         return [
             'name' => format_string($this->checkpoint->name),
             'has_submission' => $this->submission !== null,
@@ -554,17 +684,34 @@ use core_courseformat\activityoverviewbase;
 use core_courseformat\local\overview\overviewitem;
 use core_calendar\output\humandate;
 
+/**
+ * Integra o Checkpoint à visão geral de atividades do curso.
+ */
 final class overview extends activityoverviewbase {
+    /**
+     * Cria a integração com acesso ao banco e ao relógio do Moodle.
+     *
+     * @param \cm_info $cm Informações do course module.
+     * @param \moodle_database $db Camada de acesso ao banco de dados.
+     * @param \core\clock $clock Relógio usado pelas regras temporais.
+     */
     public function __construct(
         \cm_info $cm,
         private readonly \moodle_database $db,
         private readonly \core\clock $clock,
     ) {
+        // Inicializa o contrato comum das integrações de Activity Overview.
         parent::__construct($cm);
     }
 
+    /**
+     * Retorna a data limite formatada para a visão geral de atividades.
+     *
+     * @return overviewitem|null Item de overview com a data limite.
+     */
     #[\Override]
     public function get_due_date_overview(): ?overviewitem {
+        // Busca somente os campos necessários para montar o item de prazo.
         $checkpoint = $this->db->get_record(
             'checkpoint',
             ['id' => $this->cm->instance],
@@ -572,6 +719,7 @@ final class overview extends activityoverviewbase {
             MUST_EXIST,
         );
 
+        // Converte o timestamp em uma representação própria da interface do Moodle.
         return new overviewitem(
             name: get_string('duedate'),
             value: $checkpoint->duedate ?: null,
@@ -588,9 +736,13 @@ A versão completa pode acrescentar get_extra_overview_items() para mostrar esta
 ### 30.28.2 index.php vira compatibilidade de navegação
 
 ```php
+// Carrega o bootstrap do Moodle antes de acessar parâmetros ou APIs da plataforma.
 require_once(__DIR__ . '/../../config.php');
 
+// Lê e valida o ID do curso recebido pela requisição.
 $courseid = required_param('id', PARAM_INT);
+
+// Redireciona para a página padrão de overview filtrada pela atividade Checkpoint.
 \core_courseformat\activityoverviewbase::redirect_to_overview_page(
     $courseid,
     'checkpoint',
@@ -633,15 +785,24 @@ O JS não decide se o usuário pode ver a informação. A External Function cont
 A função externa deve declarar parâmetros, validar contexto e devolver uma estrutura pequena.
 
 ```php
+/**
+ * Retorna os totais de estados do Checkpoint para consumidores externos autorizados.
+ *
+ * @param int $cmid ID do course module.
+ * @return array Contadores agrupados por estado.
+ */
 public static function execute(int $cmid): array {
     global $DB;
 
+    // Resolve o course module e seu contexto a partir do identificador recebido.
     $cm = get_coursemodule_from_id('checkpoint', $cmid, 0, false, MUST_EXIST);
     $context = context_module::instance($cm->id);
 
+    // Valida o contexto da External Function e exige permissão de avaliação.
     self::validate_context($context);
     require_capability('mod/checkpoint:grade', $context);
 
+    // Retorna somente os dados permitidos pelo contrato externo.
     return self::count_states($cm->instance);
 }
 ```
@@ -668,6 +829,7 @@ O Event é disparado depois que a alteração principal aconteceu. Ele não deve
 Depois de gravar a entrega:
 
 ```php
+// Cria o evento com o contexto, a entrega afetada e o usuário relacionado.
 $event = \mod_checkpoint\event\submission_created::create([
     'context' => $context,
     'objectid' => $submission->id,
@@ -676,6 +838,8 @@ $event = \mod_checkpoint\event\submission_created::create([
         'checkpointid' => $checkpoint->id,
     ],
 ]);
+
+// Dispara o evento somente depois de preencher todos os dados exigidos pelo contrato.
 $event->trigger();
 ```
 
@@ -694,10 +858,15 @@ Se no futuro terceiros precisarem alterar validação antes do envio, aí sim o 
 Enviar notificação depois da avaliação não precisa prender o request do professor. Uma Adhoc Task recebe apenas identificadores estáveis.
 
 ```php
+// Cria a Adhoc Task responsável por enviar a notificação fora da requisição principal.
 $task = new \mod_checkpoint\task\send_grade_notification();
+
+// Passa apenas identificadores suficientes para a task reconstruir o contexto necessário.
 $task->set_custom_data([
     'submissionid' => $submission->id,
 ]);
+
+// Coloca a task na fila para execução assíncrona pelo cron.
 \core\task\manager::queue_adhoc_task($task);
 ```
 
@@ -720,8 +889,13 @@ Se o status de atraso pode ser calculado com `duedate < time()` sem persistir na
 O dashboard do professor pode ter um cache pequeno para contadores por atividade, principalmente em turmas grandes.
 
 ```php
+// Obtém a definição de cache declarada pelo plugin.
 $cache = cache::make('mod_checkpoint', 'summary');
+
+// Usa uma chave estável por atividade para evitar colisões entre checkpoints.
 $key = 'checkpoint:' . $checkpointid;
+
+// Tenta reutilizar o resumo já calculado antes de consultar ou recomputar os dados.
 $summary = $cache->get($key);
 ```
 
@@ -738,8 +912,10 @@ Uma cache incorreta é pior que uma consulta um pouco mais lenta, porque apresen
 A definição pode ser simples:
 
 ```php
+// Declara os caches próprios do componente em db/caches.php.
 $definitions = [
     'summary' => [
+        // Usa cache de aplicação porque o resumo não pertence a uma sessão específica.
         'mode' => cache_store::MODE_APPLICATION,
     ],
 ];
@@ -752,6 +928,7 @@ Não escolha TTL como solução para invalidação que o próprio código conseg
 A atividade possui um item de nota. `checkpoint_grade_item_update()` cria ou atualiza esse item usando `grade_update()`.
 
 ```php
+// Define a configuração do item de nota que será publicado no Gradebook.
 $params = [
     'itemname' => $checkpoint->name,
     'gradetype' => GRADE_TYPE_VALUE,
@@ -759,6 +936,7 @@ $params = [
     'grademax' => $checkpoint->grade,
 ];
 
+// Cria ou atualiza o item de nota associado à instância da atividade.
 grade_update(
     'mod/checkpoint',
     $checkpoint->course,
@@ -776,11 +954,13 @@ grade_update(
 Ao avaliar:
 
 ```php
+// Converte a avaliação interna para o formato esperado pela Gradebook API.
 $grade = [
     'userid' => $submission->userid,
     'rawgrade' => $submission->grade,
 ];
 
+// Publica a nota do aluno no item correspondente à atividade.
 checkpoint_grade_item_update($checkpoint, $grade);
 ```
 
@@ -808,17 +988,34 @@ A primeira verifica se existe entrega enviada. A segunda verifica se a entrega f
 ```php
 namespace mod_checkpoint\completion;
 
+/**
+ * Implementa as regras customizadas de conclusão da atividade.
+ */
 final class custom_completion extends \core_completion\activity_custom_completion {
+    /**
+     * Lista as regras customizadas disponibilizadas pelo plugin.
+     *
+     * @return array Nomes das regras de conclusão.
+     */
     public static function get_defined_custom_rules(): array {
+        // Mantém os nomes alinhados aos campos configurados no formulário da atividade.
         return [
             'completionsubmit',
             'completiongrade',
         ];
     }
 
+    /**
+     * Calcula o estado de uma regra customizada específica.
+     *
+     * @param string $rule Nome da regra solicitada.
+     * @return int Estado de conclusão reconhecido pela Completion API.
+     */
     public function get_state(string $rule): int {
+        // Rejeita nomes desconhecidos antes de consultar qualquer estado da atividade.
         $this->validate_rule($rule);
 
+        // Encaminha cada regra para o cálculo especializado correspondente.
         return match ($rule) {
             'completionsubmit' => $this->get_submit_state(),
             'completiongrade' => $this->get_grade_state(),
@@ -844,6 +1041,7 @@ Não existe justificativa para `null_provider`.
 O provider deve declarar a tabela de entregas e as file areas relevantes.
 
 ```php
+// Declara quais dados pessoais são armazenados na tabela de submissões.
 $items->add_database_table(
     'checkpoint_submission',
     [
@@ -874,11 +1072,13 @@ Se alguma informação precisar ser preservada por uma obrigação institucional
 O backup da atividade precisa incluir configuração e, quando `userinfo` estiver habilitado, entregas dos usuários.
 
 ```php
+// Define o elemento raiz que representa a instância da atividade no backup.
 $checkpoint = new backup_nested_element('checkpoint', ['id'], [
     'name', 'intro', 'introformat', 'duedate', 'grade',
     'allowtext', 'allowfile', 'completionsubmit', 'completiongrade'
 ]);
 
+// Cria o contêiner e o elemento repetível das entregas vinculadas à atividade.
 $submissions = new backup_nested_element('submissions');
 $submission = new backup_nested_element('submission', ['id'], [
     'userid', 'status', 'submissiontext', 'submissionformat',
@@ -892,7 +1092,10 @@ $submission = new backup_nested_element('submission', ['id'], [
 Usuários e avaliadores precisam ser anotados.
 
 ```php
+// Marca o autor da entrega para que o Backup API remapeie o usuário no restore.
 $submission->annotate_ids('user', 'userid');
+
+// Marca também o avaliador porque seu ID pode mudar na instalação de destino.
 $submission->annotate_ids('user', 'graderid');
 ```
 
@@ -901,7 +1104,10 @@ No restore esses IDs não podem ser reutilizados diretamente.
 ## 30.54 Annotating files
 
 ```php
+// Inclui os arquivos usados pelo campo intro da instância da atividade.
 $checkpoint->annotate_files('mod_checkpoint', 'intro', null);
+
+// Inclui os arquivos de evidência usando o ID da submissão como itemid.
 $submission->annotate_files('mod_checkpoint', 'evidence', 'id');
 ```
 
@@ -956,6 +1162,7 @@ Use formulário ou valide `require_sesskey()` em endpoints de ação apropriados
 Nenhuma consulta recebe SQL montado com parâmetro bruto.
 
 ```php
+// Filtra pela atividade e pelo estado usando parâmetros estruturados, sem concatenar SQL.
 $DB->get_records('checkpoint_submission', [
     'checkpointid' => $checkpointid,
     'status' => submission_status::SUBMITTED,
@@ -999,25 +1206,38 @@ Uma mensagem "erro ao enviar" sem submission ID, activity ID ou exceção útil 
 Um primeiro teste cria curso, aluno, atividade e envia a entrega pela classe de serviço.
 
 ```php
+/**
+ * Testes da camada de serviço responsável pelas entregas do Checkpoint.
+ */
 final class manager_test extends \advanced_testcase {
+    /**
+     * Confirma que um aluno matriculado consegue registrar uma entrega.
+     *
+     * @return void
+     */
     public function test_student_can_submit(): void {
+        // Isola as alterações feitas no banco durante este teste.
         $this->resetAfterTest();
 
+        // Cria o curso, o aluno matriculado e uma instância real da atividade.
         $course = $this->getDataGenerator()->create_course();
         $student = $this->getDataGenerator()->create_and_enrol($course, 'student');
         $checkpoint = $this->getDataGenerator()
             ->get_plugin_generator('mod_checkpoint')
             ->create_instance(['course' => $course->id]);
 
+        // Executa a ação autenticada como o aluno que fará a entrega.
         $this->setUser($student);
 
+        // Obtém o serviço pelo mesmo container utilizado pelo código de produção.
         $manager = \core\di::get(\mod_checkpoint\local\manager::class);
-    $id = $manager->submit(
+        $id = $manager->submit(
             $checkpoint->id,
             $student->id,
             ['submissiontext' => 'Minha evidência']
         );
 
+        // Confirma que a camada de serviço retornou um identificador persistido válido.
         $this->assertGreaterThan(0, $id);
     }
 }
@@ -1028,9 +1248,22 @@ final class manager_test extends \advanced_testcase {
 O generator evita repetir setup de instância em todos os testes.
 
 ```php
+/**
+ * Generator de testes para criar instâncias do módulo Checkpoint.
+ */
 class mod_checkpoint_generator extends testing_module_generator {
+    /**
+     * Cria uma instância com valores padrão adequados aos testes.
+     *
+     * @param stdClass|array|null $record Dados que sobrescrevem os padrões.
+     * @param array|null $options Opções adicionais do generator.
+     * @return stdClass Registro criado para a atividade.
+     */
     public function create_instance($record = null, array $options = null) {
+        // Normaliza o registro para permitir a composição simples com os valores padrão.
         $record = (array)$record;
+
+        // Define somente defaults úteis para reduzir repetição no setup dos testes.
         $record += [
             'name' => 'Checkpoint de teste',
             'grade' => 100,
@@ -1038,6 +1271,7 @@ class mod_checkpoint_generator extends testing_module_generator {
             'allowfile' => 1,
         ];
 
+        // Delega a criação efetiva da atividade ao generator padrão de módulos.
         return parent::create_instance($record, $options);
     }
 }
