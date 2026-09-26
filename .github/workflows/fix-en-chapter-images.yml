@@ -1,0 +1,178 @@
+name: Fix English chapter images
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/fix-en-chapter-images.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Place images in English Markdown chapters
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path('docs/en/chapters')
+          ptroot = Path('docs/pt_br/chapters')
+          image_dir = root / 'image'
+
+          chapters = {}
+          for path in root.glob('Chapter_*.md'):
+              match = re.search(r'Chapter_(\d+)_', path.name)
+              if match:
+                  chapters[int(match.group(1))] = path
+
+          ptchapters = {}
+          for path in ptroot.glob('Capitulo_*.md'):
+              match = re.search(r'Capitulo_(\d+)_', path.name)
+              if match:
+                  ptchapters[int(match.group(1))] = path
+
+          existing_images = {path.name for path in image_dir.glob('*') if path.is_file()}
+
+          cover_images = {
+              10: ('Events, Callbacks and Hooks', 'chapter10-events-callbacks-hooks.png'),
+              11: ('Cron, Tasks and Asynchronous Processing', 'chapter11-cron-tasks-asynchronous-processing.png'),
+              14: ('Web Services and Integrations', 'chapter14-web-services-and-integrations.png'),
+              29: ('Compatibility and Maintenance Across Versions', 'chapter29-version-compatibility-and-maintenance.png'),
+          }
+
+          translated_images = {
+              'cap10-visao-geral-dos-hooks-no-moodle.png': 'chapter10-hooks-overview-in-moodle.png',
+              'cap11-administracao-de-tarefas-agendadas-do-moodle.png': 'chapter11-moodle-scheduled-tasks-administration.png',
+              'cap12-configuracao-de-cache-no-moodle.png': 'chapter12-moodle-cache-configuration.png',
+              'cap14-administracao-de-servicos-externos-no-moodle.png': 'chapter14-moodle-external-services-administration.png',
+              'cap17-janela-de-atividade-no-moodle.png': 'chapter17-moodle-activity-chooser-window.png',
+              'cap22-banco-de-questoes-do-curso.png': 'chapter22-course-question-bank.png',
+          }
+
+          alt_overrides = {
+              'cap05-editor-xmldb-do-moodle.png': 'Moodle XMLDB Editor',
+              'cap07-configuracoes-de-atividade-no-moodle.png': 'Moodle activity settings',
+              'cap08-permissoes-do-professor.png': 'Teacher permissions in Moodle',
+              'cap09-seletor-de-arquivos-no-moodle.png': 'Moodle file picker',
+              'chapter10-hooks-overview-in-moodle.png': 'Hooks overview in Moodle',
+              'chapter11-moodle-scheduled-tasks-administration.png': 'Moodle scheduled tasks administration',
+              'chapter12-moodle-cache-configuration.png': 'Moodle cache configuration',
+              'chapter14-moodle-external-services-administration.png': 'Moodle external services administration',
+              'chapter17-moodle-activity-chooser-window.png': 'Moodle activity chooser window',
+              'chapter22-course-question-bank.png': 'Course question bank',
+          }
+
+          def title_from_filename(filename: str) -> str:
+              stem = Path(filename).stem
+              stem = re.sub(r'^(cap|chapter)\d+-', '', stem)
+              words = re.sub(r'[-_]+', ' ', stem).strip()
+              return words[:1].upper() + words[1:]
+
+          def read(path: Path) -> str:
+              return path.read_text(encoding='utf-8')
+
+          def write_if_changed(path: Path, content: str) -> None:
+              old = read(path)
+              if old != content:
+                  path.write_text(content, encoding='utf-8')
+
+          def replace_or_insert_cover(path: Path, alt: str, filename: str) -> None:
+              if filename not in existing_images:
+                  return
+              text = read(path)
+              if f'(image/{filename})' in text:
+                  return
+              lines = text.splitlines()
+              title_index = None
+              for index, line in enumerate(lines):
+                  if line.startswith('# '):
+                      title_index = index
+                      break
+              if title_index is None:
+                  return
+              insert_index = title_index + 1
+              while insert_index < len(lines) and lines[insert_index].strip() == '':
+                  insert_index += 1
+              image_line_re = re.compile(r'^!\[[^\]]*\]\(image/[^)]+\)$')
+              if insert_index < len(lines) and image_line_re.match(lines[insert_index].strip()):
+                  lines[insert_index] = f'![{alt}](image/{filename})'
+              else:
+                  lines[title_index + 1:title_index + 1] = ['', f'![{alt}](image/{filename})']
+              write_if_changed(path, '\n'.join(lines) + ('\n' if text.endswith('\n') else ''))
+
+          def collect_pt_image_sections():
+              image_sections = {}
+              image_re = re.compile(r'!\[[^\]]*\]\(image/([^\)]+)\)')
+              heading_re = re.compile(r'^(#{2,6})\s+(\d+\.\d+)\b')
+              for chapter_number, path in ptchapters.items():
+                  current_section = None
+                  for line in read(path).splitlines():
+                      heading = heading_re.match(line)
+                      if heading:
+                          current_section = heading.group(2)
+                      image = image_re.search(line)
+                      if image and current_section:
+                          image_sections[image.group(1)] = (chapter_number, current_section)
+              return image_sections
+
+          def insert_section_image(path: Path, section_number: str, filename: str) -> None:
+              if filename not in existing_images:
+                  return
+              text = read(path)
+              if f'(image/{filename})' in text:
+                  return
+              lines = text.splitlines()
+              heading_re = re.compile(r'^(#{2,6})\s+' + re.escape(section_number) + r'\b')
+              for index, line in enumerate(lines):
+                  if heading_re.match(line):
+                      alt = alt_overrides.get(filename, title_from_filename(filename))
+                      insertion = ['', f'![{alt}](image/{filename})']
+                      after = index + 1
+                      # Keep the visual style used in the Portuguese chapters: heading, blank line, image, blank line, then text.
+                      while after < len(lines) and lines[after].strip() == '':
+                          after += 1
+                      lines[index + 1:after] = insertion + ['']
+                      write_if_changed(path, '\n'.join(lines) + ('\n' if text.endswith('\n') else ''))
+                      return
+
+          for chapter_number, (alt, filename) in cover_images.items():
+              path = chapters.get(chapter_number)
+              if path:
+                  replace_or_insert_cover(path, alt, filename)
+
+          image_sections = collect_pt_image_sections()
+          reverse_translated = {new: old for old, new in translated_images.items()}
+
+          for filename in sorted(existing_images):
+              if filename in {value[1] for value in cover_images.values()}:
+                  continue
+              source_filename = reverse_translated.get(filename, filename)
+              section = image_sections.get(source_filename)
+              if not section:
+                  continue
+              chapter_number, section_number = section
+              path = chapters.get(chapter_number)
+              if path:
+                  insert_section_image(path, section_number, filename)
+
+          workflow = Path('.github/workflows/fix-en-chapter-images.yml')
+          if workflow.exists():
+              workflow.unlink()
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/en/chapters/*.md .github/workflows/fix-en-chapter-images.yml
+          if ! git diff --cached --quiet; then
+            git commit -m "Add English chapter images to Markdown"
+            git push
+          fi
