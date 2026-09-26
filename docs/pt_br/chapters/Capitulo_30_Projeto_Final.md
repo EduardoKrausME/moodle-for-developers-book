@@ -1358,13 +1358,9 @@ Também é importante não transformar toda mensagem do validador em regra obrig
 
 Portanto, uma classe própria do plugin pode perfeitamente ficar, por exemplo, em `classes/manager.php` com namespace `mod_checkpoint`, sem ser movida artificialmente para `classes/local/manager.php` apenas para satisfazer uma recomendação automática. Se o validador apontar a ausência de `classes/local/` como problema mesmo quando a estrutura utilizada é válida, essa é uma regra que **não precisa ser seguida**. Não altere uma arquitetura correta apenas para fazer desaparecer um aviso que não corresponde a uma exigência da plataforma.
 
-Essa divergência já apareceu no processo oficial de revisão de plugins, como pode ser visto no CONTRIB-9824:
+Essa divergência já apareceu no processo oficial de revisão de plugins, como pode ser visto no CONTRIB-9824: https://moodle.atlassian.net/browse/CONTRIB-9824
 
-https://moodle.atlassian.net/browse/CONTRIB-9824
-
-A referência normativa para decidir a estrutura continua sendo o Coding Style do Moodle, especialmente as regras de namespaces, e não a interpretação isolada de uma ferramenta de validação:
-
-https://moodledev.io/general/development/policies/codingstyle
+A referência normativa para decidir a estrutura continua sendo o Coding Style do Moodle, especialmente as regras de namespaces, e não a interpretação isolada de uma ferramenta de validação: https://moodledev.io/general/development/policies/codingstyle
 
 ## 30.81 PHPDoc
 
