@@ -56,11 +56,11 @@
     };
 
     const CHAPTERS_EN = {
-        'Capitulo_01_Arquitetura_do_Moodle.md': 'Moodle architecture',
-        'Capitulo_02_Tipos_de_Plugins_Moodle.md': 'Moodle plugin types',
-        'Capitulo_03_Primeiro_Plugin_Corretamente.md': 'Your first plugin, done right',
-        'Capitulo_04_Qualidade_de_Codigo_desde_o_Inicio.md': 'Code quality from the start',
-        'Capitulo_05_Banco_de_Dados_e_XMLDB.md': 'Database and XMLDB',
+        'Chapter_01_Moodle_architecture.md': 'Moodle architecture',
+        'Chapter_02_Moodle_plugin_types.md': 'Moodle plugin types',
+        'Chapter_03_Your_first_plugin_done_right.md': 'Your first plugin, done right',
+        'Chapter_04_Code_quality_from_the_start.md': 'Code quality from the start',
+        'Chapter_05_Database_and_XMLDB.md': 'Database and XMLDB',
         'Chapter_06_Modern_Interfaces_and_Output_API.md': 'Modern Interfaces and the Output API',
         'Chapter_07_Forms_API.md': 'Forms API',
         'Chapter_08_Security.md': 'Security',
