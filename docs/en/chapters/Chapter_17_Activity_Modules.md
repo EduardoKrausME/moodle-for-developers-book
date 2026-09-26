@@ -457,8 +457,6 @@ If you need to discover where the activity is, move it, or reorganize modules, u
 
 ![Moodle activity chooser window](image/chapter17-moodle-activity-chooser-window.png)
 
-![Janela de atividade no moodle](image/cap17-janela-de-atividade-no-moodle.png)
-
 When a teacher enables editing and asks to add an activity or resource, your module enters the activity chooser. Name, icon, capabilities, and purpose influence that experience.
 
 The `mod/example:addinstance` capability controls who may create the activity, while `FEATURE_MOD_PURPOSE` helps Moodle classify it. In Moodle 5.1 the activity chooser was also internally refactored and began using new attributes in course-format rendering, reinforcing an important rule: activity plugins should depend on the public chooser contract, not details of theme or format HTML.
