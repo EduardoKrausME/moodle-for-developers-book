@@ -1,4 +1,27 @@
 (() => {
+    try {
+        document.documentElement.dataset.theme =
+            localStorage.getItem('bookTheme') || 'light';
+    } catch (e) {
+        document.documentElement.dataset.theme = 'light';
+    }
+
+    const pathLanguageMatch = location.pathname.match(
+        /\/(pt_br|en)(?:\/|$)/i
+    );
+    const detectedLanguage = pathLanguageMatch
+        ? pathLanguageMatch[1].toLowerCase()
+        : 'pt_br';
+    const preferredLanguage = (
+        navigator.languages ||
+        [navigator.language || 'en']
+    ).some(language => /^pt(?:-|$)/i.test(language))
+        ? 'pt_br'
+        : 'en';
+
+    window.BOOK_LANGUAGE = detectedLanguage;
+    window.BOOK_PREFERRED_LANGUAGE = preferredLanguage;
+
     const CHAPTERS_PT_BR = {
         'Capitulo_01_Arquitetura_do_Moodle.md': 'Arquitetura do Moodle',
         'Capitulo_02_Tipos_de_Plugins_Moodle.md': 'Tipos de plugins Moodle',
@@ -114,6 +137,193 @@
     }[LANGUAGE];
 
     const CHAPTERS = LANGUAGE === 'en' ? CHAPTERS_EN : CHAPTERS_PT_BR;
+
+    const LANGUAGE_UI_TEXT = {
+        pt_br: {
+            htmlLang: 'pt-BR',
+            skip: 'Ir para o conteúdo',
+            menu: 'Abrir capítulos',
+            by: 'POR EDUARDO KRAUS',
+            edition: 'O LIVRO · EDIÇÃO DIGITAL',
+            summary: 'SUMÁRIO',
+            chapter: 'CAPÍTULO',
+            decrease: 'Diminuir texto',
+            increase: 'Aumentar texto',
+            loading: 'Carregando capítulo…',
+            toc: 'NESTE CAPÍTULO',
+            notice: 'Seu navegador está configurado para português.',
+            switchText: 'Ler em português'
+        },
+        en: {
+            htmlLang: 'en',
+            skip: 'Skip to content',
+            menu: 'Open chapters',
+            by: 'BY EDUARDO KRAUS',
+            edition: 'THE BOOK · DIGITAL EDITION',
+            summary: 'CONTENTS',
+            chapter: 'CHAPTER',
+            decrease: 'Decrease text size',
+            increase: 'Increase text size',
+            loading: 'Loading chapter…',
+            toc: 'IN THIS CHAPTER',
+            notice: 'Your browser is configured for English.',
+            switchText: 'Read in English'
+        }
+    };
+
+    const findChapterFile = (chapters, chapterNumber) =>
+        Object.keys(chapters).find(file => {
+            const match = file.match(/_(\d{2})_/);
+
+            return match && match[1] === chapterNumber;
+        }) || null;
+
+    const getCurrentChapterNumber = () => {
+        const currentPage = decodeURIComponent(
+            location.pathname.split('/').pop() || ''
+        );
+        const currentFile = Object.keys(CHAPTERS).find(
+            file => file.replace(/\.md$/i, '.html') === currentPage
+        );
+
+        if (currentFile) {
+            return currentFile.match(/_(\d{2})_/)?.[1] || null;
+        }
+
+        const queryChapter = new URLSearchParams(
+            location.search
+        ).get('chapters');
+
+        if (queryChapter) {
+            return String(queryChapter).padStart(2, '0');
+        }
+
+        const hashChapter = location.hash.match(
+            /chapters[=\/-]?(\d{1,2})/i
+        );
+
+        return hashChapter
+            ? String(hashChapter[1]).padStart(2, '0')
+            : null;
+    };
+
+    const getLanguageUrl = targetLanguage => {
+        if (targetLanguage === LANGUAGE) {
+            return location.href;
+        }
+
+        const chapterNumber = getCurrentChapterNumber();
+
+        if (!chapterNumber) {
+            return null;
+        }
+
+        const targetChapters = targetLanguage === 'en'
+            ? CHAPTERS_EN
+            : CHAPTERS_PT_BR;
+
+        // Both collections must contain the same chapter number.
+        const sourceFile = findChapterFile(
+            CHAPTERS,
+            chapterNumber
+        );
+        const targetFile = findChapterFile(
+            targetChapters,
+            chapterNumber
+        );
+
+        if (!sourceFile || !targetFile) {
+            return null;
+        }
+
+        const languageRoot = location.pathname.match(
+            /^(.*\/)(?:pt_br|en)\/[^/]*$/i
+        );
+
+        if (!languageRoot) {
+            return null;
+        }
+
+        return languageRoot[1] +
+            targetLanguage +
+            '/' +
+            targetFile.replace(/\.md$/i, '.html') +
+            location.hash;
+    };
+
+    function initLanguageUi() {
+        const text = LANGUAGE_UI_TEXT[LANGUAGE] ||
+            LANGUAGE_UI_TEXT.pt_br;
+        const preferred = window.BOOK_PREFERRED_LANGUAGE ||
+            LANGUAGE;
+        const languageLinks = {
+            pt_br: qs('#languagePtBr'),
+            en: qs('#languageEn')
+        };
+
+        document.documentElement.lang = text.htmlLang;
+        qs('#skipLink').textContent = text.skip;
+        qs('#menuBtn').setAttribute('aria-label', text.menu);
+        qs('#brandBy').textContent = text.by;
+        qs('#edition').textContent = text.edition;
+        qs('#summaryLabel').textContent = text.summary;
+        qs('#chapterLabel').textContent = text.chapter;
+        qs('#fontMinus').title = text.decrease;
+        qs('#fontPlus').title = text.increase;
+        qs('#loadingLabel').textContent = text.loading;
+        qs('#tocLabel').textContent = text.toc;
+        qs('#languageSwitcher').setAttribute(
+            'aria-label',
+            LANGUAGE === 'en' ? 'Language' : 'Idioma'
+        );
+
+        Object.entries(languageLinks).forEach(
+            ([targetLanguage, link]) => {
+                const target = getLanguageUrl(targetLanguage);
+                const isActive = targetLanguage === LANGUAGE;
+
+                link.classList.toggle('active', isActive);
+                link.classList.toggle('unavailable', !target);
+                link.setAttribute(
+                    'aria-current',
+                    isActive ? 'page' : 'false'
+                );
+
+                if (target) {
+                    link.href = target;
+                    link.removeAttribute('aria-disabled');
+                    return;
+                }
+
+                link.removeAttribute('href');
+                link.setAttribute('aria-disabled', 'true');
+                link.title = targetLanguage === 'en'
+                    ? 'English translation is not available for this chapter yet'
+                    : 'Tradução em português indisponível para este capítulo';
+            }
+        );
+
+        if (preferred === LANGUAGE) {
+            return;
+        }
+
+        const target = getLanguageUrl(preferred);
+
+        if (!target) {
+            return;
+        }
+
+        const preferredText = LANGUAGE_UI_TEXT[preferred];
+        const notice = qs('#languageNotice');
+        const link = qs('#languageNoticeLink');
+
+        qs('#languageNoticeText').textContent =
+            preferredText.notice;
+        link.textContent = preferredText.switchText;
+        link.href = target;
+        notice.classList.add('visible');
+    }
+
 
     const state = {
         current: null,
@@ -1145,6 +1355,7 @@
     }
 
     function init() {
+        initLanguageUi();
         initTheme();
         renderSidebar();
 
