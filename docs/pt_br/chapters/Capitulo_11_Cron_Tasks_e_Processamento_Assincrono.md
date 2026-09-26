@@ -2,7 +2,7 @@
 
 # 11. Cron, Tasks e processamento assíncrono
 
-![Cron, Tasks e Processamento Assíncrono](image/cap11-cron-tasks-assincrono.svg)
+![Cron, Tasks e Processamento Assíncrono](image/cap11-cron-tasks-assincrono.png)
 
 Quando uma página demora vinte segundos para responder, o problema nem sempre está na consulta SQL ou no servidor. Muitas vezes o código simplesmente está fazendo no lugar errado um trabalho que nunca deveria ter acontecido dentro da requisição do usuário. Importar dez mil registros, converter arquivos, sincronizar matrículas, chamar uma API externa para centenas de usuários, gerar relatórios pesados ou enviar milhares de mensagens pode até funcionar dentro de um `view.php`, mas funcionar uma vez em ambiente de desenvolvimento não transforma isso numa arquitetura aceitável.
 
