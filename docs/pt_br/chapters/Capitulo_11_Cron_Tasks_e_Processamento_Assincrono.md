@@ -2,6 +2,8 @@
 
 # 11. Cron, Tasks e processamento assíncrono
 
+![Cron, Tasks e Processamento Assíncrono](image/cap11-cron-tasks-assincrono.svg)
+
 Quando uma página demora vinte segundos para responder, o problema nem sempre está na consulta SQL ou no servidor. Muitas vezes o código simplesmente está fazendo no lugar errado um trabalho que nunca deveria ter acontecido dentro da requisição do usuário. Importar dez mil registros, converter arquivos, sincronizar matrículas, chamar uma API externa para centenas de usuários, gerar relatórios pesados ou enviar milhares de mensagens pode até funcionar dentro de um `view.php`, mas funcionar uma vez em ambiente de desenvolvimento não transforma isso numa arquitetura aceitável.
 
 Esse é um daqueles pontos em que o Moodle obriga você a mudar a forma de pensar. O usuário faz uma ação, o plugin valida o pedido, registra o que precisa ser feito e devolve a página rapidamente. O trabalho pesado fica para outro processo, fora da requisição HTTP, e é exatamente aí que entram cron, Scheduled Tasks, Adhoc Tasks e a Lock API.

@@ -2,6 +2,8 @@
 
 # 14 WEB SERVICES E INTEGRACOES
 
+![Web Services e Integrações](image/cap14-web-services-integracoes.svg)
+
 Chega uma hora em que o Moodle deixa de conversar apenas com ele mesmo. Um ERP precisa matricular alunos, um sistema financeiro precisa avisar que uma fatura foi paga, um aplicativo precisa buscar dados de curso, um painel externo precisa ler indicadores, o frontend precisa salvar uma alteração sem recarregar a página e, de repente, aquela classe que até ontem era chamada somente por uma página PHP passa a ser uma fronteira entre sistemas diferentes. É nesse momento que aparece um erro muito comum, o desenvolvedor pega uma função que já existe, coloca alguma coisa em `db/services.php`, gera um token e considera a integração resolvida.
 
 Só que Web Service não é uma função PHP com acesso remoto. Quando você expõe uma operação para fora do fluxo normal da página, você cria um contrato público com parâmetros, tipos, permissões, contexto, formato de retorno, comportamento de erro e consequências que precisam continuar previsíveis mesmo quando quem chama não é o seu próprio código. A chamada pode vir do Moodle App, de JavaScript executando dentro do Moodle, de um ERP, de um webhook, de um script de linha de comando ou de uma aplicação que você nem sabe que existe ainda. Isso muda bastante a maneira de pensar a implementação.

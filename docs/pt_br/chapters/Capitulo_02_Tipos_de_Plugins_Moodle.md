@@ -2,6 +2,8 @@
 
 # 2 TIPOS DE PLUGINS MOODLE
 
+![Tipos de Plugins Moodle](image/cap02-tipos-plugins-moodle.svg)
+
 Antes de escrever o primeiro `version.php`, existe uma decisão que costuma definir se o plugin vai envelhecer bem ou se daqui a dois anos alguém vai abrir o código e perguntar por que tudo foi colocado dentro de `local/`. Essa decisão é escolher o tipo correto de plugin. Parece um detalhe de organização porque, olhando de fora, todos acabam sendo pastas com PHP, classes, strings, banco de dados e alguma interface, mas no Moodle o tipo do plugin informa ao core qual papel aquele componente exerce, quando ele deve ser carregado, quais callbacks ou APIs fazem sentido, onde ele aparece na administração e quais contratos específicos precisa cumprir.
 
 É muito tentador começar por `local` porque ele aceita praticamente qualquer coisa e permite colocar páginas próprias, tabelas, tasks, web services, events e integrações sem que o Moodle reclame. O problema é justamente esse. Quando uma ferramenta aceita qualquer coisa, ela também facilita usar a ferramenta errada. Se você quer criar uma atividade que o professor adiciona ao curso, um `local` não vira uma atividade só porque você criou uma tabela com `courseid`; se quer alterar a forma como o curso é apresentado, um `local` não vira `format`; se quer autenticar usuários contra um sistema externo, uma página de login dentro de `local` não substitui um `auth`; se quer controlar matrícula, não faz sentido reinventar `user_enrolments` quando existe um tipo de plugin cuja responsabilidade é exatamente essa.

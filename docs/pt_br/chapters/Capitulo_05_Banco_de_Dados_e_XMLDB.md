@@ -2,6 +2,8 @@
 
 # 5 BANCO DE DADOS E XMLDB
 
+![Banco de Dados e XMLDB](image/cap05-banco-dados-xmldb.svg)
+
 Banco de dados é uma das partes em que um plugin Moodle consegue parecer correto durante meses e ainda assim estar construído sobre decisões ruins. Você abre a tela, salva um registro, consulta outro, tudo responde rápido na instalação de desenvolvimento e a sensação é de que está resolvido. Depois o plugin chega a um ambiente com milhões de registros, PostgreSQL em vez de MariaDB, duas tarefas concorrentes e um upgrade vindo de uma versão antiga, então aparecem duplicidades, deadlocks, consultas lentas e aquela frase clássica de suporte, "aqui sempre funcionou".
 
 O Moodle já resolveu boa parte desses problemas na camada de banco, mas para aproveitar isso precisamos aceitar uma regra simples. O banco do Moodle não é um MySQL com tabelas chamadas `mdl_*`. Ele é uma abstração que precisa funcionar em bancos diferentes, sobreviver a upgrades, respeitar convenções de schema e continuar previsível quando o volume cresce. Se você escreve pensando diretamente em MySQL, em pouco tempo passa a lutar contra a plataforma em vez de usar a plataforma.

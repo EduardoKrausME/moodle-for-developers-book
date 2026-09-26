@@ -2,6 +2,8 @@
 
 # 1 ARQUITETURA DO MOODLE
 
+![Arquitetura do Moodle](image/cap01-arquitetura-moodle.svg)
+
 Antes de criar um plugin, alterar uma página ou tentar descobrir por que alguma coisa funciona no seu Moodle e quebra no Moodle do cliente, vale entender o caminho que o sistema percorre até entregar uma página pronta ao navegador. Parece básico, afinal estamos falando de uma aplicação PHP, mas é justamente nesse ponto que começam muitas soluções estranhas, como incluir arquivo na mão porque a classe "não carregou", consultar uma tabela diretamente porque parecia mais rápido, colocar uma configuração qualquer dentro de `$CFG` ou criar um endpoint que funciona sem contexto e sem verificar quem está acessando.
 
 Vamos começar por uma URL comum, como `https://ead.exemplo.com/mod/forum/view.php?id=42`. Quando você digita isso no navegador, o Moodle ainda não recebeu nada, `$DB` não existe, `$USER` não foi carregado e nem sequer há garantia de que o PHP será executado, porque antes de tudo existe um servidor web decidindo o que fazer com aquela requisição. A partir desse ponto vamos acompanhar a execução até o HTML final e, no caminho, entender onde entram `config.php`, `lib/setup.php`, `$CFG`, as globais, os contextos, o Moodledata, o sistema de componentes, o autoloading e o Routing Engine das versões modernas.

@@ -2,6 +2,8 @@
 
 # 7. Forms API
 
+![Forms API](image/cap07-forms-api.svg)
+
 Formulário parece uma das partes mais simples de um plugin Moodle até você precisar editar um registro existente, validar uma regra que depende do banco, receber arquivos, manter um editor HTML com imagens, abrir o mesmo formulário dentro de uma modal e impedir que uma submissão duplicada faça besteira. Nesse momento fica claro que um `<form>` com alguns `<input>` não resolve o problema inteiro, porque a parte difícil nunca foi desenhar o campo na tela, mas fazer o ciclo completo funcionar de forma previsível dentro do Moodle.
 
 A Forms API existe justamente para isso. Ela padroniza a construção dos campos, integra validação, acessibilidade, limpeza dos valores recebidos, proteção contra CSRF, File API, editores, botões de ação e vários comportamentos que seriam repetidos manualmente em cada plugin. Por baixo ainda existe uma herança histórica do PEAR HTML_QuickForm, o que explica alguns nomes e algumas escolhas de API que parecem estranhas para quem chega hoje, mas a regra prática é simples. Você trabalha com `moodleform`, não com HTML_QuickForm diretamente, e deixa o Moodle cuidar da parte repetitiva enquanto seu código fica responsável pelas regras de negócio.

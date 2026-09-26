@@ -2,6 +2,8 @@
 
 # 29 COMPATIBILIDADE E MANUTENÇÃO ENTRE VERSÕES
 
+![Compatibilidade e Manutenção entre Versões](image/cap29-compatibilidade-versoes.svg)
+
 Criar um plugin que funciona em uma versão do Moodle é uma tarefa. Manter o mesmo plugin funcionando por anos, atravessando mudanças de PHP, banco, JavaScript, APIs, estrutura de diretórios e políticas de depreciação, é outra completamente diferente. A diferença entre as duas aparece quando o plugin deixa de ser projeto pontual e passa a ser produto. A partir daí você não controla mais apenas o código que escreveu, porque precisa conviver com clientes em branches diferentes, upgrades em ritmos diferentes e instalações que nem sempre podem atualizar Moodle, PHP e banco ao mesmo tempo.
 
 É nesse ponto que começam soluções perigosas. Um `if ($CFG->version >= ...)` aparece para corrigir uma incompatibilidade, depois outro `if` aparece em outro arquivo, depois um terceiro testa `class_exists()`, e em poucos meses ninguém mais sabe qual combinação foi realmente testada. O plugin continua "compatível" apenas porque nenhuma instalação importante quebrou ainda.
