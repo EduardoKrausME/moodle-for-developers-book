@@ -10,7 +10,7 @@ Neste capítulo vamos trabalhar em duas camadas. A primeira é DML, usada para c
 
 ### Arquitetura do banco de dados do Moodle 5.3
 
-Antes de entrar nas APIs, vale olhar o banco como um sistema e não como uma coleção de tabelas isoladas. O diagrama [**Moodle 5.3 database architecture**](../../image/moodle-5.3-db-architecture.svg) apresenta uma visão consolidada da arquitetura do banco do Moodle 5.3, organizada por áreas funcionais como questões, notas, usuários e autenticação, mensagens, cursos e inscrições, assignment, competências, quiz, SCORM, arquivos, H5P, web services e outras partes do core.
+Antes de entrar nas APIs, vale olhar o banco como um sistema e não como uma coleção de tabelas isoladas. O diagrama [Moodle 5.3 database architecture](../../image/moodle-5.3-db-architecture.svg) apresenta uma visão consolidada da arquitetura do banco do Moodle 5.3, organizada por áreas funcionais como questões, notas, usuários e autenticação, mensagens, cursos e inscrições, assignment, competências, quiz, SCORM, arquivos, H5P, web services e outras partes do core.
 
 [![Arquitetura do banco de dados do Moodle 5.3](../../image/moodle-5.3-db-architecture.svg)](../../image/moodle-5.3-db-architecture.svg)
 
