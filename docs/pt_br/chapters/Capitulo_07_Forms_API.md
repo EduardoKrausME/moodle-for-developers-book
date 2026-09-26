@@ -460,6 +460,9 @@ file_save_draft_area_files(
 
 Essas funções aparecem novamente no Capítulo 9 com muito mais detalhe, inclusive `contextid`, `component`, `filearea`, `itemid`, diretórios virtuais e `pluginfile.php`.
 
+
+> **Problema conhecido — MDL-84230:** há um bug reportado no Moodle envolvendo `filemanager` opcional quando a opção `maxfiles` é definida. Um campo criado, por exemplo, com `'maxfiles' => 3` pode gerar a mensagem de que não é possível enviar mais de três arquivos mesmo quando o campo é opcional e nenhum arquivo foi enviado. `maxfiles` deveria apenas limitar a quantidade de arquivos quando o usuário realmente utiliza o campo; ele não deveria tornar o elemento obrigatório nem provocar erro para um `filemanager` vazio. Veja [MDL-84230](https://moodle.atlassian.net/browse/MDL-84230).
+
 ## 7.34 Draft files
 
 Draft area é uma área temporária ligada ao usuário enquanto ele edita. Ela existe porque o navegador precisa permitir upload, remoção e edição de arquivos antes que você saiba se a pessoa vai salvar o formulário. Se cada clique alterasse imediatamente os arquivos permanentes, Cancelar seria quase impossível de implementar corretamente.
