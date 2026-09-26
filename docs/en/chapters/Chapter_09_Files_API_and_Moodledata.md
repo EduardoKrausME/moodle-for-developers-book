@@ -2,7 +2,7 @@
 
 # 9. Files API and Moodledata
 
-![Files API and moodledata](image/cap09-files-api-moodledata.png)
+![Files API and moodledata](image/chapter09-files-api-and-moodledata.png)
 
 If you open the moodledata directory of an installation and enter filedir expecting a structure resembling courses, activities, users, and filenames, the first impression is usually that something went wrong. Instead of folders with understandable names, you find directories such as 08/13 and, inside them, files called 081371cb102fa559e81993fddc230c79205232ce. There is no final-report.pdf, profile-photo.jpg, or lesson-material-3.zip. There is a collection of hashes that, when viewed only from disk, seems unrelated to what the user sees in Moodle.
 
