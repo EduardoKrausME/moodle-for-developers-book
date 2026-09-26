@@ -36,6 +36,59 @@
             border-bottom-color: #9e6a03;
             color: #f0e7c2;
         }
+
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .language-switcher a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--surface);
+            color: var(--text);
+            text-decoration: none;
+            font-size: 20px;
+            line-height: 1;
+            transition: border-color .15s ease, background .15s ease, opacity .15s ease;
+        }
+
+        .language-switcher a:hover {
+            border-color: color-mix(in srgb, var(--brand) 65%, var(--line));
+            background: var(--brand-soft);
+        }
+
+        .language-switcher a.active {
+            border-color: color-mix(in srgb, var(--brand) 70%, var(--line));
+            background: var(--brand-soft);
+        }
+
+        .language-switcher a.unavailable {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 820px) {
+            .topbar-inner {
+                gap: 10px;
+            }
+
+            .language-switcher {
+                gap: 3px;
+            }
+
+            .language-switcher a {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+        }
     </style>
     <script>
         try {
@@ -69,6 +122,10 @@
         <a class="brand" href="index.html"><span class="brand-mark">&lt;/&gt;</span><span class="brand-text"><span class="brand-name">Moodle Developer</span><span
                 class="brand-by" id="brandBy">POR EDUARDO KRAUS</span></span></a><span
             class="edition" id="edition">O LIVRO · EDIÇÃO DIGITAL</span>
+        <nav class="language-switcher" id="languageSwitcher" aria-label="Idioma">
+            <a id="languagePtBr" href="#" hreflang="pt-BR" lang="pt-BR" title="Português (Brasil)" aria-label="Português (Brasil)">🇧🇷</a>
+            <a id="languageEn" href="#" hreflang="en" lang="en" title="English" aria-label="English">🇬🇧</a>
+        </nav>
         <button class="icon-btn" id="themeBtn">☾ Escuro</button>
     </div>
 </header>
@@ -138,6 +195,109 @@
         };
 
         const text = strings[language] || strings.pt_br;
+        const translatedChapterFiles = {
+            pt_br: {
+                '06': 'Capitulo_06_Interface_Moderna_e_Output_API.html',
+                '07': 'Capitulo_07_Forms_API.html',
+                '08': 'Capitulo_08_Seguranca.html',
+                '09': 'Capitulo_09_Files_API_e_Moodledata.html',
+                '10': 'Capitulo_10_Events_Callbacks_e_Hooks.html',
+                '11': 'Capitulo_11_Cron_Tasks_e_Processamento_Assincrono.html',
+                '12': 'Capitulo_12_Cache_e_Performance.html',
+                '13': 'Capitulo_13_APIs_Transversais_Essenciais.html',
+                '14': 'Capitulo_14_Web_Services_e_Integracoes.html',
+                '15': 'Capitulo_15_Plugin_Local.html',
+                '16': 'Capitulo_16_Blocos.html',
+                '17': 'Capitulo_17_Modulos_de_Atividade.html',
+                '18': 'Capitulo_18_Plugins_de_Matricula.html',
+                '19': 'Capitulo_19_Plugins_de_Autenticacao.html'
+            },
+            en: {
+                '06': 'Chapter_06_Modern_Interfaces_and_Output_API.html',
+                '07': 'Chapter_07_Forms_API.html',
+                '08': 'Chapter_08_Security.html',
+                '09': 'Chapter_09_Files_API_and_Moodledata.html',
+                '10': 'Chapter_10_Events_Callbacks_and_Hooks.html',
+                '11': 'Chapter_11_Cron_Tasks_and_Asynchronous_Processing.html',
+                '12': 'Chapter_12_Cache_and_Performance.html',
+                '13': 'Chapter_13_Essential_Cross_Cutting_APIs.html',
+                '14': 'Chapter_14_Web_Services_and_Integrations.html',
+                '15': 'Chapter_15_Local_Plugin.html',
+                '16': 'Chapter_16_Blocks.html',
+                '17': 'Chapter_17_Activity_Modules.html',
+                '18': 'Chapter_18_Enrolment_Plugins.html',
+                '19': 'Chapter_19_Authentication_Plugins.html'
+            }
+        };
+
+        const getChapterNumber = () => {
+            const currentPage = decodeURIComponent(location.pathname.split('/').pop() || '');
+            const pageMatch = currentPage.match(/(?:Capitulo|Chapter)_(\\d{2})_/i);
+
+            if (pageMatch) {
+                return pageMatch[1];
+            }
+
+            const queryChapter = new URLSearchParams(location.search).get('chapters');
+
+            return queryChapter
+                ? String(queryChapter).padStart(2, '0')
+                : null;
+        };
+
+        const getLanguageUrl = targetLanguage => {
+            if (targetLanguage === language) {
+                return location.href;
+            }
+
+            const chapterNumber = getChapterNumber();
+            const targetFile = chapterNumber
+                ? translatedChapterFiles[targetLanguage]?.[chapterNumber]
+                : null;
+
+            if (!targetFile) {
+                return null;
+            }
+
+            const languageRoot = location.pathname.match(/^(.*\\/)(?:pt_br|en)\\/[^/]*$/i);
+
+            if (!languageRoot) {
+                return null;
+            }
+
+            return languageRoot[1] + targetLanguage + '/' + targetFile + location.hash;
+        };
+
+        const languageLinks = {
+            pt_br: document.querySelector('#languagePtBr'),
+            en: document.querySelector('#languageEn')
+        };
+
+        Object.entries(languageLinks).forEach(([targetLanguage, link]) => {
+            const target = getLanguageUrl(targetLanguage);
+            const isActive = targetLanguage === language;
+
+            link.classList.toggle('active', isActive);
+            link.setAttribute('aria-current', isActive ? 'page' : 'false');
+
+            if (target) {
+                link.href = target;
+                return;
+            }
+
+            link.removeAttribute('href');
+            link.classList.add('unavailable');
+            link.setAttribute('aria-disabled', 'true');
+            link.title = targetLanguage === 'en'
+                ? 'English translation is not available for this chapter yet'
+                : 'Tradução em português indisponível para este capítulo';
+        });
+
+        document.querySelector('#languageSwitcher').setAttribute(
+            'aria-label',
+            language === 'en' ? 'Language' : 'Idioma'
+        );
+
         document.documentElement.lang = text.htmlLang;
         document.querySelector('#skipLink').textContent = text.skip;
         document.querySelector('#menuBtn').setAttribute('aria-label', text.menu);
