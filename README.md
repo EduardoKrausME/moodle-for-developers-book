@@ -51,15 +51,15 @@ Across the chapters, the book covers architecture, plugin types, databases, XMLD
 
 The chapters can be read in sequence as a book or used individually as a practical reference during development.
 
-[**Read the book — Moodle for Developers**](https://eduardokrausme.github.io/moodle-for-developers-book/en/)
+[**Read the book — Moodle for Developers**](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_01_Moodle_architecture.html)
 
 ## Chapters
 
-1. [Moodle Architecture](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_01_Arquitetura_do_Moodle.html)
-2. [Moodle Plugin Types](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_02_Tipos_de_Plugins_Moodle.html)
-3. [Your First Plugin, Done Right](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_03_Primeiro_Plugin_Corretamente.html)
-4. [Code Quality from the Start](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_04_Qualidade_de_Codigo_desde_o_Inicio.html)
-5. [Database and XMLDB](https://eduardokrausme.github.io/moodle-for-developers-book/en/Capitulo_05_Banco_de_Dados_e_XMLDB.html)
+1. [Moodle Architecture](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_01_Moodle_architecture.html)
+2. [Moodle Plugin Types](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_02_Moodle_plugin_types.html)
+3. [Your First Plugin, Done Right](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_03_Your_first_plugin_done_right.html)
+4. [Code Quality from the Start](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_04_Code_quality_from_the_start.html)
+5. [Database and XMLDB](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_05_Database_and_XMLDB.html)
 6. [Modern Interfaces and the Output API](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_06_Modern_Interfaces_and_Output_API.html)
 7. [Forms API](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_07_Forms_API.html)
 8. [Security](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_08_Security.html)
@@ -76,12 +76,12 @@ The chapters can be read in sequence as a book or used individually as a practic
 19. [Authentication Plugins](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_19_Authentication_Plugins.html)
 20. [Subplugins](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_20_Subplugins.html)
 21. [Gradebook and Completion](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_21_Gradebook_and_Completion.html)
-22. [Question Engine and Quiz](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_22_Question_Engine_and_Quiz.html)
-23. [Privacy API and GDPR](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_23_Privacy_API_and_GDPR.html)
-24. [Backup and Restore](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_24_Backup_and_Restore.html)
-25. [PHPUnit](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_25_PHPUnit.html)
-26. [Behat](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_26_Behat.html)
-27. [Git and CI](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_27_Git_and_CI.html)
-28. [Applied Offensive Security](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_28_Applied_Offensive_Security.html)
-29. [Compatibility and Maintenance Across Versions](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_29_Compatibility_and_Maintenance_Across_Versions.html)
-30. [Final Project](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_30_Final_Project.html)
+22. Question Engine and Quiz *(translation pending)*
+23. Privacy API and GDPR *(translation pending)*
+24. Backup and Restore *(translation pending)*
+25. PHPUnit *(translation pending)*
+26. Behat *(translation pending)*
+27. Git and CI *(translation pending)*
+28. Applied Offensive Security *(translation pending)*
+29. [Compatibility and Maintenance Across Versions](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_29_Compatibility_and_Maintenance_between_Versions.html)
+30. Final Project *(translation pending)*
