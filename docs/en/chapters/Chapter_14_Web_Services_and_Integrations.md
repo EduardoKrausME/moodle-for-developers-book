@@ -150,7 +150,7 @@ This separation lets you control which functions a particular integration may us
 
 ## 14.8 Predefined service or administrator-configured service
 
-![Moodle external services administration](image/chapter14-moodle-external-services-administration.png)
+![Moodle external services administration](image/chapter14-moodle-external-services.png)
 
 The plugin can declare a service in `db/services.php`.
 
