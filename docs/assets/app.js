@@ -92,15 +92,22 @@
             number: n,
             title,
             file: `chapters/${file}`,
-            url: `chapters-${pad(n)}.html`
+            url: file.replace(/\.md$/i, '.html')
         };
     };
 
     function detectChapter() {
-        const m = location.pathname.match(/chapters-(\d{1,2})\.html$/i);
+        const currentPage = decodeURIComponent(
+            location.pathname.split('/').pop() || ''
+        );
 
-        if (m) {
-            return pad(m[1]);
+        const files = Object.keys(CHAPTERS);
+        const pageIndex = files.findIndex(
+            file => file.replace(/\.md$/i, '.html') === currentPage
+        );
+
+        if (pageIndex !== -1) {
+            return pad(pageIndex + 1);
         }
 
         const p = new URLSearchParams(location.search).get('chapters');

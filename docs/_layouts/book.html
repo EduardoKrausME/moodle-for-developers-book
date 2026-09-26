@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description"
+          content="Moodle Developer, livro digital de Eduardo Kraus sobre desenvolvimento de plugins Moodle.">
+    <meta name="theme-color" content="#10161d">
+    <title>Moodle Developer — Eduardo Kraus</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+    <script>
+        try {
+            document.documentElement.dataset.theme = localStorage.getItem('bookTheme') || 'light'
+        } catch (e) {
+        }
+    </script>
+</head>
+<body>
+<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+<div class="progress" id="progress"></div>
+<header class="topbar">
+    <div class="topbar-inner">
+        <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir capítulos">☰</button>
+        <a class="brand" href="index.html"><span class="brand-mark">&lt;/&gt;</span><span class="brand-text"><span class="brand-name">Moodle Developer</span><span
+                class="brand-by">POR EDUARDO KRAUS</span></span></a><span
+            class="edition">O LIVRO · EDIÇÃO DIGITAL</span>
+        <button class="icon-btn" id="themeBtn">☾ Escuro</button>
+    </div>
+</header>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="sidebar-title"><span>SUMÁRIO</span><span id="count">30 capítulos</span></div>
+        <ol class="chapter-list" id="chapterList"></ol>
+    </aside>
+    <main class="main" id="conteudo">
+        <article class="article">
+            <div class="chapter-heading-row">
+                <div class="chapter-label" id="chapterLabel">CAPÍTULO</div>
+                <div class="tools">
+                    <button class="font-btn" id="fontMinus" title="Diminuir texto">A−</button>
+                    <button class="font-btn" id="fontPlus" title="Aumentar texto">A+</button>
+                </div>
+            </div>
+            <h1 id="chapterTitle">Moodle Developer</h1>
+            <div class="meta" id="meta"></div>
+            <div class="chapter-body" id="chapterBody">
+                <div class="loading"><span class="loading-dot"></span>Carregando capítulo…</div>
+            </div>
+            <nav class="chapter-nav" id="chapterNav"></nav>
+            <footer>Moodle Developer · Eduardo Kraus</footer>
+        </article>
+    </main>
+    <aside class="right-toc">
+        <div class="toc-label">NESTE CAPÍTULO</div>
+        <nav class="toc" id="toc"></nav>
+    </aside>
+</div>
+<script src="../assets/app.js" defer></script>
+</body>
+</html>
