@@ -1,6 +1,6 @@
 # 2 MOODLE PLUGIN TYPES
 
-![Moodle Plugin Types](image/cap02-moodle-plugin-types.png)
+![Moodle Plugin Types](image/chapter02-types-of-moodle-plugins.png)
 
 Before writing your first `version.php`, there is a decision that often determines whether a plugin will age well or whether, two years from now, someone will open the code and ask why everything was placed under `local/`. That decision is choosing the correct plugin type. From the outside this can look like an organizational detail because all plugins eventually become directories containing PHP, classes, language strings, database structures, and some interface, but in Moodle the plugin type tells core what role that component plays, when it should be loaded, which callbacks or APIs make sense, where it appears in administration, and which specific contracts it must satisfy.
 
