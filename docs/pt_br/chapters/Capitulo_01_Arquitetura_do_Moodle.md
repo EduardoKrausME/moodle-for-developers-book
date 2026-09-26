@@ -2,7 +2,7 @@
 
 # 1 ARQUITETURA DO MOODLE
 
-![Arquitetura do Moodle](image/cap01-arquitetura-moodle.svg)
+![Arquitetura do Moodle](image/cap01-arquitetura-moodle.png)
 
 Antes de criar um plugin, alterar uma página ou tentar descobrir por que alguma coisa funciona no seu Moodle e quebra no Moodle do cliente, vale entender o caminho que o sistema percorre até entregar uma página pronta ao navegador. Parece básico, afinal estamos falando de uma aplicação PHP, mas é justamente nesse ponto que começam muitas soluções estranhas, como incluir arquivo na mão porque a classe "não carregou", consultar uma tabela diretamente porque parecia mais rápido, colocar uma configuração qualquer dentro de `$CFG` ou criar um endpoint que funciona sem contexto e sem verificar quem está acessando.
 
