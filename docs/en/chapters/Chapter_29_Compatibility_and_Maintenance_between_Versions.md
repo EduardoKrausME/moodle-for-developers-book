@@ -2,7 +2,7 @@
 
 # 29 COMPATIBILITY AND MAINTENANCE ACROSS VERSIONS
 
-![Compatibility and Maintenance Across Versions](image/cap29-version-compatibility-maintenance.svg)
+![Compatibility and Maintenance Across Versions](image/cap29-version-compatibility-maintenance.png)
 
 Creating a plugin that works on one Moodle version is one task. Keeping the same plugin working for years while PHP, databases, JavaScript, APIs, directory structures, and deprecation policies change is something else entirely. The difference becomes clear when the plugin stops being a one-off project and becomes a product. From that point on, you no longer control only the code you wrote, because you need to live with customers on different branches, upgrades happening at different paces, and installations that cannot always upgrade Moodle, PHP, and the database at the same time.
 

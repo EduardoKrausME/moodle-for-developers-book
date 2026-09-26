@@ -1,6 +1,6 @@
 # 7 FORMS API
 
-![Forms API](image/cap07-forms-api.svg)
+![Forms API](image/cap07-forms-api.png)
 
 A form looks simple until it needs to edit an existing record, validate relationships in the database, manage files, preserve rich-text content, work inside a modal, and remain secure when the request does not look like anything the browser would normally submit. Moodle's Forms API exists to standardize that lifecycle.
 

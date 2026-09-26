@@ -1,6 +1,6 @@
 # 1 MOODLE ARCHITECTURE
 
-![Moodle Architecture](image/cap01-moodle-architecture.svg)
+![Moodle Architecture](image/cap01-moodle-architecture.png)
 
 Before creating a plugin, changing a page, or trying to understand why something works on your Moodle and breaks on a client's Moodle, it is worth understanding the path the system follows before it delivers a finished page to the browser. It may sound basic, after all we are talking about a PHP application, but this is exactly where many strange solutions begin, such as including a file manually because a class "did not load", querying a table directly because it seemed faster, placing arbitrary configuration inside `$CFG`, or creating an endpoint that works without a context and without checking who is accessing it.
 

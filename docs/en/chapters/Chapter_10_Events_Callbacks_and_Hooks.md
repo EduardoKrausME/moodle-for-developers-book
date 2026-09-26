@@ -2,7 +2,7 @@
 
 # 10. Events, callbacks, and Hooks
 
-![Events, Callbacks and Hooks](image/cap10-events-callbacks-hooks.svg)
+![Events, Callbacks and Hooks](image/cap10-events-callbacks-hooks.png)
 
 If you have worked with Moodle for a while, you have probably opened a `lib.php` looking for a function with a very long name, found a `db/events.php` registering an observer and, on a newer branch, encountered a `db/hooks.php` pointing to a class that receives a Hook object. All three mechanisms exist to let one part of Moodle react to what another part is doing, but they were created at different times, solve different problems, and, when treated as synonyms, the code becomes confusing very quickly.
 

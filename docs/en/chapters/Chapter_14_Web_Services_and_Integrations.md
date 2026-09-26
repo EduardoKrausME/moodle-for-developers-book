@@ -2,7 +2,7 @@
 
 # 14 WEB SERVICES AND INTEGRATIONS
 
-![Web Services and Integrations](image/cap14-web-services-integrations.svg)
+![Web Services and Integrations](image/cap14-web-services-integrations.png)
 
 There comes a point when Moodle stops talking only to itself. An ERP needs to enrol students, a financial system needs to report that an invoice was paid, an application needs to retrieve course data, an external dashboard needs to read indicators, the frontend needs to save a change without reloading the page and, suddenly, the class that until yesterday was called only by a PHP page becomes a boundary between different systems. That is exactly when a very common mistake appears: the developer takes a function that already exists, puts something into `db/services.php`, generates a token, and considers the integration solved.
 

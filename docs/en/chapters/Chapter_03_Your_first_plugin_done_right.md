@@ -307,7 +307,7 @@ For developers who work in Portuguese, a good practice is to write both versions
 
 Do not use `pix/` as a generic asset directory merely because it contains images. Moodle has its own icon conventions, themes may participate in presentation, and some APIs resolve images by component and icon name. When you use the proper mechanism, the theme and core can take part in resolution rather than forcing you to construct a physical URL manually.
 
-Also avoid depending on paths such as `/local/myplugin/pix/icon.svg` hard-coded in HTML. Besides the `public/` restructuring changing the relationship between filesystem and web root in newer versions, Moodle already has APIs for generating resource URLs in a safer and more portable way.
+Also avoid depending on paths such as `/local/myplugin/pix/icon.png` hard-coded in HTML. Besides the `public/` restructuring changing the relationship between filesystem and web root in newer versions, Moodle already has APIs for generating resource URLs in a safer and more portable way.
 
 ## 3.28 `templates/` overview, covered in depth in Chapter 6
 

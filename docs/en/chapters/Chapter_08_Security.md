@@ -1,6 +1,6 @@
 # 8 SECURITY
 
-![Moodle Security](image/cap08-moodle-security.svg)
+![Moodle Security](image/cap08-moodle-security.png)
 
 Security in a Moodle plugin is not a final checklist applied after the feature works. It is part of every decision involving input, authorization, output, files, SQL, external calls, tokens, and the relationship between an identifier received from the browser and the real object being accessed.
 
