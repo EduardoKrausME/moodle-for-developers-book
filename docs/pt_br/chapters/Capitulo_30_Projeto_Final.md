@@ -204,11 +204,21 @@ Pendente, enviado, avaliado e reaberto são estados da mesma entrega, não quatr
 
 Uma coluna `status` com constantes bem definidas é mais previsível.
 
-```
+```php
+/**
+ * Centraliza os estados permitidos para uma entrega.
+ */
 final class submission_status {
+    // Representa uma entrega ainda não enviada pelo aluno.
     public const DRAFT = 'draft';
+
+    // Representa uma entrega formalmente enviada para avaliação.
     public const SUBMITTED = 'submitted';
+
+    // Representa uma entrega que já recebeu avaliação.
     public const GRADED = 'graded';
+
+    // Representa uma entrega devolvida ao aluno para nova edição.
     public const REOPENED = 'reopened';
 }
 ```
@@ -521,7 +531,8 @@ A presença dos campos pode ser condicionada à configuração da instância.
 
 Arquivo de evidência deve passar pelo fluxo normal de draft file area.
 
-```
+```php
+// Prepara a draft area com os arquivos já associados à submissão atual.
 file_prepare_standard_filemanager(
     $data,
     'evidence',
