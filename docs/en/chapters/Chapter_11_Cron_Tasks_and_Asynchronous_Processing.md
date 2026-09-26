@@ -121,6 +121,8 @@ The correct design normally uses batches, cursors, recordsets, or some progress 
 
 ![Moodle scheduled tasks administration](image/chapter11-moodle-scheduled-tasks-administration.png)
 
+![Administracao de tarefas agendadas do moodle](image/cap11-administracao-de-tarefas-agendadas-do-moodle.png)
+
 Scheduled Tasks appear in Moodle administration and administrators can change the schedule, disable execution, and inspect task information. This matters because a plugin does not know every infrastructure environment where it will be installed.
 
 You may think synchronizing an ERP every minute is reasonable, but a customer's endpoint may allow only one hundred calls per hour. A nightly cleanup may be cheap in one environment and heavy in another. Allowing administrative adjustment is part of Task API architecture.

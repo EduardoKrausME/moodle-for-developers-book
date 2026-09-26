@@ -152,6 +152,8 @@ This separation lets you control which functions a particular integration may us
 
 ![Moodle external services administration](image/chapter14-moodle-external-services-administration.png)
 
+![Administracao de servicos externos no moodle](image/cap14-administracao-de-servicos-externos-no-moodle.png)
+
 The plugin can declare a service in `db/services.php`.
 
 ```php

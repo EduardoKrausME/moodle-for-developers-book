@@ -587,7 +587,7 @@ This neutral definition is also why you should not edit `install.xml` as if it w
 
 ## 5.35 XMLDB Editor
 
-![Moodle XMLDB Editor](image/chapter05-moodle-xmldb-editor.png)
+![Moodle XMLDB Editor](image/cap05-editor-xmldb-do-moodle.png)
 
 The XMLDB Editor is available among administration's development tools and lets you create or load a component's `install.xml`, edit tables, and generate upgrade snippets.
 

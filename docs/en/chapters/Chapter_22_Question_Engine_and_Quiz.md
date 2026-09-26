@@ -20,6 +20,8 @@ Mixing these responsibilities usually produces fragile code. If a plugin only ne
 
 ![Course question bank](image/chapter22-course-question-bank.png)
 
+![Banco de questoes do curso](image/cap22-banco-de-questoes-do-curso.png)
+
 The Question Bank is the layer where teachers create, organise, edit, and manage reusable questions. Since Moodle 4.0 it has stopped being merely an interface over the `question` table and gained an explicit architecture of entries, versions, and `qbank` plugins.
 
 This matters because the logical identity of a question and the concrete version that will be attempted are no longer exactly the same thing. A question called "Capital of Brazil" may have five versions over time while still representing the same entry in the Question Bank.

@@ -354,6 +354,8 @@ When order matters, document why and keep behavior predictable. Priority should 
 
 ![Hooks overview in Moodle](image/chapter10-hooks-overview-in-moodle.png)
 
+![Visao geral dos hooks no moodle](image/cap10-visao-geral-dos-hooks-no-moodle.png)
+
 One practical advantage of the Hooks API is the overview page available to administrators and developers. It lists discovered Hooks and registered callbacks, letting you see who reacts to a given extension point without searching every `lib.php` in the installation for function names.
 
 This visibility changes support significantly in large environments. When a customization interferes with a flow, you can start from the Hook and see consumers and priorities rather than depending only on grep. Hooks inside the standard `*[component]\hook\*` namespace are discovered automatically, while non-standard locations require a discovery agent.
