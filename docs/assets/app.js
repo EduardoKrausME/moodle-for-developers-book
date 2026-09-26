@@ -1070,7 +1070,6 @@
                     img.alt
                 );
             });
-            paragraph.insertBefore(content);
         });
     }
 
