@@ -32,6 +32,87 @@
         'Capitulo_30_Projeto_Final.md': 'Projeto final'
     };
 
+    const CHAPTERS_EN = {
+        'Capitulo_01_Arquitetura_do_Moodle.md': 'Moodle architecture',
+        'Capitulo_02_Tipos_de_Plugins_Moodle.md': 'Moodle plugin types',
+        'Capitulo_03_Primeiro_Plugin_Corretamente.md': 'Your first plugin, done right',
+        'Capitulo_04_Qualidade_de_Codigo_desde_o_Inicio.md': 'Code quality from the start',
+        'Capitulo_05_Banco_de_Dados_e_XMLDB.md': 'Database and XMLDB',
+        'Capitulo_06_Interface_Moderna_e_Output_API.md': 'Modern interface and Output API',
+        'Capitulo_07_Forms_API.md': 'Forms API',
+        'Capitulo_08_Seguranca.md': 'Security',
+        'Capitulo_09_Files_API_e_Moodledata.md': 'Files API and Moodledata',
+        'Capitulo_10_Events_Callbacks_e_Hooks.md': 'Events, callbacks and Hooks',
+        'Capitulo_11_Cron_Tasks_e_Processamento_Assincrono.md': 'Cron, Tasks and asynchronous processing',
+        'Capitulo_12_Cache_e_Performance.md': 'Cache and performance',
+        'Capitulo_13_APIs_Transversais_Essenciais.md': 'Essential cross-cutting APIs',
+        'Capitulo_14_Web_Services_e_Integracoes.md': 'Web Services and integrations',
+        'Capitulo_15_Plugin_Local.md': 'Local plugin',
+        'Capitulo_16_Blocos.md': 'Blocks',
+        'Capitulo_17_Modulos_de_Atividade.md': 'Activity modules',
+        'Capitulo_18_Plugins_de_Matricula.md': 'Enrolment plugins',
+        'Capitulo_19_Plugins_de_Autenticacao.md': 'Authentication plugins',
+        'Capitulo_20_Subplugins.md': 'Subplugins',
+        'Capitulo_21_Gradebook_e_Completion.md': 'Gradebook and Completion',
+        'Capitulo_22_Question_Engine_e_Quiz.md': 'Question Engine and Quiz',
+        'Capitulo_23_Privacy_API_e_GDPR.md': 'Privacy API and GDPR',
+        'Capitulo_24_Backup_e_Restore.md': 'Backup and Restore',
+        'Capitulo_25_PHPUnit.md': 'PHPUnit',
+        'Capitulo_26_Behat.md': 'Behat',
+        'Capitulo_27_Git_e_CI.md': 'Git and CI',
+        'Capitulo_28_Seguranca_Ofensiva_Aplicada.md': 'Applied offensive security',
+        'Capitulo_29_Compatibilidade_e_Manutencao_entre_Versoes.md': 'Compatibility and maintenance across versions',
+        'Capitulo_30_Projeto_Final.md': 'Final project'
+    };
+
+    const LANGUAGE = window.BOOK_LANGUAGE === 'en' ? 'en' : 'pt_br';
+    const TEXT = {
+        pt_br: {
+            chapters: 'capítulos',
+            light: '☀ Claro',
+            dark: '☾ Escuro',
+            code: 'código',
+            copy: 'Copiar',
+            copied: 'Copiado',
+            loading: 'Carregando capítulo…',
+            chapter: 'CAPÍTULO',
+            reading: 'min de leitura',
+            sections: 'seções',
+            words: 'palavras',
+            previous: '← capítulo anterior',
+            next: 'próximo capítulo →',
+            loadError: 'Não foi possível carregar o capítulo.',
+            confirm: 'Confirme se',
+            repository: 'está no mesmo repositório publicado pelo GitHub Pages.',
+            codeStyleError: 'Não foi possível carregar o codestyle online.',
+            locale: 'pt-BR'
+        },
+        en: {
+            chapters: 'chapters',
+            light: '☀ Light',
+            dark: '☾ Dark',
+            code: 'code',
+            copy: 'Copy',
+            copied: 'Copied',
+            loading: 'Loading chapter…',
+            chapter: 'CHAPTER',
+            reading: 'min read',
+            sections: 'sections',
+            words: 'words',
+            previous: '← previous chapter',
+            next: 'next chapter →',
+            loadError: 'The chapter could not be loaded.',
+            confirm: 'Check that',
+            repository: 'is in the same repository published by GitHub Pages.',
+            codeStyleError: 'The online code style could not be loaded.',
+            locale: 'en-US'
+        }
+    }[LANGUAGE];
+
+    if (LANGUAGE === 'en') {
+        Object.assign(CHAPTERS, CHAPTERS_EN);
+    }
+
     const state = {
         current: null,
         readerSize: Number(localStorage.getItem('readerSize') || 17),
@@ -130,7 +211,7 @@
         localStorage.setItem('bookTheme', theme);
 
         qs('#themeBtn').textContent =
-            theme === 'dark' ? '☀ Claro' : '☾ Escuro';
+            theme === 'dark' ? TEXT.light : TEXT.dark;
     }
 
     function initTheme() {
@@ -169,7 +250,7 @@
             .join('');
 
         qs('#count').textContent =
-            `${Object.keys(CHAPTERS).length} capítulos`;
+            `${Object.keys(CHAPTERS).length} ${TEXT.chapters}`;
 
         list.addEventListener('click', e => {
             const a = e.target.closest('a[data-chapter]');
@@ -288,13 +369,13 @@
                 out.push(`
                     <div class="code-wrap">
                         <div class="code-head">
-                            <span>${esc(lang || 'código')}</span>
+                            <span>${esc(lang || TEXT.code)}</span>
 
                             <button
                                 class="copy-code"
                                 type="button"
                             >
-                                Copiar
+                                ${TEXT.copy}
                             </button>
                         </div>
 
@@ -521,7 +602,7 @@
         qs('#chapterBody').innerHTML = `
             <div class="loading">
                 <span class="loading-dot"></span>
-                Carregando capítulo…
+                ${TEXT.loading}
             </div>
         `;
 
@@ -575,15 +656,15 @@
                 : c.title;
 
             qs('#chapterLabel').textContent =
-                `CAPÍTULO ${c.id}`;
+                `${TEXT.chapter} ${c.id}`;
 
             qs('#chapterTitle').textContent =
                 title;
 
             qs('#meta').textContent =
-                `${minutes} min de leitura · ` +
-                `${sections} seções · ` +
-                `${words.toLocaleString('pt-BR')} palavras`;
+                `${minutes} ${TEXT.reading} · ` +
+                `${sections} ${TEXT.sections} · ` +
+                `${words.toLocaleString(TEXT.locale)} ${TEXT.words}`;
 
             document.title =
                 `${c.id} · ${title} — Moodle Developer`;
@@ -626,7 +707,7 @@
             qs('#chapterBody').innerHTML = `
                 <div class="error-box">
                     <strong>
-                        Não foi possível carregar o capítulo.
+                        ${TEXT.loadError}
                     </strong>
 
                     <p>
@@ -634,10 +715,9 @@
                     </p>
 
                     <p>
-                        Confirme se
+                        ${TEXT.confirm}
                         <code>${esc(c.file)}</code>
-                        está no mesmo repositório publicado
-                        pelo GitHub Pages.
+                        ${TEXT.repository}
                     </p>
                 </div>
             `;
@@ -663,7 +743,7 @@
                             class="nav-card"
                         >
                             <small>
-                                ← capítulo anterior
+                                ${TEXT.previous}
                             </small>
 
                             <strong>
@@ -683,7 +763,7 @@
                             class="nav-card next"
                         >
                             <small>
-                                próximo capítulo →
+                                ${TEXT.next}
                             </small>
 
                             <strong>
@@ -794,7 +874,7 @@
             });
         } catch (err) {
             console.warn(
-                'Não foi possível carregar o codestyle online.',
+                TEXT.codeStyleError,
                 err
             );
         }
@@ -817,7 +897,7 @@
 
                 const old = b.textContent;
 
-                b.textContent = 'Copiado';
+                b.textContent = TEXT.copied;
 
                 setTimeout(
                     () => {

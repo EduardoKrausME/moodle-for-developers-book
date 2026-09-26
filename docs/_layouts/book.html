@@ -8,28 +8,73 @@
     <meta name="theme-color" content="#10161d">
     <title>Moodle Developer — Eduardo Kraus</title>
     <link rel="stylesheet" href="../assets/styles.css">
+    <style>
+        .language-notice {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 9px 16px;
+            background: #fff8c5;
+            border-bottom: 1px solid #d4a72c;
+            color: #3b2300;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .language-notice.visible {
+            display: flex;
+        }
+
+        .language-notice a {
+            color: inherit;
+            font-weight: 700;
+        }
+
+        [data-theme="dark"] .language-notice {
+            background: #3b2e08;
+            border-bottom-color: #9e6a03;
+            color: #f0e7c2;
+        }
+    </style>
     <script>
         try {
             document.documentElement.dataset.theme = localStorage.getItem('bookTheme') || 'light'
         } catch (e) {
         }
+
+        (() => {
+            const pathMatch = location.pathname.match(/\/(pt_br|en)(?:\/|$)/i);
+            const currentLanguage = pathMatch ? pathMatch[1].toLowerCase() : 'pt_br';
+            const preferredLanguage = (navigator.languages || [navigator.language || 'en'])
+                .some(language => /^pt(?:-|$)/i.test(language))
+                ? 'pt_br'
+                : 'en';
+
+            window.BOOK_LANGUAGE = currentLanguage;
+            window.BOOK_PREFERRED_LANGUAGE = preferredLanguage;
+        })();
     </script>
 </head>
 <body>
-<a class="skip" href="#conteudo">Ir para o conteúdo</a>
+<div class="language-notice" id="languageNotice" role="status">
+    <span id="languageNoticeText"></span>
+    <a id="languageNoticeLink" href="#"></a>
+</div>
+<a class="skip" id="skipLink" href="#conteudo">Ir para o conteúdo</a>
 <div class="progress" id="progress"></div>
 <header class="topbar">
     <div class="topbar-inner">
         <button class="icon-btn menu-btn" id="menuBtn" aria-label="Abrir capítulos">☰</button>
         <a class="brand" href="index.html"><span class="brand-mark">&lt;/&gt;</span><span class="brand-text"><span class="brand-name">Moodle Developer</span><span
-                class="brand-by">POR EDUARDO KRAUS</span></span></a><span
-            class="edition">O LIVRO · EDIÇÃO DIGITAL</span>
+                class="brand-by" id="brandBy">POR EDUARDO KRAUS</span></span></a><span
+            class="edition" id="edition">O LIVRO · EDIÇÃO DIGITAL</span>
         <button class="icon-btn" id="themeBtn">☾ Escuro</button>
     </div>
 </header>
 <div class="layout">
     <aside class="sidebar">
-        <div class="sidebar-title"><span>SUMÁRIO</span><span id="count">30 capítulos</span></div>
+        <div class="sidebar-title"><span id="summaryLabel">SUMÁRIO</span><span id="count">30 capítulos</span></div>
         <ol class="chapter-list" id="chapterList"></ol>
     </aside>
     <main class="main" id="conteudo">
@@ -44,17 +89,93 @@
             <h1 id="chapterTitle">Moodle Developer</h1>
             <div class="meta" id="meta"></div>
             <div class="chapter-body" id="chapterBody">
-                <div class="loading"><span class="loading-dot"></span>Carregando capítulo…</div>
+                <div class="loading"><span class="loading-dot"></span><span id="loadingLabel">Carregando capítulo…</span></div>
             </div>
             <nav class="chapter-nav" id="chapterNav"></nav>
             <footer>Moodle Developer · Eduardo Kraus</footer>
         </article>
     </main>
     <aside class="right-toc">
-        <div class="toc-label">NESTE CAPÍTULO</div>
+        <div class="toc-label" id="tocLabel">NESTE CAPÍTULO</div>
         <nav class="toc" id="toc"></nav>
     </aside>
 </div>
+<script>
+    (() => {
+        const language = window.BOOK_LANGUAGE || 'pt_br';
+        const preferred = window.BOOK_PREFERRED_LANGUAGE || language;
+        const strings = {
+            pt_br: {
+                htmlLang: 'pt-BR',
+                skip: 'Ir para o conteúdo',
+                menu: 'Abrir capítulos',
+                by: 'POR EDUARDO KRAUS',
+                edition: 'O LIVRO · EDIÇÃO DIGITAL',
+                summary: 'SUMÁRIO',
+                chapter: 'CAPÍTULO',
+                decrease: 'Diminuir texto',
+                increase: 'Aumentar texto',
+                loading: 'Carregando capítulo…',
+                toc: 'NESTE CAPÍTULO',
+                notice: 'Seu navegador está configurado para português.',
+                switchText: 'Ler em português'
+            },
+            en: {
+                htmlLang: 'en',
+                skip: 'Skip to content',
+                menu: 'Open chapters',
+                by: 'BY EDUARDO KRAUS',
+                edition: 'THE BOOK · DIGITAL EDITION',
+                summary: 'CONTENTS',
+                chapter: 'CHAPTER',
+                decrease: 'Decrease text size',
+                increase: 'Increase text size',
+                loading: 'Loading chapter…',
+                toc: 'IN THIS CHAPTER',
+                notice: 'Your browser is configured for English.',
+                switchText: 'Read in English'
+            }
+        };
+
+        const text = strings[language] || strings.pt_br;
+        document.documentElement.lang = text.htmlLang;
+        document.querySelector('#skipLink').textContent = text.skip;
+        document.querySelector('#menuBtn').setAttribute('aria-label', text.menu);
+        document.querySelector('#brandBy').textContent = text.by;
+        document.querySelector('#edition').textContent = text.edition;
+        document.querySelector('#summaryLabel').textContent = text.summary;
+        document.querySelector('#chapterLabel').textContent = text.chapter;
+        document.querySelector('#fontMinus').title = text.decrease;
+        document.querySelector('#fontPlus').title = text.increase;
+        document.querySelector('#loadingLabel').textContent = text.loading;
+        document.querySelector('#tocLabel').textContent = text.toc;
+
+        if (preferred === language) {
+            return;
+        }
+
+        const target = location.pathname.replace(
+            /\/(pt_br|en)(?=\/|$)/i,
+            '/' + preferred
+        ) + location.search + location.hash;
+
+        fetch(target, {method: 'HEAD', cache: 'no-store'})
+            .then(response => {
+                if (!response.ok) {
+                    return;
+                }
+
+                const preferredText = strings[preferred];
+                const notice = document.querySelector('#languageNotice');
+                document.querySelector('#languageNoticeText').textContent = preferredText.notice;
+                const link = document.querySelector('#languageNoticeLink');
+                link.textContent = preferredText.switchText;
+                link.href = target;
+                notice.classList.add('visible');
+            })
+            .catch(() => {});
+    })();
+</script>
 <script src="../assets/app.js" defer></script>
 </body>
 </html>
