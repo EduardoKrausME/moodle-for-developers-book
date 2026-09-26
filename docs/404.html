@@ -9,16 +9,17 @@
 <body>
 <main class="scene">
     <div class="ghost404" aria-hidden="true">404</div>
-    <section class="terminal" aria-label="Erro 404">
+    <section class="terminal" id="terminal" aria-label="Erro 404">
         <div class="bar"><i class="dot"></i><i class="dot"></i><i
                 class="dot"></i><span>moodle@developer:~/local/plugin</span></div>
         <div class="console">
             <div id="steps"></div>
-            <div class="final"><h1>Recurso não encontrado.</h1>
-                <p>O Moodle iniciou corretamente, o plugin carregou, a capability passou... e a URL não existe.
+            <div class="final"><h1 id="errorTitle">Recurso não encontrado.</h1>
+                <p id="errorText">O Moodle iniciou corretamente, o plugin carregou, a capability passou... e a URL não existe.
                     Pelo menos desta vez o erro não está no <code>config.php</code>.</p>
                 <div class="actions">
-                    <a class="btn" href="https://eduardokrausme.github.io/moodle-for-developers-book/index.html">Voltar ao livro</a>
+                    <a class="btn" id="backLink"
+                       href="https://eduardokrausme.github.io/moodle-for-developers-book/index.html">Voltar ao livro</a>
                 </div>
             </div>
         </div>
