@@ -52,7 +52,8 @@
         'Capitulo_27_Git_e_CI.md': 'Git e CI',
         'Capitulo_28_Seguranca_Ofensiva_Aplicada.md': 'Segurança ofensiva aplicada',
         'Capitulo_29_Compatibilidade_e_Manutencao_entre_Versoes.md': 'Compatibilidade e manutenção entre versões',
-        'Capitulo_30_Projeto_Final.md': 'Projeto final'
+        'Capitulo_30_Projeto_Final.md': 'Projeto final',
+        'Capitulo_31_Moodle_Friendly_Installation.md': 'Moodle Friendly Installation: operação e automação'
     };
 
     const CHAPTERS_EN = {
@@ -85,7 +86,8 @@
         'Chapter_27_Git_and_CI.md': 'Git and CI',
         'Chapter_28_Applied_Offensive_Security.md': 'Applied offensive security',
         'Chapter_29_Compatibility_and_Maintenance_between_Versions.md': 'Compatibility and maintenance across versions',
-        'Chapter_30_Final_Project.md': 'Final project'
+        'Chapter_30_Final_Project.md': 'Final project',
+        'Chapter_31_Moodle_Friendly_Installation.md': 'Moodle Friendly Installation: operations and automation'
     };
 
     const LANGUAGE = window.BOOK_LANGUAGE === 'en' ? 'en' : 'pt_br';
