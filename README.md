@@ -40,6 +40,7 @@ Os capítulos podem ser lidos em sequência, como um livro, ou utilizados indivi
 28. [Segurança Ofensiva Aplicada](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_28_Seguranca_Ofensiva_Aplicada.html)
 29. [Compatibilidade e Manutenção entre Versões](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_29_Compatibilidade_e_Manutencao_entre_Versoes.html)
 30. [Projeto Final](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_30_Projeto_Final.html)
+31. [Moodle Friendly Installation: Operação e Automação](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_31_Moodle_Friendly_Installation.html)
 
 ---
 
@@ -85,3 +86,4 @@ The chapters can be read in sequence as a book or used individually as a practic
 28. [Applied Offensive Security](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_28_Applied_Offensive_Security.html)
 29. [Compatibility and Maintenance Across Versions](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_29_Compatibility_and_Maintenance_between_Versions.html)
 30. [Final Project](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_30_Final_Project.html)
+31. [Moodle Friendly Installation: Operations and Automation](https://eduardokrausme.github.io/moodle-for-developers-book/en/Chapter_31_Moodle_Friendly_Installation.html)
