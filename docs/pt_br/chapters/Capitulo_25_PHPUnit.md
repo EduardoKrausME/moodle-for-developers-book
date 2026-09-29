@@ -2,11 +2,11 @@
 
 # 25 PHPUNIT
 
-Teste automatizado em plugin Moodle não deveria entrar no projeto quando alguém pede cobertura antes de publicar. Ele deveria entrar quando a primeira regra de negócio deixa de caber confortavelmente na cabeça de quem escreveu o código, porque é justamente nesse momento que começa a ficar caro descobrir regressão clicando em tela, criando curso, trocando papel, executando cron e repetindo o mesmo cenário depois de cada mudança.
+Quanto tempo você leva para testar manualmente uma regra que depende de curso, usuário, capability, atividade, task e banco? Agora multiplique isso por cada alteração pequena do plugin. Em algum ponto o navegador deixa de ser ferramenta de teste e vira um ritual caro de repetição.
 
-O problema é que muita gente aprende PHPUnit pelo caminho errado. Primeiro aprende `assertEquals()`, depois cria um teste que chama um método trivial, vê uma barra verde e conclui que existe uma suíte. Só que em Moodle a parte interessante começa quando o teste precisa de curso, usuário, contexto, capability, activity module, arquivo, evento, task, Web Service ou banco. A plataforma já possui uma infraestrutura enorme para isso e, quando usamos essa infraestrutura corretamente, o teste deixa de ser uma imitação frágil do ambiente real e passa a executar a regra dentro de um Moodle isolado preparado especificamente para teste.
+É aí que PHPUnit começa a pagar a conta. Não quando alguém pede "cobertura" antes de publicar, mas quando a regra ficou importante demais para depender da memória de quem está clicando. O Moodle já oferece geradores, banco isolado, usuários, cursos, contexts e infraestrutura para executar essas regras sem precisar montar tudo na mão.
 
-Neste capítulo vamos continuar usando `mod_checkpoint` como referência. A atividade já possui instância, respostas, notas, completion, eventos e backup, portanto ela é um bom laboratório para mostrar testes de DML, capabilities, Events, Hooks, Tasks, External Functions, Privacy e upgrades. O objetivo não é terminar com cem testes porque cem parece um número bonito, mas construir uma suíte que detecte mudanças de comportamento importantes e permita refatorar sem transformar cada alteração em uma sessão de tentativa e erro no navegador.
+Só não caia na armadilha da barra verde decorativa. Um teste que chama um getter trivial e faz `assertEquals()` pode aumentar número sem proteger comportamento nenhum. Vamos usar `mod_checkpoint` para testar justamente o que costuma quebrar em manutenção: permissões, DML, Events, Tasks, External Functions, Privacy e upgrades. A pergunta para cada teste será sempre a mesma: qual regressão real ele impediria de chegar em produção?
 
 ## 25.1 O que PHPUnit testa no Moodle
 
