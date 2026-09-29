@@ -2,11 +2,11 @@
 
 # 27 GIT E CI
 
-No Capítulo 4 nós falamos de qualidade como uma responsabilidade do desenvolvedor. Código precisa seguir Coding Style, upgrade precisa estar correto, JavaScript precisa compilar, Mustache precisa ser válido, testes precisam passar e um plugin não deveria ser publicado apenas porque abriu sem erro no ambiente de quem escreveu. O problema é que depender de memória humana para executar todas essas verificações antes de cada entrega é uma estratégia que funciona até o dia em que você está corrigindo um bug urgente, esquece um comando e publica justamente o erro que o processo deveria impedir.
+Você pode ter Coding Style definido, PHPUnit, Behat, validação de Mustache e uma lista perfeita de comandos que "todo mundo deve rodar antes de publicar". Agora corrija um bug urgente às 18h, esqueça um deles e descubra por que depender de memória humana não é um processo de qualidade.
 
-É aqui que Git e CI deixam de ser ferramentas de infraestrutura e passam a fazer parte da arquitetura do plugin. Git registra o histórico, organiza manutenção entre versões e cria pontos reproduzíveis de release, enquanto Continuous Integration executa automaticamente aquilo que o projeto considera obrigatório para aceitar uma mudança. O objetivo não é criar um workflow bonito no GitHub, é transformar regras que hoje dependem de disciplina em verificações que rodam sempre.
+Git e CI entram justamente para tirar essa dependência da cabeça de alguém. Git registra exatamente o que mudou e qual versão foi entregue; CI executa sempre as verificações que o projeto decidiu que são obrigatórias. Não é sobre ter badges bonitos no README nem um YAML sofisticado, é sobre impedir que uma release dependa de lembrar dez comandos na ordem certa.
 
-Neste capítulo vamos continuar usando `mod_checkpoint`. No Capítulo 25 ele ganhou testes PHPUnit, no 26 ganhou jornadas Behat e agora vamos colocar tudo isso em um pipeline real com GitHub Actions e Moodle Plugin CI. O mesmo pipeline também executará PHP lint, Coding Style, PHPDoc, `validate` do Moodle Plugin CI, Moodle Plugin Validate, savepoints, Mustache, Grunt, PHPUnit e Behat, além de testar combinações selecionadas de Moodle, PHP e banco. No final, uma tag aprovada poderá gerar um ZIP reproduzível sem alguém abrir o gerenciador de arquivos e compactar a pasta manualmente.
+Vamos colocar `mod_checkpoint` num pipeline real e fazer o repositório provar que consegue instalar, validar, testar e empacotar o plugin. A provocação aqui é simples: se uma regra é realmente obrigatória antes do merge ou da release, por que ela ainda depende de alguém lembrar de executá-la?
 
 ## 27.1 Git não é apenas backup de código
 
