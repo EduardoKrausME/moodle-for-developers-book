@@ -6,7 +6,7 @@ Eu repito bastante uma frase porque ela evita uma quantidade absurda de plugins 
 
 É claro que você consegue fazer quase tudo dentro de um plugin local. Criar páginas, tabelas, tasks, Web Services, observers, integrações e dashboards não é o problema; justamente por ele aceitar tanta coisa, fica muito fácil transformar `local` na gaveta de bagunça da instalação. Se a funcionalidade é uma atividade, por que não é `mod`? Se controla matrícula, por que não é `enrol`? Se participa de autenticação, o que impede usar `auth`?
 
-Agora, não vamos cometer o exagero contrário. `local` é um tipo excelente quando a responsabilidade é realmente institucional, transversal ou integradora. Eu uso bastante, principalmente para regras internas, sincronizações, APIs próprias e funcionalidades que atravessam vários cursos. A diferença está em chegar a `local` por decisão, não por desistência. Este capítulo parte exatamente daí: quando ele é o encaixe correto e como impedir que sua flexibilidade vire um `lib.php` de cinco mil linhas.
+Agora, não vamos cometer o exagero contrário. `local` é um tipo excelente quando a responsabilidade é realmente institucional, transversal ou integradora. Eu uso bastante, principalmente para regras internas, sincronizações, APIs próprias e funcionalidades que atravessam vários cursos. A diferença está em chegar a `local` por decisão, não por desistência. O que interessa daqui para frente é reconhecer quando ele é o encaixe correto e como impedir que sua flexibilidade vire um `lib.php` de cinco mil linhas.
 
 ## 15.1 O que realmente é um plugin local
 
