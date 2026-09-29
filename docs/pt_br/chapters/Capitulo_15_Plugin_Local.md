@@ -48,6 +48,12 @@ O erro seria pegar essa experiência e transformar em regra universal. Se eu pre
 
 Esse é um bom exemplo de como escolher o tipo pelo domínio do problema. Um `mod` existe porque é uma atividade. Um `local` pode observar o ecossistema inteiro quando sua responsabilidade é transversal. O importante é não escolher o tipo olhando apenas para a pasta que parece mais fácil de programar.
 
+### Exemplo real: `local_kopere_dashboard`
+
+O [`local_kopere_dashboard`](https://github.com/EduardoKrausME/moodle-local-kopere_dashboard) é um exemplo útil porque a decisão por `local` não veio da ausência de ideia melhor. O projeto reúne funcionalidades institucionais e administrativas que atravessam cursos, usuários e diferentes áreas do Moodle. Ele não representa uma atividade adicionada pelo professor, um método de matrícula ou um mecanismo de autenticação.
+
+É exatamente o tipo de projeto em que um `local` pode funcionar como componente transversal. E também é um bom alerta: como o escopo é grande, fica ainda mais importante não transformar `lib.php` numa aplicação inteira. Flexibilidade do plugin type não elimina a necessidade de separar serviços, páginas, tasks, integrações e apresentação.
+
 ## 15.5 A pergunta correta antes de criar a pasta
 
 Antes de criar `local/meuplugin`, eu faria algumas perguntas. A funcionalidade representa uma entidade que já possui plugin type próprio? Ela precisa de instâncias por curso? É executada apenas em páginas de um componente específico ou precisa atravessar o Moodle? O professor precisa adicioná-la manualmente? Existe lifecycle específico como matrícula, autenticação, atividade, question type ou formato de curso? A interface é administrativa ou utilizada por diversos perfis?
