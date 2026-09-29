@@ -127,6 +127,8 @@ Isso é importante porque `cm_info` não representa apenas colunas da tabela. El
 
 ## 17.11 O `lib.php` de uma atividade é especial
 
+Se você veio de um framework em que `lib.php` parece um lugar conveniente para jogar funções auxiliares, segure essa vontade. Num módulo Moodle esse arquivo participa de contratos conhecidos pelo core, então misturar callbacks obrigatórios com uma coleção de helpers aleatórios torna justamente o arquivo mais importante do componente mais difícil de ler.
+
 No Capítulo 3 nós insistimos que `lib.php` deve ser pequeno, e aqui a regra continua valendo, embora módulos ainda dependam de vários callbacks globais que o core chama pelo nome. A documentação atual trata `lib.php` como uma ponte legada entre o core e o plugin, então o objetivo não é colocar a aplicação inteira ali, mas apenas implementar os callbacks esperados e encaminhar o trabalho para classes quando a lógica crescer.
 
 Um `lib.php` saudável pode ter `example_add_instance()`, `example_update_instance()`, `example_delete_instance()`, `example_supports()` e alguns callbacks específicos das APIs utilizadas. O que ele não deveria virar é uma classe de serviço disfarçada com duas mil linhas de regra de negócio.
@@ -183,6 +185,8 @@ function example_update_instance($data, $mform): bool {
 Esse callback também é o lugar natural para sincronizar estruturas derivadas da configuração, como item de nota e eventos de calendário, mas novamente vale separar coordenação de regra de negócio.
 
 ## 17.16 `delete_instance()` não significa apenas apagar uma linha
+
+Imagine o professor excluindo a atividade depois de seis meses de uso. Sumir com o registro principal resolve mesmo? E os arquivos, notas, eventos relacionados, dados filhos e qualquer estado que o plugin criou ao redor daquela instância? Exclusão é um bom teste para descobrir se você realmente conhece tudo o que seu módulo possui.
 
 Quando a atividade é removida do curso, `example_delete_instance()` precisa eliminar os dados pertencentes àquela instância. Se existem tabelas filhas, arquivos próprios, grades internas ou estruturas externas controladas pelo plugin, é aqui que você precisa pensar na limpeza.
 
@@ -306,6 +310,8 @@ Quando os dados persistidos não correspondem exatamente ao formato esperado por
 Isso evita uma gambiarra comum de mudar o formato salvo no banco apenas para facilitar a interface. Persistência e representação de formulário não precisam ser idênticas, desde que a conversão seja explícita e previsível.
 
 ## 17.28 O que não colocar em `mod_form.php`
+
+Abra seu `mod_form.php` e veja se ele está começando a parecer uma classe de serviço disfarçada. Se ali dentro existe consulta complexa, regra de negócio reutilizável, envio de mensagem ou atualização de outras entidades, provavelmente o formulário já recebeu responsabilidades que deveriam sobreviver mesmo se amanhã essa mesma operação vier de AJAX ou Web Service.
 
 Evite consultas pesadas, chamadas externas, mutações de dados e regras de negócio extensas dentro da definição do formulário. O formulário pode precisar carregar opções, mas isso não autoriza transformar `definition()` em um serviço de integração.
 
