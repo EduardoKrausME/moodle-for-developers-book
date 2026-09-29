@@ -6,7 +6,7 @@ Você já abriu um plugin antigo, corrigiu uma linha e passou os vinte minutos s
 
 Por isso eu não gosto da ideia de ensinar desenvolvimento primeiro e qualidade depois, como se Coding Style, organização, testes estáticos e legibilidade fossem uma camada de verniz aplicada antes de publicar. Se você vai escrever um plugin hoje, já deve escrevê-lo como espera manter daqui a três anos. Não porque todo arquivo precise ser perfeito, mas porque dívida técnica criada deliberadamente no começo raramente recebe aquela refatoração tranquila que alguém prometeu fazer "depois".
 
-Também não confunda qualidade com agradar o checker. Uma linha pode passar no PHPCS e continuar sendo uma péssima decisão de arquitetura, enquanto um aviso pode exigir entendimento antes de qualquer correção. Ferramenta boa tira da nossa frente os problemas repetitivos; ela não pensa pelo desenvolvedor. O ponto deste capítulo é justamente aprender a usar as convenções e verificações automáticas sem terceirizar para elas o raciocínio sobre o código.
+Também não confunda qualidade com agradar o checker. Uma linha pode passar no PHPCS e continuar sendo uma péssima decisão de arquitetura, enquanto um aviso pode exigir entendimento antes de qualquer correção. Ferramenta boa tira da nossa frente os problemas repetitivos; ela não pensa pelo desenvolvedor. Use as convenções e verificações automáticas para economizar atenção, não para terceirizar a elas o raciocínio sobre o código.
 
 ## 4.1 Moodle Coding Style
 
