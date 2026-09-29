@@ -2,13 +2,11 @@
 
 # 20 SUBPLUGINS
 
-Subplugin é um daqueles assuntos do Moodle que parece simples quando visto pela estrutura de diretórios e fica muito mais interessante quando você entende a arquitetura por trás. A primeira impressão costuma ser "é um plugin dentro de outro plugin", mas essa definição é curta demais porque não explica quem descobre esse plugin, quem define o contrato que ele precisa cumprir, de onde vem o Frankenstyle component, como instalação e upgrade acontecem, nem por que alguns componentes do Moodle conseguem receber extensões internas enquanto outros não conseguem.
+Você tem um plugin que conversa com três sistemas externos. Então cria três classes. Chega o quarto, o quinto, o décimo e aparece aquele `switch` simpático: "se for SAP, faz isso; se for Totvs, faz aquilo; se for API X, chama outra classe". Em algum ponto fica claro que o plugin pai não deveria conhecer cada implementação concreta.
 
-A forma mais útil de pensar é que um subplugin existe quando um plugin pai decide ser extensível. O pai cria um ponto de extensão formal, declara um novo tipo de plugin e passa a permitir que outras extensões sejam instaladas dentro daquela estrutura sem precisar editar o código do pai. Isso muda bastante o desenho. Em vez de colocar quinze integrações dentro da mesma pasta, com um `switch` gigante dizendo "se for SAP faça isto, se for Totvs faça aquilo, se for API própria faça outra coisa", o pai define um contrato pequeno e cada integração vira um componente independente com versão, classes, banco, configurações e ciclo de vida próprios.
+É exatamente esse tipo de problema que subplugins resolvem bem. Não porque "plugin dentro de plugin" seja uma organização bonita de diretórios, mas porque o componente pai pode declarar um contrato e permitir que cada implementação tenha versão, classes, configuração, banco e ciclo de vida próprios.
 
-É exatamente por isso que o Quiz não possui todos os relatórios e todas as regras de acesso escritos como uma única classe dentro de `mod_quiz`, e por que o Assignment separa tipos de submissão e tipos de feedback. O plugin pai conhece o conceito, enquanto o subplugin implementa uma variação daquele conceito.
-
-Neste capítulo vamos usar como exemplo um plugin pai fictício chamado `local_deliveryhub`, pensado para centralizar envio de dados acadêmicos para sistemas externos, e ele permitirá subplugins do tipo `deliveryconnector`. Um conector pode falar com um ERP, outro pode publicar em uma API REST e outro pode gravar em uma fila corporativa, mas todos obedecem ao mesmo contrato definido pelo pai. O exemplo é fictício, porém a arquitetura é a mesma que aparece em vários pontos reais do Moodle.
+Pense no pai como quem define a pergunta e no subplugin como quem oferece uma resposta. O Quiz sabe que existem tipos de relatório e regras de acesso; Assignment sabe que existem tipos de submissão e feedback. Eles não precisam incorporar todas as variações numa classe central. Vamos construir essa mesma ideia com um `local_deliveryhub` e conectores independentes, prestando atenção principalmente a uma coisa: a lógica específica precisa morar no subplugin, senão você ganhou pastas novas e continuou com a mesma arquitetura centralizada de antes.
 
 ## 20.1 O que é um subplugin
 
