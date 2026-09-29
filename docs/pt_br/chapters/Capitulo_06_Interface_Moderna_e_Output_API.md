@@ -2,11 +2,11 @@
 
 # 6 INTERFACE MODERNA E OUTPUT API
 
-Uma página Moodle pode estar correta do ponto de vista funcional e ainda assim estar mal construída. Ela consulta os dados certos, respeita capability, salva sem erro e entrega o resultado esperado, mas mistura HTML com PHP, espalha JavaScript pelo arquivo, duplica strings, cria botão manualmente, ignora o tema e fica praticamente impossível de reaproveitar quando aparece uma segunda tela parecida. É o tipo de código que passa no primeiro teste e começa a cobrar juros assim que o plugin cresce.
+Abra um `view.php` que consulta banco, monta tabela com `echo`, injeta JavaScript no meio do PHP e decide a cor do badge dentro da mesma regra que calcula o status. Se a página funciona, alguém sempre pergunta: qual é o problema? O problema normalmente aparece na segunda tela, quando você precisa reaproveitar a mesma informação e descobre que regra de negócio, HTML e comportamento do navegador viraram uma coisa só.
 
-A Output API existe justamente para evitar que a interface vire uma coleção de `echo`, concatenação de HTML e decisões visuais misturadas com regra de negócio. O Moodle separa a preparação dos dados da forma como esses dados serão apresentados, enquanto templates, classes de output, JavaScript, componentes visuais e o sistema de temas trabalham em conjunto para permitir que a mesma funcionalidade continue sustentável quando o layout muda, quando o tema é trocado ou quando parte da interface passa a ser atualizada sem recarregar a página inteira.
+É aqui que a Output API deixa de ser "mais uma forma de imprimir HTML" e começa a fazer sentido. Dados mudam por um motivo, layout muda por outro e interação muda por um terceiro; quando tudo está misturado, qualquer alteração pequena atravessa as três camadas. Templates Mustache, classes de output, `$OUTPUT`, JavaScript e o sistema de temas existem para evitar justamente esse acoplamento.
 
-Neste capítulo vamos construir essa separação aos poucos. Primeiro vamos entender o papel de `$OUTPUT` e dos templates Mustache, depois vamos organizar os dados em classes de output, entrar no JavaScript moderno do Moodle e terminar ligando tudo isso a acessibilidade, CSS, temas e componentes dinâmicos. A ideia não é decorar APIs, mas conseguir olhar para uma página PHP cheia de HTML e saber exatamente o que precisa sair dali e para onde cada responsabilidade deve ir.
+Durante o capítulo, faça um teste mental simples: sempre que aparecer uma decisão visual dentro de uma consulta ou uma regra de negócio dentro de um template, pergunte se aquela responsabilidade está no lugar certo. A intenção não é produzir arquitetura bonita para apresentação de slide, mas chegar numa interface que possa mudar de tema, ganhar uma modal ou ser reutilizada sem obrigar você a desmontar metade da página.
 
 ## 6.1 Moodle Output API
 
