@@ -2,11 +2,11 @@
 
 # 21 GRADEBOOK E COMPLETION
 
-Nota e conclusão aparecem juntas em quase toda atividade avaliativa do Moodle, mas são subsistemas diferentes e precisam continuar diferentes dentro do código. O Gradebook responde qual é a nota do usuário, qual faixa de valores é válida, qual escala está sendo usada, se aquela nota foi sobrescrita manualmente e como ela participa dos cálculos do curso, enquanto Completion responde se uma atividade foi concluída e por quais regras essa conclusão aconteceu. Uma atividade pode ter nota sem usar conclusão, pode ter conclusão sem nota e pode combinar os dois, por exemplo exigindo que o estudante receba uma nota para concluir.
+Se a atividade tem nota e conclusão, é tentador guardar as duas coisas na tabela do plugin e considerar o problema resolvido. Parece prático, principalmente quando tudo ainda cabe numa única tela. Só que o Moodle já possui dois subsistemas diferentes para essas responsabilidades, e misturá-los cria uma verdade paralela que cedo ou tarde entra em conflito com o curso.
 
-Essa separação evita um erro muito comum em plugins próprios, que é criar uma coluna `completed` e outra `grade` na tabela do módulo e começar a tratar aquilo como se o Moodle não possuísse Gradebook e Completion API. No começo parece prático porque toda regra está dentro do plugin, mas o professor não vê a nota corretamente no livro, a conclusão não aparece na página do curso, Availability API não consegue usar o estado, backup e restore ficam inconsistentes e qualquer alteração feita no Gradebook deixa o plugin com uma verdade paralela.
+Gradebook responde quanto o usuário tirou, qual escala vale, se houve override e como aquilo participa dos cálculos. Completion responde se a atividade foi concluída e por qual regra. Às vezes os dois se encontram, por exemplo quando receber uma nota é condição para concluir, mas continuam sendo perguntas diferentes.
 
-Neste capítulo vamos continuar usando o `mod_checkpoint` criado no Capítulo 17. Agora ele receberá integração completa com o Gradebook e duas regras customizadas de conclusão, uma exigindo que o estudante envie uma resposta e outra exigindo que essa resposta receba feedback do professor. Com isso conseguimos acompanhar o ciclo inteiro, desde a criação do grade item até a atualização da conclusão quando a resposta é enviada, editada, avaliada ou perde uma condição que antes estava satisfeita.
+Vamos seguir o `mod_checkpoint` e observar exatamente onde essa separação importa. Quando surgir a vontade de criar uma coluna `completed` ou usar a nota da tabela interna como se o livro de notas fosse adivinhar que ela existe, faça uma pausa e pergunte: qual subsistema deveria ser a fonte oficial desse estado? Essa resposta simplifica bastante o restante do código.
 
 ## 21.1 Gradebook não é a tabela de notas do seu plugin
 
