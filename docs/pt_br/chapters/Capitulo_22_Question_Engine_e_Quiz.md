@@ -6,7 +6,7 @@ O professor cria um Quiz, adiciona questões, o aluno responde e recebe nota. Ol
 
 O Quiz coordena a experiência: tempo, páginas, revisão, tentativas, nota final e regras de acesso. O Question Engine executa as questões, registra passos, estados, respostas e frações. Se você não separar mentalmente essas duas camadas, `quiz_attempts`, `question_usages`, `question_attempts` e `question_attempt_steps` parecem uma coleção de tabelas arbitrárias. Quando entende o papel de cada uma, o desenho começa a fazer sentido.
 
-Neste capítulo vamos desmontar uma tentativa real de dentro para fora. Não tente decorar os nomes das tabelas; acompanhe a pergunta que cada camada responde. Onde está a tentativa? Onde está o uso das questões? Onde cada interação foi registrada? Onde a nota daquela questão foi calculada? É essa trilha que você vai usar depois para investigar problema de verdade.
+Vamos desmontar uma tentativa real de dentro para fora. Não tente decorar os nomes das tabelas; acompanhe a pergunta que cada camada responde. Onde está a tentativa? Onde está o uso das questões? Onde cada interação foi registrada? Onde a nota daquela questão foi calculada? É essa trilha que você vai usar depois para investigar problema de verdade.
 
 ## 22.1 Quiz e Question Engine não são a mesma coisa
 
