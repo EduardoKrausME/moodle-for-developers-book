@@ -6,7 +6,7 @@ Quando alguém diz "precisamos de SSO", qual problema exatamente está pedindo p
 
 É aí que muita implementação começa torta: escolhe-se um plugin `auth` antes de entender de onde vem a identidade e como essa identidade será provada. Depois aparecem senha, redirect, criação de conta, replay, logout, MFA e vínculo entre identidades, e o código precisa compensar uma decisão que foi tomada cedo demais.
 
-Neste capítulo vamos usar `auth_academicsso` como referência, mas não como martelo para todo prego. Primeiro vamos separar autenticação, autorização e matrícula; depois decidimos quando `auth` realmente é o ponto de extensão correto. A pergunta que deve acompanhar o capítulo inteiro é simples: quem já sabe quem é o usuário e qual evidência o Moodle recebe para confiar nessa identidade?
+Vou usar `auth_academicsso` como referência, mas não como martelo para todo prego. Primeiro precisamos separar autenticação, autorização e matrícula; depois fica muito mais fácil decidir quando `auth` realmente é o ponto de extensão correto. Guarde uma pergunta: quem já sabe quem é o usuário e qual evidência o Moodle recebe para confiar nessa identidade?
 
 ## 19.1 O que é a Authentication API
 
