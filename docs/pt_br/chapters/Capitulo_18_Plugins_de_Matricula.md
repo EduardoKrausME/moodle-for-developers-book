@@ -2,11 +2,11 @@
 
 # 18 PLUGINS DE MATRÍCULA
 
-Quando um sistema externo diz que determinado aluno comprou um curso, assinou um contrato, entrou em uma turma ou perdeu o direito de acesso, o primeiro impulso de muita gente é criar um plugin `local`, inserir alguma coisa em `user_enrolments` e depois atribuir o papel de estudante. Isso pode até parecer simples no primeiro teste, mas é exatamente o tipo de atalho que ignora a arquitetura do Moodle, porque matrícula não é apenas uma linha que libera a entrada no curso, ela possui origem, instância, status, datas, relação com papéis, expiração, sincronização, eventos, backup e regras próprias de cada método.
+Um ERP informa que o contrato do aluno foi ativado. Você precisa liberar o curso. A solução rápida parece óbvia: inserir em `user_enrolments`, atribuir o papel de estudante e seguir a vida. Mas quem é o dono dessa matrícula depois? Quem suspende? Quem renova? Qual método aparece para o administrador? O que acontece no backup?
 
-O Moodle possui um tipo de plugin específico para isso, o `enrol`. Um plugin de matrícula não serve apenas para criar matrículas, ele representa a forma pela qual aquelas matrículas são controladas. A diferença é importante porque um aluno pode estar matriculado manualmente, outro por coorte, outro por banco externo, outro por pagamento e outro por uma integração institucional, todos no mesmo curso, cada um pertencendo a uma instância de método diferente e obedecendo regras diferentes para suspensão, remoção, duração e edição.
+Matrícula não é apenas uma linha que permite entrada no curso. Ela tem origem, instância, status, datas, papéis, expiração e um ciclo de vida que muda conforme o método que criou aquela relação. É por isso que o Moodle tem um plugin type específico para isso: `enrol`.
 
-Neste capítulo vamos trabalhar com um exemplo chamado `enrol_contractsync`, imaginando uma instituição em que um ERP mantém os contratos acadêmicos e o Moodle deve refletir esse estado. Se o contrato estiver ativo, a matrícula precisa estar ativa; se estiver temporariamente bloqueado, talvez a matrícula deva ser suspensa; se for cancelado, a instituição precisa decidir se remove a matrícula ou apenas a suspende para preservar histórico. Esse cenário ajuda a entender por que gravar diretamente nas tabelas não é o mesmo que implementar corretamente um método de matrícula.
+Vamos usar um `enrol_contractsync` como exemplo e acompanhar um cenário que costuma acontecer em integração acadêmica: contrato ativo, bloqueado e cancelado. A cada estado, a pergunta não será apenas "como altero a matrícula?", mas "qual comportamento esse método de matrícula deve assumir?". Essa diferença separa uma integração que simplesmente grava tabela de outra que realmente participa da arquitetura do Moodle.
 
 ## 18.1 O que é um plugin de matrícula
 
