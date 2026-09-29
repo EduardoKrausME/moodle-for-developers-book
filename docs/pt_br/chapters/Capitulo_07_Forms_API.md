@@ -8,7 +8,7 @@ Criar três `input` dentro de um `form` é fácil. O interessante começa quando
 
 Se você está pensando "mas eu consigo fazer tudo isso com HTML e PHP puro", consegue mesmo. A pergunta é por que faria de novo algo que o Moodle já precisa resolver em praticamente toda tela administrativa. A Forms API padroniza esse ciclo e integra campos, validação, limpeza, CSRF, File API, editores, acessibilidade e ações de formulário.
 
-Só não entregue responsabilidade demais para ela. `moodleform` não decide autorização, não substitui regra de negócio e não deveria virar o lugar onde consulta, persistência, envio de mensagem e redirect acontecem juntos. Ao longo deste capítulo vamos separar bem essas fronteiras, porque formulário gordo costuma ser confortável até o dia em que a mesma regra precisa ser executada por AJAX, CLI ou Web Service.
+Só não entregue responsabilidade demais para ela. `moodleform` não decide autorização, não substitui regra de negócio e não deveria virar o lugar onde consulta, persistência, envio de mensagem e redirect acontecem juntos. Formulário gordo costuma ser confortável até o dia em que a mesma regra precisa ser executada por AJAX, CLI ou Web Service; é aí que separar essas fronteiras deixa de parecer preciosismo.
 
 ## 7.1 O que é `moodleform`
 
