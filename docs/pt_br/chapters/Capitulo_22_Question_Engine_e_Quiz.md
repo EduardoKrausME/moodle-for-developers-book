@@ -2,11 +2,11 @@
 
 # 22 QUESTION ENGINE E QUIZ
 
-Quiz e Question Engine vivem tão próximos no Moodle que é fácil tratar os dois como se fossem a mesma coisa. O professor cria um Quiz, adiciona questões, o aluno responde e depois aparece uma nota, então visualmente parece existir apenas uma atividade chamada Questionário. No código, porém, a separação é muito mais importante, porque o Quiz é uma atividade que organiza tentativas, tempo, páginas, revisão, notas e regras de acesso, enquanto o Question Engine é um subsistema genérico que sabe executar questões, registrar cada interação, calcular frações, controlar estados e trabalhar com diferentes behaviours sem depender de `mod_quiz`.
+O professor cria um Quiz, adiciona questões, o aluno responde e recebe nota. Olhando pela interface, parece uma coisa só. No banco e no código, não é. E essa diferença explica por que tanta gente se perde quando tenta manipular tentativa diretamente por SQL.
 
-Essa distinção explica muita coisa que inicialmente parece estranha. A tabela `quiz_attempts` não guarda as respostas das questões, porque as respostas ficam no Question Engine. O campo `uniqueid` da tentativa aponta para `question_usages`, e a partir daí aparecem `question_attempts`, `question_attempt_steps` e `question_attempt_step_data`. Também explica por que uma questão pode ser usada fora do Quiz, por exemplo em preview, em filtros que incorporam questões ou em outro plugin que cria um `question_usage_by_activity` próprio.
+O Quiz coordena a experiência: tempo, páginas, revisão, tentativas, nota final e regras de acesso. O Question Engine executa as questões, registra passos, estados, respostas e frações. Se você não separar mentalmente essas duas camadas, `quiz_attempts`, `question_usages`, `question_attempts` e `question_attempt_steps` parecem uma coleção de tabelas arbitrárias. Quando entende o papel de cada uma, o desenho começa a fazer sentido.
 
-Neste capítulo vamos desmontar essa arquitetura camada por camada, começando pelo Question Bank e chegando até uma tentativa real de Quiz. No caminho vamos trabalhar com categorias, versões, referências, `qtype`, behaviours, states, fractions, feedback, hints, slots, questões aleatórias e criação programática. O objetivo não é decorar tabelas, mas conseguir olhar uma tentativa complexa e entender exatamente onde cada parte do estado está armazenada e qual API deve ser utilizada para alterá-la.
+Neste capítulo vamos desmontar uma tentativa real de dentro para fora. Não tente decorar os nomes das tabelas; acompanhe a pergunta que cada camada responde. Onde está a tentativa? Onde está o uso das questões? Onde cada interação foi registrada? Onde a nota daquela questão foi calculada? É essa trilha que você vai usar depois para investigar problema de verdade.
 
 ## 22.1 Quiz e Question Engine não são a mesma coisa
 
