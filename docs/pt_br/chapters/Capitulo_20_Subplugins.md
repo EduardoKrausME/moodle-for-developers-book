@@ -10,23 +10,25 @@ Pense no pai como quem define a pergunta e no subplugin como quem oferece uma re
 
 ## 20.1 O que é um subplugin
 
-Subplugin é um plugin cujo tipo é declarado por outro plugin. Isso significa que `deliveryconnector_sap` não existe no Moodle simplesmente porque alguém criou uma pasta com esse nome, ele existe porque `local_deliveryhub` informou ao core que possui um tipo de subplugin chamado `deliveryconnector` e indicou onde esses componentes ficam.
+Subplugin é um plugin cujo tipo é declarado por outro plugin. No Kopere BI, por exemplo, `biblocks_pie` só existe como tipo reconhecido porque `local_kopere_bi` declara `biblocks` como um dos seus tipos de subplugin e informa ao core em qual diretório esses componentes ficam.
 
-O subplugin continua sendo um plugin de verdade. Ele possui componente próprio, `version.php`, strings de idioma, classes, possibilidade de `db/install.xml`, `db/upgrade.php`, Events, Hooks, Tasks e outros recursos compatíveis com plugins Moodle. A diferença é que seu tipo não nasceu diretamente no core, ele nasceu em um plugin pai.
+O subplugin continua sendo um plugin de verdade. Ele possui componente próprio, `version.php`, strings de idioma, classes e pode ter banco, Events, Hooks, Tasks, Privacy e outros recursos compatíveis com plugins Moodle. A diferença é que seu tipo não nasceu diretamente no core; nasceu em outro plugin.
 
 ## 20.2 O plugin pai é quem cria o ponto de extensão
 
 Não existe subplugin sem plugin pai. O pai é responsável por declarar que aceita extensões e, principalmente, por definir o que essas extensões significam.
 
-Se `local_deliveryhub` declara `deliveryconnector`, então cabe a ele dizer o que um conector precisa fazer. Pode existir uma interface `connector`, uma classe abstrata, uma factory ou um dispatcher que localiza implementações, mas precisa haver um contrato compreensível. Declarar a pasta sem definir comportamento apenas cria várias pastas que o Moodle reconhece, não uma arquitetura extensível.
+O GeniAI mostra isso de forma simples. `local_geniai` declara o tipo `geniaicontroller` e mantém uma interface pública chamada `controller_interface`. Um controller precisa conseguir informar se está configurado e precisa saber gerar uma completion. O pai conhece esse contrato; não precisa conhecer internamente a API de cada provedor.
 
-Esse é o ponto que diferencia extensibilidade de desorganização. O pai deve conhecer o tipo do subplugin, mas não deve conhecer antecipadamente cada implementação futura.
+Esse é o ponto que diferencia extensibilidade de desorganização. Declarar uma pasta em `subplugins.json` resolve descoberta. O contrato é o que transforma aquelas pastas em partes intercambiáveis de uma arquitetura.
 
 ## 20.3 Quando subplugin faz sentido
 
-Subplugin faz sentido quando existe um componente principal com uma responsabilidade clara e existem variações independentes de uma parte dessa responsabilidade. O Quiz possui uma atividade principal e diferentes relatórios, além de diferentes regras de acesso. O Assignment possui a atividade principal e formas diferentes de submissão e feedback.
+Subplugin faz sentido quando existe um componente principal com responsabilidade clara e variações independentes de uma parte dessa responsabilidade. O Quiz possui relatórios e regras de acesso. Assignment possui tipos de submissão e feedback.
 
-No nosso exemplo, `local_deliveryhub` conhece o processo de exportar dados, mantém fila, auditoria e configuração geral, enquanto cada conector sabe falar com um destino específico. Isso permite instalar ou remover um conector sem transformar o plugin pai em uma coleção infinita de integrações opcionais.
+No Kopere BI acontece algo parecido. O plugin principal cuida do dashboard, persistência, administração, utilitários e fluxo geral. Os tipos `biblocks` representam formas diferentes de apresentar indicadores, como `pie`, `line`, `table`, `maps` e outras. Já `bifilters` representam filtros independentes, como curso, usuário e coorte.
+
+Eu poderia ter colocado todas essas variações dentro de `local_kopere_bi` e criado um grande `switch`. Funcionaria. E seria exatamente o tipo de arquitetura que fica pior a cada novo bloco ou filtro.
 
 ## 20.4 Quando não criar subplugins
 
@@ -38,335 +40,297 @@ Também não use subplugin apenas para organizar diretórios. Se a funcionalidad
 
 Um plugin pode depender de outro sem ser subplugin. Um `local_reports` pode declarar dependência de `mod_quiz` e continuar sendo um plugin independente. Nesse caso existe uma relação de dependência, mas `local_reports` não passa a fazer parte de um tipo criado pelo Quiz.
 
-No subplugin a relação é mais forte. O próprio tipo é definido pelo pai e, conforme a política de comunicação de componentes do Moodle, o subplugin pode assumir que seu pai existe, enquanto não deve assumir a presença de outros plugins opcionais sem declarar ou verificar essa dependência.
+No subplugin a relação é mais forte. O próprio tipo é definido pelo pai e, conforme a política de comunicação de componentes do Moodle, o filho pode assumir a presença de seu host, enquanto não deve assumir a presença de outros plugins opcionais sem declarar ou verificar essa dependência.
 
 ## 20.6 Quais plugins podem hospedar subplugins
 
-A documentação de arquitetura do Moodle restringe a capacidade de hospedar subplugins a alguns tipos de plugin, entre eles activity modules, editors, administration tools e local plugins. Isso importa quando você está desenhando um novo sistema extensível, porque não é correto imaginar que qualquer plugin type pode simplesmente criar `db/subplugins.json` e automaticamente se transformar em host.
+A documentação de arquitetura do Moodle restringe a capacidade de hospedar subplugins a determinados tipos, entre eles activity modules, editors, administration tools e local plugins. Não é correto imaginar que qualquer plugin type pode criar `db/subplugins.json` e automaticamente se transformar em host.
 
-Para o exemplo deste capítulo usamos `local_deliveryhub` justamente porque `local` é um dos tipos que pode hospedar subplugins e porque o cenário é uma extensão institucional genérica.
+Kopere BI e GeniAI são `local`, enquanto Beautiful Certificate é `mod`. Os três conseguem hospedar subplugins porque seus tipos permitem esse desenho.
 
 ## 20.7 Frankenstyle do subplugin
 
-O Frankenstyle component de um subplugin segue a mesma lógica dos demais plugins, combinando o tipo do subplugin com seu nome. Se o tipo é `deliveryconnector` e o nome é `sap`, o componente será `deliveryconnector_sap`.
+O Frankenstyle combina o tipo do subplugin com seu nome. No Kopere BI, o tipo `biblocks` e o nome `pie` formam:
 
-Isso aparece em strings, namespaces, configurações, Events e em diversas APIs:
-
-```php
-get_string('pluginname', 'deliveryconnector_sap');
-get_config('deliveryconnector_sap');
+```
+biblocks_pie
 ```
 
-O nome do pai não precisa aparecer no componente porque a relação de parentesco já é conhecida pelo tipo `deliveryconnector`.
+Isso aparece em namespace, strings, configuração e outras APIs:
+
+```php
+get_string('pluginname', 'biblocks_pie');
+get_config('biblocks_pie', 'enabled');
+```
+
+O nome `local_kopere_bi` não precisa aparecer no componente do filho porque a relação com o pai já é conhecida pelo tipo `biblocks`.
 
 ## 20.8 Estrutura de diretórios do pai
 
-Uma estrutura possível para o pai seria:
+No Kopere BI a estrutura real inclui dois diretórios de subplugins:
 
 ```
-local/deliveryhub/
+local/kopere_bi/
+    biblocks/
+    bifilters/
     classes/
-    connector/
     db/
         subplugins.json
     lang/
-        en/
-            local_deliveryhub.php
     settings.php
     version.php
 ```
 
-A pasta `connector/` será o diretório onde os subplugins serão instalados. O nome dessa pasta é uma decisão do plugin pai e será declarado em `db/subplugins.json`.
+O nome desses diretórios não é descoberto por convenção solta. Ele é declarado pelo pai em `db/subplugins.json`.
 
 ## 20.9 Estrutura de um subplugin
 
-Um conector chamado `sap` poderia ter:
+O bloco de gráfico de pizza existe em:
 
 ```
-local/deliveryhub/connector/sap/
+local/kopere_bi/biblocks/pie/
     classes/
-        connector.php
-    db/
-        tasks.php
+        provider.php
     lang/
-        en/
-            deliveryconnector_sap.php
-    settings.php
+    templates/
     version.php
 ```
 
-Ele está fisicamente dentro da árvore do pai, mas continua possuindo identidade própria. Essa distinção é importante porque atualização do pai e atualização do subplugin não precisam ter a mesma versão.
+O namespace da implementação é `biblocks_pie` e a classe `provider` implementa o contrato `local_kopere_bi\block\i_block_provider`.
+
+Ele está fisicamente dentro da árvore do pai, mas continua possuindo identidade própria.
 
 ## 20.10 `db/subplugins.json`
 
-O arquivo que declara os tipos de subplugin fica no plugin pai em `db/subplugins.json`. No Moodle atual, um exemplo mínimo é:
+O arquivo real do Kopere BI é um ótimo exemplo porque mostra dois tipos e compatibilidade entre formatos:
 
-```
+```json
 {
-    "subplugintypes": {
-        "deliveryconnector": "connector"
-    }
+  "subplugintypes": {
+    "bifilters": "bifilters",
+    "biblocks": "biblocks"
+  },
+  "plugintypes": {
+    "bifilters": "local/kopere_bi/bifilters",
+    "biblocks": "local/kopere_bi/biblocks"
+  }
 }
 ```
 
-A chave é o novo plugin type e o valor é o caminho relativo à raiz do plugin pai onde os componentes daquele tipo ficam.
+A chave é o plugin type criado pelo pai. No formato moderno o caminho é relativo à raiz do pai; no formato legado ele parte da raiz do Moodle.
 
 ## 20.11 A mudança do Moodle 5.0
 
-No Moodle 5.0 houve uma mudança importante no metadata de subplugins. O objeto moderno passou a se chamar `subplugintypes` e seus caminhos são relativos à raiz do plugin pai.
+No Moodle 5.0 houve uma mudança no metadata de subplugins. O objeto moderno passou a se chamar `subplugintypes` e seus caminhos são relativos à raiz do plugin pai.
 
-Antes disso era utilizado `plugintypes`, com caminhos relativos à raiz inteira do Moodle. A mudança parece pequena, mas resolve uma inconsistência antiga e deixa o plugin pai menos acoplado à localização absoluta dentro da árvore do projeto.
+Antes disso era utilizado `plugintypes`, com caminhos relativos à raiz inteira do Moodle. O arquivo do Kopere BI mantém os dois formatos justamente para atravessar branches diferentes sem transformar `biblocks` em dois tipos distintos.
 
 ## 20.12 `subplugintypes` no Moodle 5.0 ou superior
 
-Para o nosso exemplo moderno:
+A parte moderna do arquivo é:
 
-```
+```json
 {
-    "subplugintypes": {
-        "deliveryconnector": "connector"
-    }
+  "subplugintypes": {
+    "bifilters": "bifilters",
+    "biblocks": "biblocks"
+  }
 }
 ```
 
-Como `subplugins.json` está dentro de `local/deliveryhub/db/`, o caminho `connector` é entendido relativamente a `local/deliveryhub/`.
+Como o arquivo pertence a `local_kopere_bi`, `biblocks` é interpretado relativamente à raiz desse plugin.
 
 ## 20.13 `plugintypes` nas branches antigas
 
-Se o mesmo plugin precisa funcionar no Moodle 4.5 ou anterior, ainda é necessário declarar o formato legado:
+O mesmo projeto mantém a declaração legada:
 
-```
+```json
 {
-    "plugintypes": {
-        "deliveryconnector": "local/deliveryhub/connector"
-    }
+  "plugintypes": {
+    "bifilters": "local/kopere_bi/bifilters",
+    "biblocks": "local/kopere_bi/biblocks"
+  }
 }
 ```
 
-Perceba a diferença. No legado o caminho parte da raiz do Moodle, enquanto no formato novo ele parte da raiz do plugin pai.
+Aqui o caminho é absoluto dentro da árvore de plugins do Moodle.
 
 ## 20.14 Suportando Moodle 4.5 e Moodle 5.x no mesmo código
 
-Quando o plugin precisa atravessar essa fronteira de versões, a documentação atual recomenda declarar os dois objetos e manter as mesmas chaves:
+Quando o host precisa atravessar essa fronteira, declarar os dois objetos evita espalhar detecção de versão pela regra de negócio. O component manager de cada branch lê o formato que conhece.
 
-```
-{
-    "subplugintypes": {
-        "deliveryconnector": "connector"
-    },
-    "plugintypes": {
-        "deliveryconnector": "local/deliveryhub/connector"
-    }
-}
-```
-
-Isso não é duplicação de dois tipos diferentes, é a mesma informação expressa nos dois formatos que branches diferentes entendem.
+O ponto mais importante é manter as mesmas chaves. `biblocks` precisa continuar sendo `biblocks` nos dois formatos. Compatibilidade de metadata não deve mudar a identidade do componente.
 
 ## 20.15 As chaves precisam continuar iguais
 
-Não crie `deliveryconnector` em um objeto e `deliveryintegration` no outro. Se o objetivo é compatibilidade, o tipo precisa ser o mesmo. O que muda é a forma de expressar o caminho.
+Não crie `biblocks` no objeto moderno e `bicharts` no legado. Isso faria a mesma família de plugins parecer dois tipos diferentes dependendo da versão do Moodle.
 
-Essa regra também ajuda a impedir um cenário muito ruim em upgrade, no qual a mesma pasta passa a ser vista como dois plugin types diferentes dependendo da versão do Moodle.
+A compatibilidade deve mudar a forma como o caminho é descrito, não o nome lógico do tipo.
 
 ## 20.16 O que o Moodle faz com essa declaração
 
-Depois de conhecer o tipo, o component manager consegue mapear `deliveryconnector` para o diretório correspondente e passa a descobrir plugins daquele tipo como descobre outros componentes.
+Depois de conhecer o tipo, o component manager consegue mapear `biblocks` e `bifilters` para seus diretórios e descobrir implementações sem o pai varrer filesystem manualmente.
 
-É por isso que você não precisa escrever um `glob($CFG->dirroot . '/local/deliveryhub/connector/*')` para encontrar conectores. Fazer a varredura manual ignora o sistema de componentes, caches e validações que o Moodle já possui.
+Por isso o Kopere BI não precisa de um `glob()` inventado para localizar todos os gráficos. Código de negócio deve trabalhar com as APIs de componentes, deixando descoberta e cache para o core.
 
 ## 20.17 `core_component::get_subplugins()`
 
-O core oferece descoberta da declaração feita pelo plugin pai. Uma chamada como esta permite consultar os tipos definidos pelo componente:
+Para consultar os tipos definidos pelo pai:
 
 ```php
-$types = core_component::get_subplugins('local_deliveryhub');
+$types = core_component::get_subplugins('local_kopere_bi');
 ```
 
-O retorno representa os subplugin types conhecidos para aquele pai. Use as APIs de componentes em vez de reconstruir a informação lendo JSON manualmente.
+O retorno descreve os tipos de subplugin conhecidos para aquele componente.
 
 ## 20.18 `core_plugin_manager::get_subplugins()`
 
-O plugin manager também possui `get_subplugins()`, mas seu objetivo é mais amplo, retornando plugins que definem subplugins e informações sobre os tipos declarados.
+O plugin manager também possui `get_subplugins()`, mas em escopo mais amplo, útil para administração, diagnóstico e ferramentas que precisam enxergar relações entre vários hosts.
 
 ```php
 $manager = core_plugin_manager::instance();
 $definitions = $manager->get_subplugins();
 ```
 
-Essa API é útil quando você está construindo ferramentas administrativas, diagnósticos ou precisa compreender a relação geral entre pais e tipos.
-
 ## 20.19 `get_subplugins_of_plugin()`
 
-Quando você já conhece o pai e quer os subplugins instalados relacionados a ele, o plugin manager possui uma API direta:
+Quando o pai já é conhecido:
 
 ```php
 $manager = core_plugin_manager::instance();
-$plugins = $manager->get_subplugins_of_plugin('local_deliveryhub');
+$plugins = $manager->get_subplugins_of_plugin('local_kopere_bi');
 ```
 
-O retorno utiliza componentes como chave e objetos `plugininfo` como valor. Isso é bem mais robusto do que deduzir componente a partir de nome de diretório.
+Isso é mais robusto do que deduzir componentes a partir de diretórios.
 
 ## 20.20 Descobrir plugins de um tipo específico
 
-Se o pai conhece o tipo `deliveryconnector`, também pode usar as APIs normais de plugins daquele tipo. Em vários casos basta trabalhar com `core_component::get_plugin_list('deliveryconnector')` para obter nome e diretório das implementações conhecidas.
+O próprio Kopere BI usa a ideia de descobrir implementações por tipo. Para `biblocks`:
 
 ```php
-$connectors = core_component::get_plugin_list('deliveryconnector');
+$blocks = core_component::get_plugin_list('biblocks');
 ```
 
-A partir daí o pai decide quais estão habilitados e como instanciá-los.
+A classe `local_kopere_bi\plugininfo\biblocks` trabalha com essa lista para gerenciamento dos filhos.
 
 ## 20.21 `plugininfo`
 
-O Moodle representa plugins descobertos por meio de objetos `plugininfo`. Eles carregam informações sobre componente, versão, dependências, diretório, estado de instalação e outros metadados utilizados pelo gerenciador de plugins.
+O Kopere BI possui classes de `plugininfo` próprias para `biblocks` e `bifilters`. Elas participam da administração, permitem controlar instalação/desinstalação e definem como esses componentes aparecem para o administrador.
 
-Para um host de subplugins, isso é útil em telas administrativas e diagnósticos porque evita criar um segundo sistema de inventário paralelo. O pai pode consultar o plugin manager e trabalhar com a mesma visão que o core usa.
-
-Não confunda `plugininfo` com a API funcional do seu subplugin. `plugininfo` descreve o componente para gerenciamento; quem define o comportamento de negócio continua sendo o contrato do plugin pai.
+Isso é diferente do contrato funcional. `plugininfo` descreve o componente para o gerenciador de plugins; `i_block_provider` e `i_filter_provider` dizem o que a implementação precisa fazer em runtime.
 
 ## 20.22 O pai precisa definir um contrato
 
-Aqui aparece a pergunta que decide se você realmente criou uma arquitetura extensível ou apenas espalhou código em mais pastas: o plugin pai consegue trabalhar com um subplugin sem saber qual implementação concreta está instalada? Se a resposta depende de `if ($type === 'sap')` no pai, a separação ainda é cosmética.
+Aqui aparece a pergunta que decide se você realmente criou uma arquitetura extensível: o pai consegue trabalhar com um filho sem saber antecipadamente qual implementação concreta está instalada?
 
-A declaração no JSON só resolve descoberta. Ainda falta responder o que um `deliveryconnector` precisa implementar.
-
-Uma forma moderna é definir uma interface dentro do pai:
+No GeniAI, o contrato é explícito:
 
 ```php
-namespace local_deliveryhub\local;
+namespace local_geniai;
 
-interface connector {
-    public function get_name(): string;
+interface controller_interface {
+    public function completions(array $messages, $replacemodel = "");
 
-    public function is_available(): bool;
-
-    public function send(array $records): send_result;
+    public function is_configured();
 }
 ```
 
-Agora qualquer subplugin possui um contrato claro e o pai pode trabalhar sem conhecer detalhes de SAP, ERP ou API REST.
+O pai sabe pedir uma completion e sabe perguntar se o controller está configurado. Ele não precisa conhecer como ChatGPT, outro provedor ou uma implementação futura monta a requisição.
 
 ## 20.23 Interface ou classe abstrata
 
-Interface funciona bem quando o pai quer definir somente comportamento. Classe abstrata é útil quando existe implementação compartilhada que realmente pertence ao contrato.
+Interface funciona bem quando o pai quer definir comportamento e não existe implementação comum suficiente para justificar herança. O GeniAI segue exatamente esse caminho: `controller_interface` é pequena e não existe uma superclasse enorme obrigando cada provedor a herdar decisões que talvez não façam sentido.
 
-Não coloque cinquenta métodos na base apenas porque todos os conectores "talvez precisem um dia". Quanto maior a superfície obrigatória, mais difícil fica evoluir o pai sem quebrar terceiros.
+Classe abstrata continua sendo válida quando existe comportamento realmente compartilhado. A regra não é "subplugin precisa de base class"; é "o contrato precisa ser explícito".
 
 ## 20.24 Base class
 
-Se houver comportamento comum, uma base class pode centralizar acesso a configuração, logging ou helpers específicos do contrato:
+O fato de o GeniAI não precisar de base class é um exemplo útil. É muito fácil criar uma superclasse porque parece mais arquitetural e depois colocar ali configuração, HTTP, logging, parsing e regras específicas de vários provedores.
 
-```php
-namespace local_deliveryhub\local;
-
-abstract class connector_base implements connector {
-    public function __construct(
-        protected readonly string $name,
-    ) {
-    }
-
-    protected function component(): string {
-        return 'deliveryconnector_' . $this->name;
-    }
-}
-```
-
-O objetivo é eliminar repetição realmente comum, não criar uma superclasse que sabe detalhes de todas as implementações.
+Se não existe comportamento comum estável, uma interface pequena é melhor. Adicione uma classe base apenas quando repetição real justificar a herança, não para preencher uma peça de diagrama.
 
 ## 20.25 Implementação no subplugin
 
-O subplugin SAP pode implementar o contrato:
+O controller ChatGPT implementa o contrato do pai:
 
 ```php
-namespace deliveryconnector_sap;
+namespace geniaicontroller_chatgpt;
 
-class connector extends \local_deliveryhub\local\connector_base {
-    public function get_name(): string {
-        return get_string('pluginname', 'deliveryconnector_sap');
+use local_geniai\controller_interface;
+
+class controller implements controller_interface {
+    public function is_configured() {
+        // Verifica a configuração necessária.
     }
 
-    public function is_available(): bool {
-        return !empty(get_config('deliveryconnector_sap', 'endpoint'));
-    }
-
-    public function send(array $records): \local_deliveryhub\local\send_result {
-        // Envio específico ao SAP.
+    public function completions(array $messages, $replacemodel = "") {
+        // Implementação específica do provedor.
     }
 }
 ```
 
-O pai continua conhecendo apenas a interface e o componente.
+A lógica específica da API fica no filho. O pai trabalha com `controller_interface`.
 
 ## 20.26 Factory
 
-Uma factory pode transformar o nome do plugin em uma instância do contrato:
+O GeniAI também possui um exemplo real da parte que muita gente acaba chamando de factory. `local_geniai\controller::get_instance()` descobre o controller escolhido, monta a classe esperada e valida o contrato:
 
 ```php
-namespace local_deliveryhub\local;
+$classname = "\\" . self::PLUGIN_TYPE . "_" . $name . "\\controller";
 
-final class connector_factory {
-    public static function create(string $name): connector {
-        $classname = "\\deliveryconnector_{$name}\\connector";
+if (!class_exists($classname)) {
+    throw new coding_exception(
+        "Invalid GeniAI controller class: {$classname}"
+    );
+}
 
-        if (!class_exists($classname)) {
-            throw new \coding_exception("Connector {$name} is not available");
-        }
+$instance = new $classname();
 
-        $instance = new $classname($name);
-
-        if (!$instance instanceof connector) {
-            throw new \coding_exception("Invalid connector {$name}");
-        }
-
-        return $instance;
-    }
+if (!($instance instanceof controller_interface)) {
+    throw new coding_exception("Invalid controller contract.");
 }
 ```
 
-A factory concentra convenção e validação. Não espalhe montagem dinâmica de classname por dez arquivos do plugin pai.
+Centralizar isso evita espalhar construção dinâmica de classname pelo plugin.
 
 ## 20.27 Factory não substitui descoberta
 
-A factory instancia, mas não deveria ser responsável por descobrir diretórios no filesystem. Primeiro obtenha a lista por `core_component`, depois instancie somente componentes conhecidos.
+Antes de instanciar, o GeniAI descobre controllers com:
 
-Essa separação evita que entrada do usuário vire parte de um nome de classe arbitrário e mantém o desenho mais previsível.
+```php
+core_component::get_plugin_list("geniaicontroller");
+```
+
+Esse detalhe importa. A entrada do administrador escolhe entre componentes que o Moodle já reconheceu; ela não vira um nome de classe arbitrário vindo diretamente da requisição.
 
 ## 20.28 Dispatcher
 
-Em alguns pais existe a necessidade de executar todos os subplugins habilitados para um determinado evento. Um dispatcher pode fazer isso:
+No GeniAI o método estático `controller::completions()` funciona como uma fronteira simples de despacho:
 
 ```php
-final class dispatcher {
-    public function send_to_all(array $records): array {
-        $results = [];
-
-        foreach ($this->repository->get_enabled() as $name) {
-            $connector = connector_factory::create($name);
-            $results[$name] = $connector->send($records);
-        }
-
-        return $results;
-    }
+public static function completions(array $messages, $replacemodel = "") {
+    return self::get_instance()->completions(
+        $messages,
+        $replacemodel
+    );
 }
 ```
 
-O dispatcher não deveria conhecer regras específicas de cada filho. Se começar a ter `if ($name === 'sap')`, a abstração já está vazando.
+Quem consome o serviço não precisa saber qual provider está ativo. A escolha e a validação ficam concentradas no componente pai.
 
 ## 20.29 Habilitar e desabilitar subplugins
 
-O Moodle reconhecer um subplugin não significa que ele precisa estar operacional. O mecanismo de enable/disable é uma responsabilidade que o plugin pai pode precisar definir.
+Instalado e habilitado não são sinônimos. O Kopere BI deixa isso explícito em suas classes `plugininfo`. Um `biblocks_*` pode existir no filesystem e continuar desabilitado por configuração.
 
-Uma abordagem simples é manter no pai uma configuração com a lista habilitada e oferecer uma tela administrativa. Outra é cada subplugin possuir um flag próprio. O importante é existir uma fonte única e previsível para essa decisão.
-
-Não misture "instalado" com "habilitado". Um componente pode estar instalado para preservar configuração e dados, mas temporariamente desativado para execução.
+Essa separação é útil porque remover um componente pode significar também remover configuração, arquivos ou itens que dependem dele. Às vezes você quer apenas impedir execução sem destruir o que já existe.
 
 ## 20.30 Configuração global do pai e configuração do filho
 
 O pai deve guardar configurações que pertencem ao sistema como um todo, por exemplo tamanho de lote e política de retry. O filho deve guardar configurações específicas de sua implementação, como endpoint, tenant ou identificador de fila.
 
 ```php
-$batchsize = get_config('local_deliveryhub', 'batchsize');
-$endpoint = get_config('deliveryconnector_sap', 'endpoint');
+$defaultpie = get_config('local_kopere_bi', 'chart_pie_default');
+$enabled = get_config('biblocks_pie', 'enabled');
 ```
 
 Essa divisão evita que o pai acumule dezenas de settings que só fazem sentido quando determinado subplugin está instalado.
@@ -382,7 +346,7 @@ Em hosts mais sofisticados, o pai monta uma categoria própria e inclui ou refer
 Cada subplugin possui seu próprio `version.php`:
 
 ```php
-$plugin->component = 'deliveryconnector_sap';
+$plugin->component = 'biblocks_pie';
 $plugin->version = 2026092300;
 $plugin->requires = 2024100700;
 ```
@@ -395,7 +359,7 @@ Mesmo que a relação de subplugin já implique a presença do host, declarar de
 
 ```php
 $plugin->dependencies = [
-    'local_deliveryhub' => 2026092300,
+    'local_kopere_bi' => 2026092300,
 ];
 ```
 
@@ -403,7 +367,7 @@ Assim um conector que depende de uma interface introduzida em determinada versã
 
 ## 20.34 Evite dependência circular
 
-O pai define o contrato e o filho depende do pai. Se o pai começa a depender diretamente de `deliveryconnector_sap`, você criou uma dependência circular conceitual e destruiu a extensibilidade.
+O pai define o contrato e o filho depende do pai. Se o pai começa a depender diretamente de `biblocks_pie`, você criou uma dependência circular conceitual e destruiu a extensibilidade.
 
 O pai pode saber que existem conectores instalados por descoberta, mas não deveria exigir uma implementação específica para funcionar, salvo se isso for uma decisão explícita do produto e estiver refletida nas dependências.
 
@@ -441,7 +405,7 @@ Mas observe a arquitetura. Se todos os conectores precisam receber exatamente o 
 
 ## 20.40 Events próprios
 
-Um subplugin também pode disparar seus próprios Events, por exemplo `deliveryconnector_sap\event\delivery_failed`. Isso permite auditoria, observação por outros componentes e integração com o log padrão quando o evento realmente representa um fato relevante.
+Um subplugin também pode disparar Events próprios. Se `biblocks_pie` precisasse registrar um fato específico de sua implementação, o evento pertenceria ao componente `biblocks_pie`, não a `local_kopere_bi` apenas por o pai hospedar aquele tipo. Isso permite auditoria, observação por outros componentes e integração com o log padrão quando o evento realmente representa um fato relevante.
 
 Não use Event como chamada de método indireta. A regra do Capítulo 10 continua valendo: Event representa algo que aconteceu.
 
@@ -479,13 +443,13 @@ Evite criar cache no pai com chaves que embutem detalhes privados de cada implem
 
 Um subplugin pode possuir file areas próprias usando seu próprio componente. Isso é importante porque componente faz parte da identidade de um arquivo no Moodle.
 
-Se `deliveryconnector_sap` precisa armazenar um certificado público ou arquivo auxiliar, use a Files API com `component = deliveryconnector_sap`, desde que o arquivo realmente pertença àquela implementação.
+Se um `biblocks_*` precisa armazenar arquivo que realmente pertence àquela implementação, use a Files API com o component do próprio subplugin. Não jogue tudo em `local_kopere_bi` apenas porque o pai está mais perto.
 
 ## 20.47 Capabilities
 
 Subplugins podem ter capabilities próprias quando existe uma operação realmente específica. Porém pense bem antes de criar uma capability por implementação se a ação conceitual é a mesma para todos os filhos.
 
-Às vezes `local_deliveryhub:manageconnectors` no pai é suficiente. Em outros casos o conector precisa de uma permissão particular para visualizar informações sensíveis. A decisão vem do modelo de autorização, não da estrutura de pastas.
+Às vezes uma capability no pai é suficiente para administrar todos os blocos. Em outros casos um filho pode precisar de uma permissão específica. A decisão vem do modelo de autorização, não da estrutura de pastas.
 
 ## 20.48 Web Services e AJAX
 
@@ -505,7 +469,7 @@ Backup é um dos lugares em que a frase "é um plugin de verdade" precisa de cui
 
 O host precisa oferecer pontos de integração apropriados e o tipo de plugin precisa estar conectado ao plano de backup. Activities como Quiz e Assignment possuem infraestrutura própria para permitir que seus subplugins adicionem estruturas e processem dados.
 
-Em um host customizado, você precisa desenhar isso conscientemente. Se `local_deliveryhub` mantém dados globais de integração, talvez nem façam sentido em backup de curso; se o pai fosse uma activity module e cada filho guardasse dados por instância, então backup e restore seriam parte essencial do contrato.
+Em um host customizado, você precisa desenhar isso conscientemente. No `local_kopere_bi`, boa parte dos dados é global e não pertence ao backup de um curso. Já no `mod_certificatebeautiful`, que é um activity module e também hospeda subplugins, qualquer dado do filho ligado à instância precisa ser pensado junto do contrato de backup e restore.
 
 ## 20.51 Não copie IDs entre instalações
 
@@ -517,17 +481,17 @@ Esse cuidado é ainda maior quando um subplugin referencia registros do pai, por
 
 Subplugin pode ser removido independentemente, portanto não deixe o pai quebrar quando uma implementação desaparece. Descubra novamente os plugins disponíveis e trate configuração obsoleta.
 
-Se a lista de habilitados contém `sap`, mas o componente `deliveryconnector_sap` foi removido, a tela administrativa deve sinalizar o problema e o runtime deve falhar de forma controlada, não produzir fatal error em toda requisição.
+Se uma configuração ainda referencia `pie`, mas `biblocks_pie` foi removido, a tela administrativa deve sinalizar o problema e o runtime deve falhar de forma controlada, não produzir fatal error em toda requisição.
 
 ## 20.53 Não salve classname como verdade eterna
 
-Guardar `\deliveryconnector_sap\connector` diretamente no banco parece prático, mas acopla persistência a uma decisão de classe. Prefira salvar o nome lógico `sap` ou o component `deliveryconnector_sap` e resolver a classe pela factory.
+Guardar `\biblocks_pie\provider` diretamente no banco parece prático, mas acopla persistência a uma decisão de classe. Prefira salvar o nome lógico `pie` ou o component `biblocks_pie` e resolver a implementação pelo contrato do pai.
 
 Assim você consegue mover implementação interna sem migrar todas as linhas da tabela apenas porque reorganizou classes.
 
 ## 20.54 Nomes de diretório não são API de negócio
 
-O caminho `local/deliveryhub/connector/sap` é detalhe de descoberta. Regra de negócio não deveria montar pathname para decidir como chamar o filho.
+O caminho `local/kopere_bi/biblocks/pie` é detalhe de descoberta. Regra de negócio não deveria montar pathname para decidir como chamar o filho.
 
 Use componente, plugin manager e contratos. Isso também reduz problemas quando a estrutura de metadata evolui entre versões do Moodle.
 
@@ -638,7 +602,7 @@ Também vale criar um pequeno subplugin fixture em testes quando a infraestrutur
 
 ## 20.66 Testando um subplugin
 
-O filho testa sua implementação específica. Para `deliveryconnector_sap`, você quer testar transformação de payload, tratamento de erro, configuração e integração com o contrato do pai.
+O filho testa sua implementação específica. Para `biblocks_pie`, você quer testar a preparação dos dados do gráfico, configuração e integração com `i_block_provider`, sem repetir todos os testes que pertencem ao host.
 
 Não repita nos filhos todos os testes que já pertencem ao host. O pai testa o framework de extensibilidade; o filho testa a implementação.
 
@@ -654,23 +618,23 @@ Se terceiros poderão criar subplugins, a documentação precisa informar estrut
 
 O melhor teste de extensibilidade é entregar apenas essa documentação a outra equipe e verificar se ela consegue criar um componente sem abrir o código de três implementações existentes para descobrir convenções escondidas.
 
-## 20.69 Um projeto completo de host extensível
+## 20.69 Três hosts reais, três desenhos diferentes
 
-Nosso `local_deliveryhub` poderia concentrar fila, auditoria, locks, retry e interface administrativa. O tipo `deliveryconnector` concentra somente conectores de destino.
+O Kopere BI mostra um host com **dois tipos** de subplugin. `biblocks` cuida das variações de blocos de visualização e `bifilters` das variações de filtro. Cada família possui contrato próprio, `plugininfo` próprio e implementações independentes.
 
-O fluxo seria: uma regra do pai cria um lote, a Adhoc Task carrega o conector habilitado pela factory, o dispatcher chama `send()`, o filho converte para seu protocolo e devolve um `send_result`, e o pai registra estado uniforme independentemente do destino.
+O GeniAI mostra outro desenho. Existe um tipo `geniaicontroller`, uma interface pequena no pai e uma classe de descoberta que escolhe a implementação configurada. A lógica específica de ChatGPT fica em `geniaicontroller_chatgpt`; adicionar outro provedor não deveria exigir transformar o pai num `switch` de marcas.
 
-Isso significa que adicionar `deliveryconnector_totvs` não exige mudar `local_deliveryhub`. Se exige, a pergunta é se o contrato realmente foi desenhado como ponto de extensão.
+Beautiful Certificate mostra que um activity module também pode hospedar subplugins. O tipo `certificatebeautifuldatainfo` permite separar fontes de dados usadas na geração do certificado. Isso é particularmente interessante porque o pai continua sendo uma atividade completa, com seu próprio backup, tasks e lifecycle, enquanto as extensões tratam uma parte específica do domínio.
+
+Os três projetos reforçam a mesma ideia: subplugin não é uma pasta bonita. Ele vale a pena quando existe uma variação que merece identidade própria e quando o pai consegue trabalhar com o contrato sem incorporar a implementação de cada filho.
 
 ## 20.70 Exercício
 
-Crie um plugin pai `local_deliveryhub` com um subplugin type chamado `deliveryconnector` e faça o projeto funcionar em Moodle 4.5 e Moodle 5.x. O pai deve declarar `plugintypes` e `subplugintypes`, fornecer uma interface pública pequena, factory, repository de conectores instalados, configuração de habilitados, dispatcher, Adhoc Task e auditoria.
+Use os três projetos reais como referência e crie um pequeno host didático com um único tipo de subplugin. O pai deve declarar `plugintypes` e `subplugintypes`, oferecer uma interface pública pequena, descobrir implementações por `core_component`, validar a classe antes de instanciar e diferenciar claramente "instalado" de "habilitado".
 
-Depois crie dois subplugins, `deliveryconnector_file` e `deliveryconnector_http`. O primeiro grava o lote em arquivo usando APIs do Moodle e o segundo simula envio HTTP por meio da Curl API. Cada filho deve possuir `version.php`, idioma, settings próprios e testes da implementação.
+Crie dois filhos com comportamentos diferentes e faça o pai funcionar sem nenhum `if ($name === 'filho1')` ou `switch` por implementação. Depois remova um dos filhos e verifique se o host continua funcionando de forma controlada.
 
-Em seguida altere o contrato do pai de maneira compatível, adicionando uma capability opcional como `supports_healthcheck()` sem quebrar os dois filhos existentes. Por fim teste instalação limpa, upgrade, desativação de um conector, remoção física de um filho ainda listado na configuração, execução concorrente da task e comportamento quando um terceiro subplugin implementa a interface incorretamente.
-
-O exercício só está concluído quando você consegue instalar um terceiro conector sem editar uma única linha do pai. Se for necessário abrir `dispatcher.php` e adicionar mais um `case`, você construiu uma coleção de implementações, não um sistema de subplugins.
+Por fim compare sua solução com três pontos reais: a dupla `biblocks`/`bifilters` do Kopere BI, `controller_interface` e `controller::get_instance()` do GeniAI, e o tipo `certificatebeautifuldatainfo` do Beautiful Certificate. Se o seu pai precisa abrir o código de cada filho para saber como chamá-lo, o contrato ainda não está bom.
 
 ## Referências técnicas consultadas
 
