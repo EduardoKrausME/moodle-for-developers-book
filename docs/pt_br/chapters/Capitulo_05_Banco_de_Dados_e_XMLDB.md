@@ -4,23 +4,11 @@
 
 ![Banco de Dados e XMLDB](image/cap05-banco-dados-xmldb.png)
 
-Banco de dados é uma das partes em que um plugin Moodle consegue parecer correto durante meses e ainda assim estar construído sobre decisões ruins. Você abre a tela, salva um registro, consulta outro, tudo responde rápido na instalação de desenvolvimento e a sensação é de que está resolvido. Depois o plugin chega a um ambiente com milhões de registros, PostgreSQL em vez de MariaDB, duas tarefas concorrentes e um upgrade vindo de uma versão antiga, então aparecem duplicidades, deadlocks, consultas lentas e aquela frase clássica de suporte, "aqui sempre funcionou".
+Você conhece a frase "aqui sempre funcionou"? Banco de dados é um dos lugares em que ela costuma aparecer pouco antes de descobrirmos que "aqui" significava uma instalação de desenvolvimento com quarenta registros, MariaDB e um único processo executando tudo em paz.
 
-O Moodle já resolveu boa parte desses problemas na camada de banco, mas para aproveitar isso precisamos aceitar uma regra simples. O banco do Moodle não é um MySQL com tabelas chamadas `mdl_*`. Ele é uma abstração que precisa funcionar em bancos diferentes, sobreviver a upgrades, respeitar convenções de schema e continuar previsível quando o volume cresce. Se você escreve pensando diretamente em MySQL, em pouco tempo passa a lutar contra a plataforma em vez de usar a plataforma.
+Agora coloque o mesmo plugin em PostgreSQL, milhões de registros, duas tasks concorrentes e um upgrade vindo de uma versão antiga. Aquela consulta simples pode perder índice, a gravação que "nunca duplicava" começa a disputar corrida e uma alteração de schema feita diretamente no banco vira problema na próxima atualização. O código não ficou ruim de repente; o ambiente apenas parou de esconder as suposições que já estavam ali.
 
-Neste capítulo vamos trabalhar em duas camadas. A primeira é DML, usada para consultar e modificar dados, enquanto a segunda é DDL, usada para alterar estrutura. Em seguida entra XMLDB, que descreve o schema de maneira independente do banco, e finalmente upgrade, transações, Persistent API e os problemas de escala que aparecem quando uma consulta que parecia pequena deixa de ser pequena.
-
-### Arquitetura do banco de dados do Moodle 5.3
-
-Antes de entrar nas APIs, vale olhar o banco como um sistema e não como uma coleção de tabelas isoladas. O diagrama [Moodle 5.3 database architecture](../../image/moodle-5.3-db-architecture.svg) apresenta uma visão consolidada da arquitetura do banco do Moodle 5.3, organizada por áreas funcionais como questões, notas, usuários e autenticação, mensagens, cursos e inscrições, assignment, competências, quiz, SCORM, arquivos, H5P, web services e outras partes do core.
-
-[![Arquitetura do banco de dados do Moodle 5.3](../../image/moodle-5.3-db-architecture.svg)](../../image/moodle-5.3-db-architecture.svg)
-
-O arquivo representa **372 tabelas** e **472 campos de relacionamento identificados nas definições XMLDB**. Dentro de cada tabela aparecem os campos que apontam para outras entidades, o que permite enxergar rapidamente onde cada componente se conecta ao restante do Moodle. As linhas escuras representam relacionamentos entre tabelas comuns, enquanto os relacionamentos com algumas tabelas de altíssima reutilização são tratados de forma diferente para evitar que centenas de linhas tornem o desenho ilegível.
-
-Os quatro principais hubs aparecem identificados por cores: **`user` em vermelho, `course` em azul, `context` em laranja e `question` em verde**. Em vez de desenhar uma linha atravessando o diagrama para cada referência a essas tabelas, o campo que contém a referência recebe uma seta da cor correspondente. Isso deixa visível que, por exemplo, determinado `userid` referencia `user` ou que um `courseid` referencia `course`, mas sem esconder todo o restante da arquitetura sob uma teia de conectores.
-
-É importante interpretar esse diagrama como uma visão baseada principalmente nas **relações declaradas pelo XMLDB**, e não como uma promessa de que todas elas existem fisicamente no SGBD como constraints de foreign key. No Moodle, muitas relações fazem parte do modelo lógico e das definições XMLDB, enquanto integridade, limpeza e evolução de dados também dependem das APIs e do código da aplicação. O diagrama é especialmente útil para entender dependências antes de escrever joins, investigar dados órfãos, analisar impacto de uma alteração ou simplesmente descobrir quais tabelas fazem parte de um subsistema.
+O banco do Moodle não deve ser tratado como "um MySQL com tabelas `mdl_*`". DML, DDL e XMLDB existem justamente para separar a regra do plugin das particularidades do SGBD e do ciclo de upgrade. Vamos trabalhar com essas camadas a partir de problemas reais de consulta, concorrência, transação, schema e escala, porque saber chamar `$DB->get_records()` é a parte fácil; a parte que custa caro é saber quando aquela chamada continua correta depois que os dados e o ambiente crescem.
 
 ## 5.1 Moodle DML API
 
