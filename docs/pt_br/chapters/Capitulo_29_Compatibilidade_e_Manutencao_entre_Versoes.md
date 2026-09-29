@@ -4,13 +4,11 @@
 
 ![Compatibilidade e Manutenção entre Versões](image/cap29-compatibilidade-versoes.png)
 
-Criar um plugin que funciona em uma versão do Moodle é uma tarefa. Manter o mesmo plugin funcionando por anos, atravessando mudanças de PHP, banco, JavaScript, APIs, estrutura de diretórios e políticas de depreciação, é outra completamente diferente. A diferença entre as duas aparece quando o plugin deixa de ser projeto pontual e passa a ser produto. A partir daí você não controla mais apenas o código que escreveu, porque precisa conviver com clientes em branches diferentes, upgrades em ritmos diferentes e instalações que nem sempre podem atualizar Moodle, PHP e banco ao mesmo tempo.
+Fazer um plugin funcionar hoje é uma coisa. Manter o mesmo plugin funcionando enquanto Moodle, PHP, banco, JavaScript e estrutura de diretórios mudam é outra profissão dentro da profissão.
 
-É nesse ponto que começam soluções perigosas. Um `if ($CFG->version >= ...)` aparece para corrigir uma incompatibilidade, depois outro `if` aparece em outro arquivo, depois um terceiro testa `class_exists()`, e em poucos meses ninguém mais sabe qual combinação foi realmente testada. O plugin continua "compatível" apenas porque nenhuma instalação importante quebrou ainda.
+O problema costuma começar pequeno: um `if ($CFG->version >= ...)` aqui, um `class_exists()` ali, mais uma exceção para uma branch antiga e pronto, ninguém sabe mais quais combinações realmente foram testadas. O plugin continua sendo chamado de "compatível" porque ainda não apareceu o cliente certo para provar o contrário.
 
-Neste capítulo vamos tratar compatibilidade como arquitetura e processo, não como remendo. O objetivo é mostrar como escolher uma faixa suportada, declarar isso corretamente em `version.php`, separar compatibilidade de branch, reconhecer APIs deprecated, usar feature detection quando ela é melhor que version detection, criar adapters e shims quando necessário, testar diferentes combinações em CI e decidir quando uma versão antiga precisa deixar de ser suportada.
-
-O livro foi construído tendo Moodle 5.0 como referência principal, mas um plugin profissional dificilmente existe isolado nessa versão. Em setembro de 2026, Moodle 4.5 continua sendo a LTS em suporte de segurança, Moodle 5.1 e 5.2 ainda são linhas suportadas e Moodle 5.3 LTS está prestes a ser lançado. Isso torna o momento especialmente útil para discutir manutenção, porque o desenvolvedor precisa lidar ao mesmo tempo com uma LTS anterior, duas versões regulares e uma nova LTS chegando.
+Antes de adicionar a próxima condição de versão, responda algumas perguntas: qual é a menor branch que você realmente suporta? Qual é a maior que testou? Quais versões de PHP e banco entram nessa promessa? E quando uma API for removida, você vai usar adapter, feature detection, branch separada ou abandonar suporte antigo? Compatibilidade precisa ser uma decisão explícita, não uma coleção de `if` acumulados pelo medo de quebrar alguém.
 
 ## 29.1 Compatibilidade precisa ser uma decisão explícita
 
