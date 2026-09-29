@@ -8,7 +8,7 @@ Você precisa executar código quando alguma coisa acontece no Moodle. Usa Event
 
 Pense em três frases. "Isso aconteceu." "Estou neste ponto do processo e permito que outro componente participe." "O Moodle procura esta função conhecida e, se ela existir, chama." A primeira se parece com Event, a segunda com Hook e a terceira descreve boa parte dos callbacks históricos. A sintaxe é a parte menos interessante.
 
-Essa distinção evita erros arquiteturais que funcionam muito bem no primeiro teste. Event usado para tentar alterar uma operação antes que ela aconteça, Hook usado apenas como log ou callback novo copiado de tutorial de 2014 são exemplos de código que executa e ainda assim escolheu o mecanismo errado. Neste capítulo vamos separar os três pelo problema que resolvem, não pelo número de linhas necessário para registrá-los.
+Essa distinção evita erros arquiteturais que funcionam muito bem no primeiro teste. Event usado para tentar alterar uma operação antes que ela aconteça, Hook usado apenas como log ou callback novo copiado de tutorial de 2014 são exemplos de código que executa e ainda assim escolheu o mecanismo errado. A comparação entre os três precisa partir do problema que resolvem, não do número de linhas necessário para registrá-los.
 
 ## 10.1 Diferença entre Event, Hook e callback
 
