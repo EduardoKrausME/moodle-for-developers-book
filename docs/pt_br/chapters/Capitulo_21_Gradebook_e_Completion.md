@@ -212,6 +212,8 @@ Isso evita situações em que a atividade mostra máximo 50, mas o Gradebook con
 
 ## 21.14 Alterar nota máxima depois que existem notas
 
+Parece uma alteração inocente: a atividade valia 10 e agora deve valer 100. Mas e as notas já lançadas? Dez vira dez ou vira cem? Só essa pergunta já mostra por que mudar configuração de nota depois que existem avaliações precisa de uma decisão explícita, não apenas de um `UPDATE` no campo da atividade.
+
 Mudar `grademax` em uma atividade que já possui notas precisa ser tratado com cuidado. O Gradebook possui mecanismos para trabalhar com escalonamento e regrade, mas a atividade precisa entender o significado pedagógico da mudança.
 
 Se um professor muda de 100 para 20, ele quer converter os valores mantendo percentual ou quer reinterpretar as notas existentes? Nem sempre essas duas coisas significam a mesma coisa.
@@ -415,6 +417,8 @@ function checkpoint_update_grades($checkpoint, $userid = 0, $nullifnone = true):
 Esse callback permite ao Gradebook pedir que a atividade atualize novamente suas notas quando necessário.
 
 ## 21.30 Por que a atividade precisa conseguir reconstruir a nota
+
+Se você apagasse hoje todas as linhas derivadas do Gradebook que pertencem ao seu módulo, conseguiria reconstruí-las a partir dos dados da atividade? Essa é uma pergunta excelente para separar fonte de verdade de cópia derivada. Quando a resposta é não, normalmente o plugin está dependendo de um estado que ele mesmo já não sabe reproduzir.
 
 Se a única cópia da nota estivesse em `{grade_grades}`, o módulo perderia capacidade de recomputar quando suas regras mudassem. Por isso a atividade geralmente mantém a informação de origem ou os dados a partir dos quais a nota pode ser recalculada.
 
