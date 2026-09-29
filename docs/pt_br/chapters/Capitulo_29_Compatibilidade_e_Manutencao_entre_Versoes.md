@@ -344,6 +344,12 @@ Se seu plugin precisa sobrescrever renderer interno, copiar template core inteir
 
 Às vezes isso é inevitável, principalmente em themes e course formats, mas precisa ser tratado como dívida consciente e coberto por testes específicos.
 
+### Um exemplo real: `enrol_paymentpagseguro`
+
+Eu mantenho também um exemplo do outro lado da compatibilidade: o `enrol_paymentpagseguro`. Esse plugin foi **descontinuado**. O motivo é importante para esta discussão porque mostra que a vida útil de um plugin não depende apenas do Moodle. A integração dependia de uma API externa do PagSeguro e, quando essa API mudou, manter o plugin exigiria refazer uma parte relevante da integração.
+
+É um caso útil para lembrar que compatibilidade não é apenas `$plugin->requires`, PHP e banco. Se o seu plugin depende de um gateway de pagamento, ERP, serviço de vídeo, provedor de identidade ou qualquer outra API externa, essa dependência também faz parte da sua superfície de manutenção. Às vezes a decisão correta não é criar mais uma camada de compatibilidade; é declarar com clareza que aquela integração foi descontinuada e não prometer suporte que você já não pretende manter.
+
 ## 29.30 Feature detection versus version detection
 
 Um padrão ruim é espalhar:
