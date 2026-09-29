@@ -6,7 +6,7 @@ Dois plugins podem instalar sem erro, abrir a mesma tela e parecer igualmente bo
 
 Fazer o Moodle reconhecer uma pasta é fácil. Construir um componente que sobreviva a upgrades, novas APIs e mais de um desenvolvedor já exige respeitar as convenções que a plataforma oferece. E aqui existe uma vantagem prática: quando você coloca cada coisa onde o Moodle espera encontrá-la, muita infraestrutura vem praticamente de graça; quando inventa sua própria organização, passa a pagar manutenção por uma originalidade que ninguém pediu.
 
-Não vamos criar quinze diretórios vazios só porque outro plugin tinha quinze diretórios. Também não vamos transformar este capítulo num resumo de banco, Events, Hooks, Tasks, Web Services, Privacy e Backup, porque cada assunto terá seu espaço. A pergunta agora é mais básica e mais útil: quando uma responsabilidade aparece, onde ela deve morar e quem deveria carregá-la? Saber responder isso evita uma quantidade surpreendente de código desnecessário.
+Não vamos criar quinze diretórios vazios só porque outro plugin tinha quinze diretórios, nem empilhar banco, Events, Hooks, Tasks, Web Services, Privacy e Backup antes de existir uma responsabilidade que peça por eles. A pergunta agora é mais básica e mais útil: quando uma responsabilidade aparece, onde ela deve morar e quem deveria carregá-la? Saber responder isso evita uma quantidade surpreendente de código desnecessário.
 
 ## 3.1 O que é um plugin Moodle
 
