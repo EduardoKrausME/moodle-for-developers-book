@@ -2,13 +2,11 @@
 
 # 26 BEHAT
 
-No capítulo anterior trabalhamos com PHPUnit e vimos uma verdade importante: a maior parte da regra de negócio do plugin deve ser testada sem abrir navegador. Isso deixa a suíte rápida, previsível e boa para encontrar regressões em classes, banco, capabilities, Events, Hooks, Tasks, Web Services, Privacy e praticamente qualquer outra API do Moodle. Só que existe uma categoria de problema que PHPUnit não enxerga bem, porque o erro não está em uma função isolada, está na jornada inteira que o usuário executa pela interface.
+No capítulo anterior nós tiramos muita coisa do navegador e colocamos em PHPUnit, e isso é ótimo. Só que sobra uma pergunta que teste PHP nenhum responde sozinho: quando professor e aluno usam o Moodle pela interface, a jornada completa realmente funciona?
 
-O professor abre o curso, ativa edição, adiciona uma atividade, preenche o formulário, salva, entra no relatório, abre um modal, altera um filtro e espera um componente JavaScript atualizar a tabela. Depois o aluno entra com outra conta, acessa a mesma atividade, responde, salva, recebe uma notificação e o professor volta para enxergar o novo estado. Podemos testar cada serviço PHP separadamente, mas ainda sobra uma pergunta bastante prática: o produto realmente funciona quando alguém usa o Moodle como uma pessoa normal?
+Pense num fluxo comum. O professor entra no curso, adiciona a atividade, salva, abre um relatório, usa uma modal e aplica um filtro; depois o aluno acessa, responde, recebe uma notificação e o professor volta para verificar o novo estado. Podemos testar cada serviço isoladamente e ainda assim quebrar um botão, um seletor, uma condição de visibilidade ou uma integração JavaScript no caminho.
 
-É aí que entra o Behat. Ele executa testes de aceitação descrevendo jornadas em Gherkin e interagindo com uma instalação Moodle preparada exclusivamente para testes. Dependendo do cenário, a interação pode acontecer sem JavaScript ou por um navegador real controlado via WebDriver. O objetivo não é substituir PHPUnit e muito menos automatizar cada clique existente no sistema, mas proteger fluxos críticos em que várias camadas precisam funcionar juntas.
-
-Neste capítulo vamos continuar usando `mod_checkpoint` como exemplo. O plugin já possui formulário de configuração, página do aluno, resposta, nota e completion, então ele é um bom laboratório para testar a experiência completa de professor e estudante. A preocupação central será escrever cenários legíveis e estáveis, evitando aquela suíte de Behat que leva quarenta minutos, quebra quando alguém muda um texto de botão e passa mais tempo sendo consertada do que encontrando bugs.
+É aí que Behat entra. Não para automatizar cada clique existente no Moodle — isso seria uma forma cara de construir uma suíte lenta e frágil —, mas para proteger jornadas que precisam atravessar várias camadas. Enquanto avançamos com `mod_checkpoint`, use uma regra prática: se o comportamento importante pode ser provado em PHP, prefira PHPUnit; se o que você quer provar é a experiência completa do usuário, aí Behat começa a fazer sentido.
 
 ## 26.1 PHPUnit versus Behat
 
