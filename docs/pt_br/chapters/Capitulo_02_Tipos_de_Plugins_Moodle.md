@@ -8,7 +8,7 @@ Você quer criar uma atividade que o professor adiciona ao curso. Abre `local/`,
 
 A escolha do tipo de plugin acontece antes do primeiro `version.php` e costuma decidir quanto trabalho o próprio Moodle fará por você depois. `mod`, `local`, `tool`, `auth`, `enrol`, `format` e os demais tipos não são apenas gavetas para organizar arquivos; cada um representa um contrato com o core. Quando você escolhe o contrato errado, começa a reconstruir manualmente coisas como backup, matrícula, contexto, navegação ou ciclo de vida que já existiam.
 
-`local` é especialmente sedutor porque aceita praticamente qualquer coisa. E justamente por isso merece desconfiança. Se qualquer problema cabe ali, a pergunta deixa de ser "consigo fazer com um local?" e passa a ser "por que isso deveria ser um local?". Ao longo deste capítulo vamos usar essa pergunta várias vezes, porque descobrir qual parte do Moodle você está realmente estendendo é muito mais importante do que descobrir em qual pasta o PHP deve ficar.
+`local` é especialmente sedutor porque aceita praticamente qualquer coisa. E justamente por isso merece desconfiança. Se qualquer problema cabe ali, a pergunta deixa de ser "consigo fazer com um local?" e passa a ser "por que isso deveria ser um local?". Guarde essa pergunta enquanto avançamos, porque descobrir qual parte do Moodle você está realmente estendendo é muito mais importante do que descobrir em qual pasta o PHP deve ficar.
 
 ## 2.1 O que é um tipo de plugin
 
