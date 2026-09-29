@@ -599,6 +599,36 @@ public function get_state(string $rule): int {
 
 O método não recebe o usuário atual pela global `$USER`, porque a conclusão pode ser calculada para outro usuário em relatórios, cron ou avaliações.
 
+### Exemplo real: conclusão por percentual no Super Video
+
+No [`mod_supervideo`](https://github.com/EduardoKrausME/moodle-mod_supervideo), a regra é fácil de explicar para qualquer professor: considerar a atividade concluída quando o aluno atingir determinado percentual de reprodução. O código real usa o mesmo contrato de `activity_custom_completion` que acabamos de estudar:
+
+```php
+public function get_state(string $rule): int {
+    global $DB;
+
+    $this->validate_rule($rule);
+
+    $params = [
+        "cm_id" => $this->cm->id,
+        "user_id" => $this->userid,
+    ];
+
+    $percent = (int) (
+        $DB->get_field("supervideo_view", "MAX(percent)", $params) ?? 0
+    );
+
+    $required = $this->cm
+        ->customdata['customcompletionrules']['completionpercent'];
+
+    return ($required <= $percent)
+        ? COMPLETION_COMPLETE
+        : COMPLETION_INCOMPLETE;
+}
+```
+
+Aqui a API deixa de ser abstrata. O plugin possui um dado próprio, o percentual assistido, mas não inventa um sistema paralelo de conclusão. Ele traduz o estado do domínio do vídeo para o estado oficial de Completion do Moodle. É exatamente essa fronteira que uma regra customizada deveria representar.
+
 ## 21.45 Nunca use `$USER` em regra de completion que recebe `$userid`
 
 Esse erro é extremamente comum. A regra funciona quando o aluno abre a atividade, mas o relatório do professor calcula o estado usando o professor porque o código olhou para `$USER`.
