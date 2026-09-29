@@ -2,19 +2,11 @@
 
 # 31 MOODLE FRIENDLY INSTALLATION: OPERAÇÃO E AUTOMAÇÃO
 
-Até aqui o livro tratou principalmente do que acontece dentro do Moodle: plugins, APIs, segurança, banco, testes, integração contínua e manutenção. Só que existe uma parte do problema que começa antes de qualquer `version.php` ser carregado. Alguém precisa criar a instalação, preparar banco e diretórios, configurar o servidor web, emitir SSL, executar tarefas privilegiadas, diagnosticar falhas, acompanhar consumo de recursos e, em alguns ambientes, gerar também o aplicativo móvel.
+Até aqui quase tudo aconteceu depois que o Moodle já estava de pé. Mas quem colocou ele de pé? Quem criou banco, diretórios, configuração do servidor web, SSL, permissões, cron, diagnóstico e monitoramento? Quando você administra uma instalação isso parece rotina; quando administra dezenas, a rotina vira sistema.
 
-É nesse ponto que entra o projeto **Moodle Friendly Installation**, disponível em [https://github.com/EduardoKrausME/moodle_friendly_installation](https://github.com/EduardoKrausME/moodle_friendly_installation).
+É justamente esse salto que o **Moodle Friendly Installation** tenta resolver. Ele não é plugin Moodle e isso é importante: estamos saindo da arquitetura interna da plataforma e olhando para operação, automação, privilégios, filas de jobs e observabilidade ao redor dela. O projeto está em [https://github.com/EduardoKrausME/moodle_friendly_installation](https://github.com/EduardoKrausME/moodle_friendly_installation).
 
-Ele não é um plugin Moodle. É um painel de operação para administrar múltiplas instalações Moodle em um servidor privado, e justamente por estar fora do Moodle ele mostra uma classe diferente de decisões arquiteturais: separação de privilégios, filas de jobs, automação de infraestrutura, geração de configuração, observabilidade e tratamento seguro de operações que precisam rodar como `root`.
-
-O projeto pode ser instalado com:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/EduardoKrausME/moodle_friendly_installation/refs/heads/master/install/installation.sh -o i.sh && chmod +x i.sh && ./i.sh
-```
-
-A ideia deste capítulo não é transformar esse repositório em uma receita universal de hospedagem Moodle. Ele representa uma arquitetura concreta, com decisões concretas, e por isso é mais útil estudá-lo como um sistema real do que copiar scripts sem entender o que cada processo está autorizado a fazer.
+Não trate o repositório como receita universal de hospedagem. Quero usar uma arquitetura concreta para discutir decisões que aparecem em servidor real, principalmente uma que merece atenção desde o início: painel web não deveria ganhar `root` só porque precisa executar uma tarefa privilegiada. A partir daí entram separação de processos, fila, CRON privilegiado e os limites entre conveniência operacional e segurança.
 
 ## 31.1 O problema que o projeto resolve
 
