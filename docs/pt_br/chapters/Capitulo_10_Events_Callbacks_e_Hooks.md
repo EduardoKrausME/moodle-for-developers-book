@@ -465,6 +465,28 @@ Um dos melhores efeitos dos Hooks é reduzir a justificativa para editar core. Q
 
 Mas Hook não é desculpa para implementar qualquer política em qualquer lugar. Se o ponto não oferece os dados ou a mutabilidade necessária, talvez a arquitetura correta seja outro tipo de plugin, uma API diferente ou até propor um novo Hook ao core. Forçar um Hook inadequado pode ser tão frágil quanto o hack que você queria evitar.
 
+### Exemplo real: `local_boost_dark`
+
+O [`local_boost_dark`](https://github.com/EduardoKrausME/moodle-local_boost_dark) é um caso simples em que Hook resolve um problema que antes facilmente terminaria em override ou injeção mais frágil. O plugin precisa acrescentar ao HTML o estado do modo escuro sem editar o Boost e sem transformar essa decisão numa modificação do core.
+
+No código atual, o callback recebe `before_html_attributes` e acrescenta os atributos calculados:
+
+```php
+public static function before_html_attributes(before_html_attributes $hook): void {
+    if (!get_config("local_boost_dark", "enable")) {
+        return;
+    }
+
+    $attributes = self::html_attributes();
+
+    foreach ($attributes as $id => $value) {
+        $hook->add_attribute($id, $value);
+    }
+}
+```
+
+Repare no papel do Hook. O plugin não precisa descobrir depois que a página já foi impressa como alterar a tag `html`, nem copiar um layout do tema apenas para acrescentar `data-bs-theme`. O core abre um ponto de extensão, o plugin participa daquele ponto e a instalação continua sem core hack.
+
 ## 10.53 Um exemplo completo de decisão
 
 Imagine que sua instituição precisa mandar uma mensagem para um ERP sempre que uma matrícula for criada e também precisa acrescentar um campo a um payload antes de uma integração própria enviá-lo. São dois problemas diferentes. Para a matrícula criada, observar um Event faz sentido porque o fato já ocorreu e sua integração apenas reage. Para o payload ainda em preparação, um before Hook faz sentido porque outro componente precisa participar antes da ação externa.
