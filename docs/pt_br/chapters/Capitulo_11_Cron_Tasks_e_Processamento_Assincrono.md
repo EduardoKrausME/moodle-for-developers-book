@@ -276,6 +276,16 @@ A pergunta não é "como impedir qualquer falha?", porque isso não existe. A pe
 
 Checkpoint, status por item e idempotência formam a resposta. Se a task consegue reler o estado e descobrir que itens 1 a 4.500 já foram concluídos, continuar do 4.501 é simples. Se ela guarda tudo apenas em variáveis de memória, qualquer interrupção transforma progresso em fumaça.
 
+### Exemplo real: tabelas derivadas no Kopere BI
+
+No [`local_kopere_bi`](https://github.com/EduardoKrausME/moodle-local_kopere_bi), alguns relatórios precisam trabalhar com grande volume de tracking e com partes do `logstore_standard_log`. Fazer esse cálculo inteiro dentro de cada abertura do dashboard seria colocar o trabalho no lugar errado.
+
+A Scheduled Task `report_tables_sync` prepara tabelas de apoio e sincroniza os registros necessários para os relatórios. Entre outras coisas, ela reconstrói dados agregados de tracking e mantém uma cópia filtrada dos logs que interessam ao BI.
+
+O ponto didático aqui é importante: a Task não existe para "deixar o SQL mais bonito". Ela muda o momento da execução. O custo pesado acontece fora da requisição do usuário e a interface passa a consultar dados já preparados para aquele objetivo.
+
+Esse desenho também obriga a pensar em retomada e consistência. Se a task falha no meio, o próximo ciclo precisa conseguir reconstruir ou continuar sem transformar as tabelas derivadas numa segunda fonte de verdade impossível de recuperar.
+
 ## 11.20 Idempotência
 
 Idempotência significa que repetir uma operação não produz efeitos duplicados indesejados. Em fila isso não é luxo, porque retry existe justamente para repetir execução depois de falha.
