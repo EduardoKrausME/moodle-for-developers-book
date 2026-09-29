@@ -2,11 +2,11 @@
 
 # 19 PLUGINS DE AUTENTICAÇÃO
 
-Autenticação é um daqueles assuntos em que uma palavra aparentemente simples começa a significar coisas diferentes conforme a arquitetura cresce. Em um Moodle pequeno, autenticar pode significar apenas receber usuário e senha, comparar a senha com um hash local e criar a sessão. Em uma instituição maior, a mesma palavra passa a englobar LDAP, banco externo, OAuth 2, OpenID Connect, SAML, login corporativo, área do aluno, portal acadêmico, links de acesso sem senha e MFA, e se tudo isso for tratado como se fosse apenas uma variação de `user_login()`, o plugin rapidamente vira um emaranhado de responsabilidades.
+Quando alguém diz "precisamos de SSO", qual problema exatamente está pedindo para você resolver? O Moodle deve receber usuário e senha e validar em outro sistema? Deve redirecionar para um provedor de identidade? Deve aceitar uma prova assinada de uma área do aluno já autenticada? As três coisas podem ser chamadas comercialmente de SSO e tecnicamente são fluxos bem diferentes.
 
-O primeiro objetivo deste capítulo é separar essas responsabilidades. Um plugin `auth` existe para participar do processo pelo qual o Moodle estabelece a identidade do usuário, mas nem todo cenário chamado comercialmente de "SSO" é simplesmente um plugin `auth` que recebe usuário e senha. Existe uma diferença enorme entre o Moodle receber uma credencial e perguntar a outro sistema se ela é válida, o navegador ser redirecionado para um provedor de identidade e voltar com uma asserção, e um CMS ou área do aluno já autenticado gerar um link temporário que permite ao usuário entrar no Moodle sem digitar nada novamente.
+É aí que muita implementação começa torta: escolhe-se um plugin `auth` antes de entender de onde vem a identidade e como essa identidade será provada. Depois aparecem senha, redirect, criação de conta, replay, logout, MFA e vínculo entre identidades, e o código precisa compensar uma decisão que foi tomada cedo demais.
 
-Vamos trabalhar com um exemplo chamado `auth_academicsso`, mas sem cair na armadilha de transformar todo tipo de SSO em `auth_academicsso`. Em alguns cenários ele será realmente o componente correto. Em outros, o Moodle apenas precisa receber uma prova de identidade já estabelecida por outro sistema e transformar essa prova em uma sessão local de forma segura. A diferença parece semântica até começar a lidar com senha, logout, criação de conta, rotação de segredo, replay, redirect e vínculo entre identidades.
+Neste capítulo vamos usar `auth_academicsso` como referência, mas não como martelo para todo prego. Primeiro vamos separar autenticação, autorização e matrícula; depois decidimos quando `auth` realmente é o ponto de extensão correto. A pergunta que deve acompanhar o capítulo inteiro é simples: quem já sabe quem é o usuário e qual evidência o Moodle recebe para confiar nessa identidade?
 
 ## 19.1 O que é a Authentication API
 
