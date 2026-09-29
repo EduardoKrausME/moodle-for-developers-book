@@ -2,13 +2,11 @@
 
 # 15 PLUGIN LOCAL
 
-Existe uma frase que eu repito bastante quando alguém começa a desenvolver para Moodle: plugin `local` não é o lugar onde colocamos aquilo que não sabemos onde colocar. Ele é um tipo de plugin legítimo, útil e extremamente flexível, mas essa flexibilidade é justamente o motivo pelo qual ele precisa ser usado com critério, porque quando tudo vira `local` a arquitetura do Moodle perde parte da vantagem de ter tipos de plugins especializados.
+Eu repito bastante uma frase porque ela evita uma quantidade absurda de plugins mal desenhados: `local` não é o lugar onde colocamos aquilo que não sabemos onde colocar.
 
-A documentação oficial é bem direta nesse ponto e recomenda usar um tipo padrão sempre que ele existir. Se o que você está criando é uma atividade que o professor adiciona no curso, provavelmente é `mod`. Se é autenticação, existe `auth`. Se é matrícula, existe `enrol`. Se é um bloco visual, existe `block`. Se é uma ferramenta administrativa com escopo claramente administrativo, muitas vezes `tool` faz mais sentido. O `local` entra quando a funcionalidade é realmente institucional, transversal, integradora ou não se encaixa corretamente nos contratos dos tipos especializados.
+É claro que você consegue fazer quase tudo dentro de um plugin local. Criar páginas, tabelas, tasks, Web Services, observers, integrações e dashboards não é o problema; justamente por ele aceitar tanta coisa, fica muito fácil transformar `local` na gaveta de bagunça da instalação. Se a funcionalidade é uma atividade, por que não é `mod`? Se controla matrícula, por que não é `enrol`? Se participa de autenticação, o que impede usar `auth`?
 
-Ao mesmo tempo, é importante não cair no exagero contrário e tratar plugin `local` como se fosse uma solução ruim por definição. Não é. Eu uso bastante plugin `local`, e muita gente que trabalha com Moodle institucional também usa, porque há uma quantidade enorme de demandas que não pertencem naturalmente a uma atividade, a um bloco ou a um método de matrícula. Integrações com ERP, sincronizações institucionais, regras internas de negócio, dashboards administrativos, consumo de eventos, automações, APIs próprias e telas que atravessam vários cursos são exemplos em que `local` pode ser exatamente o tipo certo.
-
-Este capítulo junta boa parte do que vimos até aqui e coloca tudo dentro de um projeto completo, porque um plugin `local` de verdade raramente vive apenas de `version.php`, `settings.php` e uma página PHP. Ele pode ter banco, capabilities, eventos, Hooks, Tasks, cache, Web Services, integrações externas, páginas administrativas, templates Mustache e regras de negócio, e o ponto importante é fazer tudo isso sem transformar o plugin em um grande `lib.php` com milhares de linhas.
+Agora, não vamos cometer o exagero contrário. `local` é um tipo excelente quando a responsabilidade é realmente institucional, transversal ou integradora. Eu uso bastante, principalmente para regras internas, sincronizações, APIs próprias e funcionalidades que atravessam vários cursos. A diferença está em chegar a `local` por decisão, não por desistência. Este capítulo parte exatamente daí: quando ele é o encaixe correto e como impedir que sua flexibilidade vire um `lib.php` de cinco mil linhas.
 
 ## 15.1 O que realmente é um plugin local
 
