@@ -2,13 +2,11 @@
 
 # 23 PRIVACY API E GDPR
 
-Quando a Privacy API apareceu no Moodle, muita gente tratou o assunto como mais uma exigência burocrática: criar `classes/privacy/provider.php`, implementar uma interface e fazer o Plugin Validate parar de reclamar. Esse é provavelmente o pior jeito de pensar o problema, porque a Privacy API não existe para satisfazer o validator, ela existe para obrigar o plugin a responder perguntas que deveriam fazer parte do projeto desde o início: quais dados pessoais ele armazena, por que armazena, em quais contextos esses dados existem, como um usuário pode receber uma cópia do que pertence a ele e o que deve acontecer quando existe uma solicitação de exclusão.
+Criar `classes/privacy/provider.php` só para o Plugin Validate parar de reclamar é uma forma bastante eficiente de cumprir a estrutura e ignorar o problema. A Privacy API começa antes do provider, com uma pergunta incômoda: quais dados pessoais seu plugin realmente guarda e onde eles estão?
 
-Em um plugin pequeno isso parece simples. Uma tabela tem `userid`, então exportamos aquela linha e apagamos quando solicitado. Em um plugin real, porém, os dados podem estar espalhados em tabelas próprias, File API, preferências, tags, comentários, ratings, logs, serviços externos e subplugins. Algumas informações precisam ser apagadas, outras precisam ser anonimizadas porque fazem parte de uma estrutura compartilhada e outras nem pertencem diretamente ao plugin, embora tenham sido criadas por ele em um subsistema do core.
+A resposta raramente termina numa tabela com `userid`. Pode existir arquivo na File API, preferência, comentário, tag, log, dado enviado para serviço externo ou informação mantida por um subplugin. E aí aparece a parte que o boilerplate não resolve: o que pode ser exportado, o que deve ser apagado, o que precisa ser anonimizado e o que pertence a outro componente?
 
-Neste capítulo vamos trabalhar com um exemplo chamado `mod_reflection`, uma atividade em que o aluno escreve uma reflexão, pode anexar arquivos e possui uma preferência individual de exibição. A atividade também envia opcionalmente uma cópia do texto para um serviço externo de análise. Esse exemplo permite passar por praticamente todos os problemas importantes: metadata, context list, user list, export, deletion, files, preferences, external locations e responsabilidade entre componentes.
-
-A parte jurídica do GDPR e da LGPD não será tratada como parecer legal. O objetivo aqui é técnico: entender o que o Moodle espera que um plugin consiga descrever e executar. A instituição continua responsável por definir base legal, retenção, finalidade e políticas, enquanto o plugin precisa fornecer mecanismos corretos para que essas políticas possam ser aplicadas.
+Vamos usar `mod_reflection` porque ele mistura texto, arquivos, preferência e integração externa, o suficiente para tornar essas perguntas concretas. A parte jurídica de GDPR e LGPD continua sendo responsabilidade da instituição e de quem define finalidade, base legal e retenção; nosso problema aqui é técnico. Quando a instituição pedir para localizar, exportar ou apagar dados, o plugin consegue responder sem improvisar uma consulta diferente para cada pedido?
 
 ## 23.1 Por que a Privacy API existe
 
