@@ -631,6 +631,14 @@ Não existe necessidade de reescrever automaticamente toda integração baseada 
 
 Independentemente do cliente, os riscos continuam os mesmos: SSRF, redirects, timeout, TLS, autenticação, tamanho de resposta, retry, rate limit e vazamento de segredo. Nenhuma biblioteca transforma uma URL fornecida pelo usuário em destino seguro por mágica.
 
+### Um caso real de code review: `local_geniai`
+
+O [`local_geniai`](https://github.com/EduardoKrausME/moodle-local_geniai) conversa com serviços externos de IA, então ele é um exemplo natural para este capítulo. E também é útil por outro motivo: código real nem sempre já está exatamente no estado que eu recomendaria num livro.
+
+No controller ChatGPT atual existe uma chamada baseada em `curl_init()`. Ela funciona, mas, olhando o mesmo código com o critério que acabamos de discutir, eu refatoraria essa fronteira para a Moodle Curl API ou para `core\http_client`, dependendo da faixa de versões suportada. Assim proxy, teste e política de transporte deixam de ficar amarrados a uma chamada cURL construída manualmente.
+
+Isso é uma vantagem de usar projeto real como exemplo: não precisamos fingir que código de produção nasce perfeito. O importante é conseguir olhar para uma implementação que funciona e ainda perguntar se a dependência está na camada certa e se a próxima manutenção ficará mais simples ou mais difícil.
+
 ## 14.41 Timeout não é detalhe
 
 Integração sem timeout pode prender processo PHP esperando um serviço que não responde. Em página web isso vira usuário olhando loading infinito, workers ocupados e capacidade da aplicação caindo.
