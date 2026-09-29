@@ -284,6 +284,8 @@ Isto já mostra uma vantagem clara de respeitar a API. O link aparece ou desapar
 
 ## 13.21 Não coloque tudo no menu principal
 
+Antes de adicionar mais um item na navegação principal, olhe para o Moodle como usuário e faça uma pergunta bem menos técnica: eu realmente preciso ver isso em todas as páginas? Menu global não é prêmio para funcionalidade importante; quanto mais coisa colocamos ali, menos importante cada item parece.
+
 Adicionar link em navegação não significa que ele deva aparecer na área mais visível possível. O Moodle deliberadamente restringe alguns espaços de navegação para não transformar a interface em uma coleção de atalhos de plugin.
 
 Antes de forçar um item na navegação principal, pergunte se ele pertence ali para todos os usuários e em todas as páginas. Muitas vezes a página deveria estar dentro do curso, das preferências do usuário, de um relatório ou da administração. A API deixa você adicionar o link, mas arquitetura de navegação continua sendo uma decisão de UX.
