@@ -6,7 +6,7 @@ Abra um `view.php` que consulta banco, monta tabela com `echo`, injeta JavaScrip
 
 É aqui que a Output API deixa de ser "mais uma forma de imprimir HTML" e começa a fazer sentido. Dados mudam por um motivo, layout muda por outro e interação muda por um terceiro; quando tudo está misturado, qualquer alteração pequena atravessa as três camadas. Templates Mustache, classes de output, `$OUTPUT`, JavaScript e o sistema de temas existem para evitar justamente esse acoplamento.
 
-Durante o capítulo, faça um teste mental simples: sempre que aparecer uma decisão visual dentro de uma consulta ou uma regra de negócio dentro de um template, pergunte se aquela responsabilidade está no lugar certo. A intenção não é produzir arquitetura bonita para apresentação de slide, mas chegar numa interface que possa mudar de tema, ganhar uma modal ou ser reutilizada sem obrigar você a desmontar metade da página.
+Faça um teste mental simples: sempre que aparecer uma decisão visual dentro de uma consulta ou uma regra de negócio dentro de um template, pergunte se aquela responsabilidade está no lugar certo. A intenção não é produzir arquitetura bonita para apresentação de slide, mas chegar numa interface que possa mudar de tema, ganhar uma modal ou ser reutilizada sem obrigar você a desmontar metade da página.
 
 ## 6.1 Moodle Output API
 
