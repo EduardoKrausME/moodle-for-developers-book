@@ -127,6 +127,29 @@ Talvez você ache razoável sincronizar um ERP a cada minuto, mas o endpoint do 
 
 Por isso eu evitaria implementar dentro de `execute()` uma condição fixa do tipo `if (date('H') !== '03') return;`. Se a periodicidade é agenda, coloque na agenda. Código deve decidir o que fazer, não esconder um segundo sistema de cron dentro da própria task.
 
+### Exemplo real: geração automática no `mod_certificatebeautiful`
+
+No [`mod_certificatebeautiful`](https://github.com/EduardoKrausME/moodle-mod_certificatebeautiful), certificados podem ser emitidos automaticamente quando determinados critérios são atingidos. Esse é um bom exemplo de trabalho que não deveria depender de o professor abrir uma página e esperar a geração terminar.
+
+A Scheduled Task `auto_issue_task` procura instâncias configuradas para emissão automática, calcula os usuários candidatos e processa cada um:
+
+```php
+$candidateuserids = automation::get_candidate_user_ids(
+    $certificatebeautiful,
+    $cm
+);
+
+foreach ($candidateuserids as $userid) {
+    try {
+        automation::process_user($cm->id, $userid);
+    } catch (Throwable $exception) {
+        mtrace($exception->getMessage());
+    }
+}
+```
+
+O ponto mais interessante não é o certificado. É a decisão de arquitetura. O professor configura a regra; depois o cron pode cumprir essa regra sem transformar uma requisição HTTP em worker de geração de documentos.
+
 ## 11.10 Adhoc Tasks
 
 Adhoc Task representa trabalho enfileirado sob demanda. Alguma coisa aconteceu agora e você quer executar determinada operação fora da requisição atual.
