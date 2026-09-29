@@ -602,6 +602,14 @@ Tecnicamente você consegue instalar uma atividade sem implementar backup, mas d
 
 Quando o módulo declara `FEATURE_BACKUP_MOODLE2`, está dizendo que implementa esse contrato. Os arquivos ficam em `backup/moodle2/` e descrevem como os dados próprios da atividade entram no backup e como são recriados no destino.
 
+### Exemplo real: `mod_supervideo`
+
+O [`mod_supervideo`](https://github.com/EduardoKrausME/moodle-mod_supervideo) é uma boa fotografia do momento em que um `mod` deixa de parecer apenas `view.php + tabela`. O repositório atual possui `backup/moodle2/`, custom completion, eventos, Privacy API, Web Services, Hooks, classes de output e diferentes providers de vídeo.
+
+Isso não quer dizer que todo módulo precise nascer com todas essas pastas. Quer dizer o contrário: conforme responsabilidades reais aparecem, o tipo `mod` oferece pontos de integração para cada uma delas. O Super Video precisa acompanhar progresso de reprodução, concluir atividade por percentual, sobreviver a backup/restore e servir uma experiência própria dentro do curso; essas necessidades justificam a arquitetura que cresceu ao redor da instância.
+
+Quando você olha um módulo real assim, fica mais fácil entender por que eu insisto que uma atividade séria não é apenas o registro da tabela principal. Ela participa do curso inteiro.
+
 ## 17.55 Estrutura do backup da atividade
 
 Uma implementação típica utiliza classes como:
