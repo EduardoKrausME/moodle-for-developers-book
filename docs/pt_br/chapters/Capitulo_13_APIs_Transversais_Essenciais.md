@@ -492,6 +492,20 @@ set_user_preference('tool_courseaudit_compact', 1);
 $compact = get_user_preferences('tool_courseaudit_compact', 0);
 ```
 
+### Exemplo real: modo escuro sem tabela própria
+
+O [`local_boost_dark`](https://github.com/EduardoKrausME/moodle-local_boost_dark) precisa lembrar a escolha de modo escuro de cada usuário. Seria fácil criar uma tabela com `userid` e `darkmode`, mas não existe razão para inventar persistência própria para uma preferência tão simples.
+
+Para usuário autenticado, o plugin usa a própria User Preferences API:
+
+```php
+set_user_preference("darkmode", $darkmode);
+
+$darkmode = get_user_preferences("darkmode", $default);
+```
+
+Para visitante não autenticado o problema é diferente, porque ainda não existe usuário Moodle ao qual associar a preferência, então o plugin usa cookie como fallback. Esse contraste é útil: a escolha conceitual continua sendo "preferência de apresentação", mas o mecanismo de persistência depende de existir ou não uma identidade Moodle.
+
 ## 13.43 Não crie tabela para cada preferência
 
 Uma tabela `tool_courseaudit_userprefs` com colunas como `userid`, `compact`, `showhelp`, `defaulttab` provavelmente é desperdício se os dados são apenas preferências simples. A Preference API já resolve armazenamento para usuários autenticados e também lida com sessão quando necessário.
