@@ -313,6 +313,8 @@ Nesse caso o restore precisa também possuir mapping entre o ID antigo da respos
 
 ## 24.22 O erro de copiar caminho físico
 
+Se a sua estratégia de backup depende de saber onde o arquivo está fisicamente no `moodledata`, alguma coisa já saiu da camada certa. Pense no restore em outro servidor, com outro dataroot ou até outro backend de armazenamento: qual parte dessa informação física ainda deveria importar para o plugin?
+
 Nunca tente incluir `/moodledata/filedir/...` diretamente no backup da atividade. A Files API já abstrai o armazenamento e o Moodle pode estar usando object storage, filesystem alternativo ou outra implementação.
 
 Backup trabalha com file records e conteúdo por meio do subsystem de arquivos. O plugin informa component, filearea e itemid, e o core cuida do transporte.
@@ -616,6 +618,8 @@ $data->userid = $this->get_mappingid('user', $data->userid);
 O resultado é o ID do usuário correspondente no destino. Se não existe mapping, o comportamento precisa ser tratado conforme o tipo de dado e o contrato do restore.
 
 ## 24.39 Usuário que não existe no destino
+
+Agora vem uma situação que não aparece no backup perfeito de laboratório: o usuário existia no site A e simplesmente não existe no site B. O que seu dado significa sem ele? Deve ser descartado, anonimizado, reassociado ou mantido sem vínculo? Não existe resposta universal; existe uma decisão que o restore precisa conhecer.
 
 Nem todo restore inclui criação ou correspondência de todos os usuários. Se uma resposta depende de um usuário que não foi restaurado, o plugin precisa respeitar o comportamento do processo.
 
