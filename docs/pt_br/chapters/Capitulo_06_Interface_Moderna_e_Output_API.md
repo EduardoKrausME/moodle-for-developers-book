@@ -424,6 +424,12 @@ Um dos argumentos históricos mais fortes para renderer era permitir que o tema 
 
 Isso reduz bastante a necessidade de override por herança. Se a diferença é marcação, use a camada feita para marcação. Criar uma classe de renderer no tema para alterar HTML que já poderia ser sobrescrito por template é carregar a solução anterior para dentro da arquitetura nova, e ainda aumenta o acoplamento com assinatura de método e implementação PHP do componente.
 
+### Exemplo real: `theme_degrade`
+
+Essa separação entre dados e marcação não é apenas teoria de plugin pequeno. No [`theme_degrade`](https://github.com/EduardoKrausME/moodle-theme_degrade), a customização visual precisa conviver com templates, SCSS, componentes do tema e um editor visual próprio. Se cada alteração de markup dependesse de copiar lógica PHP do componente original, cada upgrade do Moodle seria uma pequena operação de resgate.
+
+É exatamente aí que template override faz sentido: o tema altera a camada de apresentação porque essa é a responsabilidade dele. Quando a mudança é apenas visual, prefiro sobrescrever o artefato visual necessário e manter a regra de negócio no componente de origem. Quanto menos PHP do core o tema precisar imitar, menor tende a ser o custo da próxima atualização.
+
 ### 6.24.3 O mesmo template pode ser usado no servidor e no navegador
 
 Outro ganho que o renderer PHP clássico não resolvia sozinho é renderização no cliente. A partir do sistema de templates, a mesma definição visual pode ser usada pelo PHP e pelo JavaScript, então uma lista carregada inicialmente pelo servidor e um item inserido depois por AJAX podem compartilhar a mesma marcação. Isso reduz aquela situação desagradável em que o PHP possui um HTML e o JavaScript mantém uma segunda versão quase igual montada com strings.
