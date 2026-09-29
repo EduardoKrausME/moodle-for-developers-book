@@ -2,13 +2,11 @@
 
 # 12. Cache e performance
 
-Performance no Moodle é um assunto que costuma começar errado. A página está lenta, alguém abre a administração de cache, vê Redis disponível e conclui que o problema está resolvido assim que tudo for jogado para memória. Às vezes melhora mesmo, principalmente quando a instalação ainda usa filesystem lento para caches de aplicação, mas essa melhora pode esconder consulta ruim, callback executado em toda página, observer fazendo trabalho pesado, `get_records()` trazendo meio milhão de linhas ou uma sequência de chamadas N+1 que continuará existindo, apenas um pouco mais silenciosa.
+A página está lenta. Alguém abre a administração de cache, vê Redis disponível e surge a solução universal: "coloca tudo no Redis". Já viu esse filme? Às vezes melhora mesmo, mas também pode apenas esconder uma consulta ruim, um observer pesado, um `get_records()` trazendo meio milhão de linhas ou aquele N+1 que continua lá, agora um pouco mais rápido e bem mais difícil de perceber.
 
-Cache não corrige arquitetura ruim, ele troca trabalho repetido por complexidade de consistência. Em vez de calcular ou buscar uma informação toda vez, você guarda o resultado em algum lugar e o reutiliza, mas a partir desse momento aparece uma pergunta que não existia antes: quando esse resultado deixa de ser válido? Se essa resposta não estiver clara, o cache pode fazer a página ficar mais rápida e o sistema ficar errado, o que é uma troca particularmente ruim em ambiente educacional, financeiro ou acadêmico.
+Cache não corrige arquitetura ruim; ele troca trabalho repetido por um novo problema chamado consistência. No instante em que você guarda um resultado para reutilizar depois, precisa responder outra pergunta: quando esse valor deixa de ser verdadeiro? Se você não sabe, talvez tenha acabado de construir uma página rápida que mostra informação errada.
 
-O Moodle tem uma camada própria para esse problema, a Moodle Universal Cache, normalmente chamada de MUC. Ela existe para que o plugin declare que tipo de dado quer armazenar e quais garantias precisa, enquanto a instalação decide qual store atende aquela definição. Isso permite que o mesmo código rode numa máquina de desenvolvimento com cache em arquivo, num servidor com APCu ou num cluster usando Redis, sem o plugin conhecer IP, porta, senha ou tecnologia de armazenamento.
-
-Neste capítulo a ideia não é transformar cache numa lista de métodos `get()` e `set()`, mas entender custo de requisição, invalidação, desenho de chave, distribuição entre nós, consultas ao banco, profiling e medição. Se você terminar o capítulo achando que performance é sinônimo de Redis, alguma coisa ficou faltando.
+Antes de escolher store, TTL ou chave, descubra onde o tempo está indo. Banco? Filesystem? Rede? API externa? Serialização? Trabalho que nem deveria acontecer naquela requisição? Só depois MUC, Redis, APCu ou qualquer outra tecnologia entram na conversa. Performance começa medindo custo, não escolhendo produto.
 
 ## 12.1 O que custa caro em uma requisição Moodle
 
