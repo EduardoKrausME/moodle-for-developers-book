@@ -588,6 +588,14 @@ Da mesma forma, uma integração externa pesada pode atualizar estado local de t
 
 Cache reduz repetição. Task muda o momento da execução. São ferramentas diferentes e muitas arquiteturas boas usam as duas juntas.
 
+### Exemplo real: o Kopere BI não resolve tudo com Redis
+
+No [`local_kopere_bi`](https://github.com/EduardoKrausME/moodle-local_kopere_bi), alguns relatórios dependem de dados de tracking e do `logstore_standard_log`. Recalcular agregações grandes toda vez que alguém abre um dashboard seria exatamente o tipo de arquitetura em que o cache vira uma tentativa de esconder trabalho demais.
+
+Uma das Scheduled Tasks do plugin, `report_tables_sync`, mantém tabelas de apoio e sincroniza um recorte dos logs necessário para relatórios. Isso muda o momento em que o custo acontece: trabalho pesado e derivação ficam fora da requisição, enquanto a página consulta uma estrutura preparada para aquele uso.
+
+Esse é um caso em que Task e cache podem coexistir, mas resolvem problemas diferentes. A Task reduz o trabalho que precisa acontecer durante a abertura da página. O cache pode evitar repetir consultas já adequadas. Colocar Redis na frente de uma agregação ruim continuaria deixando uma agregação ruim esperando pelo próximo purge.
+
 ## 12.46 Medir antes de otimizar
 
 Otimização sem medição produz muito código estranho para ganhos que ninguém consegue provar.
