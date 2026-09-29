@@ -226,6 +226,8 @@ Não confunda `plugininfo` com a API funcional do seu subplugin. `plugininfo` de
 
 ## 20.22 O pai precisa definir um contrato
 
+Aqui aparece a pergunta que decide se você realmente criou uma arquitetura extensível ou apenas espalhou código em mais pastas: o plugin pai consegue trabalhar com um subplugin sem saber qual implementação concreta está instalada? Se a resposta depende de `if ($type === 'sap')` no pai, a separação ainda é cosmética.
+
 A declaração no JSON só resolve descoberta. Ainda falta responder o que um `deliveryconnector` precisa implementar.
 
 Uma forma moderna é definir uma interface dentro do pai:
@@ -418,6 +420,8 @@ O subplugin também possui `db/upgrade.php` e sua função `xmldb_[component]_up
 Não coloque todas as mudanças de schema dos filhos dentro do `upgrade.php` do pai. Isso força o pai a conhecer internamente versões e tabelas de extensões que deveriam ser independentes.
 
 ## 20.37 Upgrade do pai e evolução do contrato
+
+Agora pense no problema pelo lado de quem mantém um subplugin de terceiro. Você altera a interface do pai numa terça-feira e publica a nova versão. O que acontece com quem implementava o contrato antigo? Extensibilidade é fácil quando todos os componentes estão no mesmo repositório; ela fica interessante quando versões diferentes precisam conviver.
 
 A parte mais delicada é quando o pai muda a interface que os filhos implementam. Alterar um método obrigatório pode quebrar todos os subplugins terceiros de uma vez.
 
