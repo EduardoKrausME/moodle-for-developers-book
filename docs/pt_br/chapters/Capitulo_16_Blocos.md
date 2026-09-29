@@ -2,9 +2,11 @@
 
 # 16 BLOCOS
 
-Bloco parece simples porque a primeira versão que todo mundo escreve cabe em poucas linhas. Você cria uma classe que herda de `block_base`, coloca um título em `init()`, devolve alguma coisa em `get_content()` e pronto, o Moodle já mostra uma caixinha na lateral da página. O problema é que essa simplicidade inicial engana bastante. Um bloco que começou exibindo dois links pode ganhar configuração por instância, configuração global, filtro por contexto, arquivo, JavaScript, cache, permissão, dados por usuário e, quando você percebe, aquela classe que deveria apenas coordenar a apresentação está consultando cinco tabelas, montando HTML, verificando permissões e executando chamadas externas dentro de `get_content()`.
+Bloco engana pela aparência. A primeira versão cabe em poucas linhas, aparece numa região lateral e dá a impressão de que aquilo nunca vai crescer. Aí chegam configuração por instância, capability, dados por usuário, JavaScript, cache e uma chamada externa, e de repente `get_content()` virou uma pequena aplicação inteira.
 
-Neste capítulo vamos fazer o contrário. Primeiro vamos entender o contrato que o Moodle espera de um block plugin e depois vamos separar as responsabilidades corretamente, porque o fato de o bloco ser visualmente pequeno não significa que a arquitetura pode ser improvisada. A ideia é chegar ao fim com um bloco que pode ser instalado, adicionado em páginas diferentes, configurado, controlado por capability, renderizado com Mustache, usar JavaScript quando necessário e crescer sem transformar `block_nome.php` em um arquivo impossível de manter.
+Se você abrir seu `block_nome.php` e encontrar consulta de cinco tabelas, montagem de HTML, regra de negócio e integração externa no mesmo método, não é porque bloco precisa ser assim. É porque a simplicidade visual fez a gente relaxar na arquitetura.
+
+Vamos tratar o bloco como qualquer outro componente sério do Moodle: a classe coordena o que precisa ser exibido, enquanto regra, consulta e apresentação ficam onde fazem mais sentido. O resultado continua podendo ser uma caixa pequena na tela; o código por trás dela não precisa ser pequeno à força, só precisa continuar legível quando a funcionalidade crescer.
 
 ## 16.1 O que é um block plugin
 
