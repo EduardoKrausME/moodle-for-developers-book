@@ -2,15 +2,11 @@
 
 # 30 PROJETO FINAL
 
-Chegar ao último capítulo de um livro sobre desenvolvimento de plugins Moodle e terminar criando mais uma classe isolada seria desperdiçar tudo o que foi construído até aqui. O projeto final precisa fazer o contrário, ele deve obrigar você a tomar decisões que parecem pequenas quando cada API é estudada separadamente, mas que passam a depender umas das outras quando o plugin vira um produto de verdade.
+Se o último capítulo terminasse criando mais uma classe isolada, teríamos perdido a melhor parte do livro. APIs são relativamente fáceis de entender separadas; o trabalho de verdade começa quando uma decisão de banco interfere em backup, uma regra de negócio encosta em completion, uma notificação vira task e uma tela precisa respeitar capability, Files API e Privacy ao mesmo tempo.
 
-Por isso este capítulo não apresenta uma API nova. Tudo o que vamos usar já apareceu antes, e essa é justamente a proposta. O desafio agora é escolher o tipo de plugin correto, desenhar o banco sem criar dependências frágeis, definir capabilities coerentes, separar interface de regra de negócio, usar Gradebook e Completion sem duplicar estado, integrar Files API, Events, Tasks, Cache, Web Services, Privacy, Backup e testes, fechar CI, gerar o ZIP e provar que o pacote sobrevive a instalação limpa, upgrade e restauração em outra instalação.
+Então agora não tem API nova para esconder atrás. Vamos juntar as peças num `mod_checkpoint` completo e descobrir se as decisões anteriores continuam fazendo sentido quando o plugin vira produto. O professor cria a atividade, o aluno entrega texto e arquivo, existe avaliação, nota, conclusão, notificação, Web Service, Privacy, backup, restore e testes.
 
-O projeto será o `mod_checkpoint`, que apareceu em vários capítulos como exemplo parcial. Agora ele deixa de ser exemplo e vira uma atividade completa. O professor cria um checkpoint dentro do curso, informa instruções, data limite e valor da atividade, o aluno envia uma evidência em texto e opcionalmente um arquivo, o professor avalia, registra feedback e nota, e o Moodle atualiza Gradebook e Completion. O plugin também oferece uma pequena visão de acompanhamento, notificação assíncrona, consulta por Web Service, exportação e exclusão de dados pessoais, backup/restore e uma suíte de testes suficiente para impedir que uma alteração simples destrua o fluxo principal.
-
-O código completo deste projeto final está disponível em: [https://github.com/EduardoKrausME/moodle-for-developers-book-Final_Project](https://github.com/EduardoKrausME/moodle-for-developers-book-Final_Project).
-
-A regra mais importante deste capítulo é simples. Não adicione uma API apenas para poder dizer que ela foi usada. Hooks, subplugins, cache, task ou Web Service só entram se existir uma responsabilidade real para eles. Um projeto final bom demonstra que você sabe usar as APIs do Moodle, mas demonstra também que sabe quando não usar cada uma.
+Só existe uma regra que eu quero manter na mesa durante todo o projeto: não coloque uma API porque o livro ensinou aquela API. Use quando existir responsabilidade real para ela. Um projeto que usa Hooks, cache, task e Web Service sem precisar deles não é mais completo; só tem mais lugares para dar manutenção. O código completo fica em [https://github.com/EduardoKrausME/moodle-for-developers-book-Final_Project](https://github.com/EduardoKrausME/moodle-for-developers-book-Final_Project), mas o objetivo aqui é entender por que cada peça entrou, não copiar a árvore pronta.
 
 ## 30.1 O objetivo do projeto
 
