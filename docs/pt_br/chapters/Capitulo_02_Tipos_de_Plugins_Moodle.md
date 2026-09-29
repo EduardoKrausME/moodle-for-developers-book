@@ -164,6 +164,14 @@ Outro problema aparece quando o desenvolvedor sobrescreve template ou renderer s
 
 Quando uma funcionalidade pertence ao negócio e precisa funcionar independentemente do theme ativo, implemente-a no componente apropriado e deixe o theme decidir apenas como aquilo será apresentado quando houver um ponto de extensão adequado.
 
+### Exemplo real: `theme_degrade`
+
+Um exemplo que eu uso bastante para explicar essa fronteira é o [`theme_degrade`](https://github.com/EduardoKrausME/moodle-theme_degrade). Ele altera de forma profunda a apresentação do Moodle, possui SCSS, componentes visuais, editor próprio e customizações de interface, portanto faz sentido que seja um `theme`. A responsabilidade principal é a experiência visual.
+
+Se eu colocasse a mesma funcionalidade dentro de um `local` apenas porque um plugin local consegue injetar HTML, CSS e JavaScript em muitas páginas, o código até poderia funcionar. Só que a arquitetura estaria contando outra história: pareceria que uma regra institucional transversal existe quando, na verdade, o problema é de apresentação.
+
+Esse exemplo também mostra o limite. Se amanhã o Degrade precisar conversar com um ERP ou aplicar uma regra acadêmica obrigatória, eu não colocaria essa regra dentro do theme só porque ele já está carregado. A parte visual continua no theme; a regra de negócio deve sobreviver à troca do tema.
+
 ## 2.14 Authentication `auth`
 
 Plugins `auth` participam do processo de autenticação, ou seja, da forma como o Moodle verifica a identidade do usuário e relaciona a conta local com uma fonte de credenciais. LDAP e outros mecanismos de autenticação ajudam a entender a ideia, embora cada implementação tenha regras próprias.
