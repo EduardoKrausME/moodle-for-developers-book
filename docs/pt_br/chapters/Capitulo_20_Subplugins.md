@@ -6,7 +6,7 @@ Você tem um plugin que conversa com três sistemas externos. Então cria três 
 
 É exatamente esse tipo de problema que subplugins resolvem bem. Não porque "plugin dentro de plugin" seja uma organização bonita de diretórios, mas porque o componente pai pode declarar um contrato e permitir que cada implementação tenha versão, classes, configuração, banco e ciclo de vida próprios.
 
-Pense no pai como quem define a pergunta e no subplugin como quem oferece uma resposta. O Quiz sabe que existem tipos de relatório e regras de acesso; Assignment sabe que existem tipos de submissão e feedback. Eles não precisam incorporar todas as variações numa classe central. Vamos construir essa mesma ideia com um `local_deliveryhub` e conectores independentes, prestando atenção principalmente a uma coisa: a lógica específica precisa morar no subplugin, senão você ganhou pastas novas e continuou com a mesma arquitetura centralizada de antes.
+Pense no pai como quem define a pergunta e no subplugin como quem oferece uma resposta. O Quiz sabe que existem tipos de relatório e regras de acesso; Assignment sabe que existem tipos de submissão e feedback. Eles não precisam incorporar todas as variações numa classe central. Nos exemplos reais deste capítulo, a mesma ideia aparece nos `biblocks` e `bifilters` do Kopere BI, nos `geniaicontroller` do GeniAI e nos `certificatebeautifuldatainfo` do Beautiful Certificate. A lógica específica precisa morar no filho; caso contrário você ganhou novas pastas e continuou com a mesma arquitetura centralizada de antes.
 
 ## 20.1 O que é um subplugin
 
@@ -363,13 +363,13 @@ $plugin->dependencies = [
 ];
 ```
 
-Assim um conector que depende de uma interface introduzida em determinada versão não é instalado silenciosamente em um pai antigo.
+Assim um subplugin que depende de uma interface introduzida em determinada versão não é instalado silenciosamente em um pai antigo.
 
 ## 20.34 Evite dependência circular
 
 O pai define o contrato e o filho depende do pai. Se o pai começa a depender diretamente de `biblocks_pie`, você criou uma dependência circular conceitual e destruiu a extensibilidade.
 
-O pai pode saber que existem conectores instalados por descoberta, mas não deveria exigir uma implementação específica para funcionar, salvo se isso for uma decisão explícita do produto e estiver refletida nas dependências.
+O pai pode saber que existem filhos instalados por descoberta, mas não deveria exigir uma implementação específica para funcionar, salvo se isso for uma decisão explícita do produto e estiver refletida nas dependências.
 
 ## 20.35 Instalação do subplugin
 
