@@ -4,11 +4,11 @@
 
 ![Cron, Tasks e Processamento Assíncrono](image/cap11-cron-tasks-assincrono.png)
 
-Quando uma página demora vinte segundos para responder, o problema nem sempre está na consulta SQL ou no servidor. Muitas vezes o código simplesmente está fazendo no lugar errado um trabalho que nunca deveria ter acontecido dentro da requisição do usuário. Importar dez mil registros, converter arquivos, sincronizar matrículas, chamar uma API externa para centenas de usuários, gerar relatórios pesados ou enviar milhares de mensagens pode até funcionar dentro de um `view.php`, mas funcionar uma vez em ambiente de desenvolvimento não transforma isso numa arquitetura aceitável.
+Uma página demora vinte segundos para responder e a primeira suspeita cai no SQL, no PHP-FPM ou no servidor. Só que às vezes o problema é muito mais simples: o código está fazendo dentro da requisição do usuário um trabalho que nunca deveria estar ali. Importar dez mil registros, converter arquivos, sincronizar matrículas, chamar uma API para centenas de usuários ou enviar milhares de mensagens pode funcionar perfeitamente em desenvolvimento e continuar sendo uma decisão ruim.
 
-Esse é um daqueles pontos em que o Moodle obriga você a mudar a forma de pensar. O usuário faz uma ação, o plugin valida o pedido, registra o que precisa ser feito e devolve a página rapidamente. O trabalho pesado fica para outro processo, fora da requisição HTTP, e é exatamente aí que entram cron, Scheduled Tasks, Adhoc Tasks e a Lock API.
+Faça uma pergunta simples: o usuário precisa realmente esperar esse trabalho terminar para receber a resposta? Se não precisa, provavelmente estamos falando de fila, cron, Scheduled Task ou Adhoc Task. O request valida o pedido, registra o que precisa acontecer e devolve a página; outro processo faz o trabalho pesado.
 
-A palavra "assíncrono" também precisa ser usada com algum cuidado. Quando você enfileira uma tarefa, ela não começa magicamente em outra thread no mesmo instante. Você colocou trabalho numa fila e algum processo de cron precisa consumi-la. Se o cron roda uma vez por hora, sua fila pode esperar quase uma hora. Se roda a cada minuto e há workers suficientes, o comportamento é muito diferente. A API resolve a arquitetura do processamento, mas não corrige uma infraestrutura mal configurada.
+E cuidado com a palavra "assíncrono". Enfileirar uma tarefa não cria magicamente outra thread. Se o cron roda uma vez por hora, você criou uma fila capaz de esperar quase uma hora. Se roda a cada minuto e existem workers suficientes, a experiência muda completamente. A Task API resolve onde o trabalho deveria acontecer; infraestrutura mal configurada continua sendo infraestrutura mal configurada.
 
 ## 11.1 Como funciona o cron
 
