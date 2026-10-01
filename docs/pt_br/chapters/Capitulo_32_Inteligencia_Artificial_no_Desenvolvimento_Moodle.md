@@ -506,8 +506,6 @@ O plugin consumidor não pergunta “qual OpenAI devo usar?”. Ele declara uma 
 
 A infraestrutura decide quem pode atender aquela finalidade para aquele usuário.
 
-## 32.23 Uma chamada mínima ao AI Bridge
-
 Para outro plugin, a API pública pode ser pequena.
 
 ```php
@@ -530,7 +528,7 @@ Isso é intencional.
 
 Quando uma aplicação precisa conhecer todos esses detalhes para pedir uma explicação, a infraestrutura vazou para dentro da regra de negócio.
 
-## 32.24 Purpose: o contrato entre a aplicação e a infraestrutura
+## 32.23 Purpose: o contrato entre a aplicação e a infraestrutura
 
 Um Purpose representa um cenário de uso.
 
@@ -553,7 +551,7 @@ O plugin sabe por que está chamando IA; a infraestrutura sabe como atender.
 
 Esse é um contrato muito mais estável do que depender do nome de um modelo que pode desaparecer em alguns meses.
 
-## 32.25 System instruction e dados variáveis não são a mesma coisa
+## 32.24 System instruction e dados variáveis não são a mesma coisa
 
 Imagine uma auditoria de questão.
 
@@ -579,7 +577,7 @@ Também evita repetir a mesma instrução em cinco pontos diferentes do código.
 
 Prompt espalhado é dívida técnica como qualquer outra configuração espalhada.
 
-## 32.26 Request e Response normalizados
+## 32.25 Request e Response normalizados
 
 O Bridge transforma mensagens em um objeto `local_ai_bridge\bridge\request` contendo:
 
@@ -606,7 +604,7 @@ Essa normalização cria uma fronteira. OpenAI Responses API, OpenAI Chat Comple
 
 `options` funciona como uma saída de emergência para parâmetros adicionais. Use com cuidado. Se cada plugin começar a passar cinquenta opções específicas de um provider, recriaremos o acoplamento que a camada tentou remover.
 
-## 32.27 Tenant: organização não é Course Category
+## 32.26 Tenant: organização não é Course Category
 
 O AI Bridge pode resolver tenant a partir dos campos padrão `institution`, `department` ou da combinação dos dois.
 
@@ -616,7 +614,7 @@ Essa separação é útil em instalações que atendem várias organizações ou
 
 O resolver procura o tenant correspondente ao perfil do usuário e pode, quando explicitamente configurado, criar automaticamente a estrutura necessária. A criação automática fica desabilitada por padrão porque transformar qualquer valor de perfil em nova unidade administrativa sem controle pode gerar bagunça rapidamente.
 
-## 32.28 Papel lógico de IA não substitui role Moodle
+## 32.27 Papel lógico de IA não substitui role Moodle
 
 Outro ponto importante: `student` e `teacher` dentro do AI Bridge são papéis lógicos para roteamento. Eles não substituem roles, assignments e capabilities do Moodle.
 
@@ -638,7 +636,7 @@ teacher
 
 Misturar papel lógico com autorização seria perigoso. O Bridge começa verificando `local/ai_bridge:use`; só depois resolve tenant, controle do usuário, purpose e rotas.
 
-## 32.29 Connections e credenciais
+## 32.28 Connections, credenciais e providers como subplugins
 
 Uma Connection representa uma configuração concreta de provider.
 
@@ -654,8 +652,6 @@ Ollama interno
 Cada conexão guarda configuração específica do provider. O `bridge_manager` criptografa esse bloco usando `core\encryption` antes do armazenamento e o descriptografa somente quando precisa executar a requisição.
 
 Não confunda criptografia com invisibilidade. Uma senha mascarada no formulário continua podendo estar em texto puro no banco. O objetivo aqui é reduzir exposição no armazenamento, embora a segurança final ainda dependa da proteção das chaves de criptografia e do servidor Moodle.
-
-## 32.30 Providers como subplugins
 
 O parent plugin define o tipo de subplugin `aibridge`. Os providers distribuídos no projeto ficam em:
 
@@ -687,7 +683,7 @@ Isso inclui formulário específico, validação, headers de autenticação, pay
 
 O parent não deveria crescer uma sequência de `if ($provider === 'openai')` seguida por outra para Gemini, outra para Claude e outra para qualquer fornecedor que aparecer depois.
 
-## 32.31 Routes: política explícita
+## 32.29 Routes, prioridade, fallback e idempotência
 
 Routes conectam:
 
@@ -724,8 +720,6 @@ O plugin `qbank_questionaudit` continuaria executando exatamente a mesma chamada
 
 A mudança de política não exige deploy do plugin consumidor.
 
-## 32.32 Prioridade e fallback
-
 Um purpose pode possuir mais de uma rota.
 
 ```text
@@ -739,8 +733,6 @@ A API tenta candidatos em ordem. Se uma rota falhar antes de produzir resposta v
 Rotas sem papel lógico funcionam como fallback geral do tenant.
 
 Fallback parece simples até aparecer cobrança externa. Precisamos distinguir “o provider falhou” de “o provider respondeu, mas nosso código falhou depois”.
-
-## 32.33 Não repita uma operação paga porque o accounting falhou
 
 A implementação atual do `api::generate()` possui uma decisão importante. Depois que o provider respondeu com sucesso, o Bridge registra usage e debita créditos em transação. Se essa etapa interna falhar, a exceção deve subir; não devemos simplesmente tentar o próximo provider.
 
@@ -762,7 +754,7 @@ segunda chamada paga
 
 Esse é um caso clássico de idempotência. Retry é ótimo quando sabemos que a operação anterior não ocorreu. Quando não sabemos, repetir pode piorar o problema.
 
-## 32.34 Créditos não são preço do provider
+## 32.30 Créditos, limites e concorrência
 
 O AI Bridge separa duas coisas que costumam ser misturadas: **crédito interno** e **custo monetário estimado**.
 
@@ -781,8 +773,6 @@ Essa separação impede que uma mudança comercial do fornecedor obrigue a insti
 
 Talvez a OpenAI reduza preço amanhã. O purpose `questionaudit-review` pode continuar custando cinco créditos porque essa é a política interna de consumo.
 
-## 32.35 Limites por tenant e usuário
-
 Antes da chamada, o Bridge verifica se o tenant possui saldo suficiente e se o usuário não excedeu seu limite individual.
 
 Isso permite cenários como:
@@ -796,8 +786,6 @@ Professora Maria: limite 2000
 A validação inicial melhora a experiência, mas não basta para concorrência. Duas requisições simultâneas podem ler o mesmo saldo antes de qualquer uma debitar.
 
 Por isso o débito utiliza Lock API.
-
-## 32.36 Concorrência também existe em IA
 
 Imagine saldo `1` e duas requisições chegando praticamente juntas.
 
@@ -819,7 +807,7 @@ O `credit_manager` adquire um lock por tenant, recarrega tenant e usuário e val
 
 IA não suspende as regras de concorrência só porque o código parece “moderno”.
 
-## 32.37 Usage: observabilidade sem armazenar conversa inteira
+## 32.31 Usage, custos e observabilidade
 
 Para cada sucesso, o Bridge registra metadados como:
 
@@ -848,7 +836,27 @@ Isso reduz a quantidade de conteúdo potencialmente sensível transformado em lo
 
 Há um trade-off: suporte perde a capacidade de abrir uma tela e ver exatamente o que foi perguntado. Mas observabilidade não deveria começar com “vamos salvar tudo para o caso de precisar depois”. Primeiro precisamos justificar por que aquele dado precisa ser persistido.
 
-## 32.38 Privacidade: o que sai do Moodle importa tanto quanto o que fica
+Durante desenvolvimento, uma chamada custa quase nada e parece instantânea. Em produção, multiplique por milhares de usuários, tentativas, automações e recursos.
+
+Colete pelo menos:
+
+```text
+quantidade de requisições
+tokens de entrada
+tokens de saída
+latência
+provider
+modelo
+purpose
+custo estimado
+falhas
+```
+
+Depois olhe por unidade e por usuário quando a política permitir.
+
+Sem isso, “IA ficou cara” chega como reclamação no cartão de crédito e não como métrica monitorável.
+
+## 32.32 Privacidade: o que sai do Moodle importa tanto quanto o que fica
 
 O plugin implementa Privacy API para controles de usuário, uso, administração de tenant e ledger de créditos. Exportação e exclusão são tratadas no contexto de sistema, incluindo `core_userlist_provider`.
 
@@ -866,7 +874,7 @@ Dados disponíveis != dados necessários
 
 Um plugin consumidor deveria coletar somente o contexto necessário para seu purpose e, quando possível, remover identificadores que não acrescentam valor à tarefa semântica.
 
-## 32.39 Endpoints customizados e SSRF
+## 32.33 Endpoints customizados, SSRF e providers locais
 
 Providers locais tornam URL configurável muito atraente. Para Ollama, por exemplo, podemos querer algo como:
 
@@ -893,7 +901,27 @@ ollama.internal:11434
 
 A regra aqui vale além deste plugin: “foi preenchido por administrador” não significa “é entrada confiável para acesso de rede”.
 
-## 32.40 A resposta da IA é entrada externa
+Rodar Ollama ou outro modelo dentro da rede pode reduzir envio de dados para terceiros e dar maior controle de infraestrutura, mas não torna a integração automaticamente segura.
+
+Ainda precisamos lidar com:
+
+```text
+controle de acesso ao endpoint
+SSRF
+capacidade do servidor
+fila e concorrência
+timeout
+modelo carregado
+versão
+qualidade da resposta
+prompt injection
+logs
+backup e retenção
+```
+
+“É local” responde onde o processamento acontece. Não responde se o sistema está bem desenhado.
+
+## 32.34 A resposta da IA é entrada externa
 
 Esse talvez seja o hábito mais importante do capítulo.
 
@@ -922,8 +950,6 @@ aplicar regra de negócio
 
 O modelo não recebe autoridade porque nossa aplicação foi quem fez a pergunta.
 
-## 32.41 Structured output melhora formato, não verdade
-
 APIs modernas conseguem impor JSON Schema ou formatos estruturados. Isso é excelente porque reduz erro de parsing e elimina boa parte do “responda somente JSON, sem Markdown, por favor”.
 
 Mas schema valida estrutura.
@@ -941,7 +967,7 @@ o provider pode garantir que `score` seja número e `userid` inteiro. Ele não c
 
 Structured output move validação sintática para uma camada melhor; não elimina validação de domínio.
 
-## 32.42 Prompt injection dentro do Moodle
+## 32.35 Prompt injection dentro do Moodle
 
 Conteúdo Moodle pode conter instruções hostis para um modelo.
 
@@ -958,7 +984,7 @@ Por isso dados do usuário e instruções da aplicação precisam estar claramen
 
 O problema fica mais sério quando a IA recebe conteúdo de fontes externas, HTML, documentos ou páginas recuperadas automaticamente. Quanto mais agentes e ferramentas adicionamos, maior a superfície de prompt injection.
 
-## 32.43 IA não decide capabilities
+## 32.36 IA não decide capabilities nem recalcula fatos
 
 Um plugin como `local_roleexplainer` é um bom exemplo de separação correta.
 
@@ -979,8 +1005,6 @@ O que ela não deveria fazer é receber uma descrição textual de permissões e
 Autorização é determinística e pertence à Access API.
 
 A IA explica; Moodle autoriza.
-
-## 32.44 IA também não deveria recalcular o que o banco sabe
 
 Se um relatório possui 438 respostas, mande `438` para o modelo quando esse número for relevante. Não envie todas as respostas e pergunte “quantas são?” apenas porque o modelo consegue contar aproximadamente em vários casos.
 
@@ -1007,7 +1031,7 @@ DML / APIs Moodle
 
 Essa divisão também facilita testes. Podemos testar o cálculo sem IA e testar o tratamento da resposta sem banco real.
 
-## 32.45 Mais contexto não significa melhor contexto
+## 32.37 Mais contexto não significa melhor contexto
 
 É tentador mandar o curso inteiro para o modelo “para ele entender tudo”. Esse hábito costuma gerar quatro problemas de uma vez:
 
@@ -1022,7 +1046,7 @@ Se a tarefa é revisar uma questão, talvez precisemos do enunciado, alternativa
 
 Quando o volume realmente é grande, pense em busca, recuperação por relevância, sumarização intermediária ou processamento em etapas em vez de simplesmente aumentar a requisição.
 
-## 32.46 Timeout, indisponibilidade e custo fazem parte da regra operacional
+## 32.38 Timeout, indisponibilidade e diagnóstico
 
 Uma API externa pode demorar, falhar, atingir quota ou responder com erro transitório. Isso precisa ser esperado.
 
@@ -1051,8 +1075,6 @@ resultado disponível
 
 IA é apenas mais uma dependência externa dentro desse pipeline.
 
-## 32.47 Diagnóstico precisa preservar a causa
-
 Evite este padrão:
 
 ```php
@@ -1071,7 +1093,7 @@ Ao mesmo tempo, não registre API key, Authorization header, prompt completo ou 
 
 Diagnóstico bom preserva causa sem transformar log em vazamento.
 
-## 32.48 Criando um plugin consumidor do AI Bridge
+## 32.39 Criando um plugin consumidor: auditoria inteligente de questões
 
 Quando um plugin depende explicitamente do Bridge, pode declarar a dependência em `version.php`.
 
@@ -1093,8 +1115,6 @@ $response = \local_ai_bridge\api::generate(
 ```
 
 A configuração administrativa decide como esse purpose é atendido.
-
-## 32.49 Exemplo: auditoria inteligente de questões
 
 Vamos dividir a auditoria em duas etapas.
 
@@ -1134,8 +1154,6 @@ $response = \local_ai_bridge\api::generate(
 
 A IA não substitui a auditoria determinística; complementa onde existe interpretação.
 
-## 32.50 Trocando provider sem mudar o plugin
-
 Esse é um teste simples da arquitetura.
 
 Hoje:
@@ -1163,7 +1181,7 @@ Se o código consumidor não precisa mudar, a fronteira está cumprindo seu pape
 
 Isso não significa que todos os providers produzirão a mesma qualidade. Portabilidade de chamada não é equivalência de resultado. Precisamos testar comportamento, custo e qualidade quando trocamos modelo.
 
-## 32.51 Core AI ou AI Bridge?
+## 32.40 Core AI ou AI Bridge?
 
 Depois de percorrer os dois, a decisão pode ser resumida assim.
 
@@ -1192,7 +1210,7 @@ ou manter subplugins próprios quando for necessário acessar recursos e contrat
 
 A decisão depende do nível de abstração que o projeto precisa.
 
-## 32.52 Testes sem gastar tokens
+## 32.41 Testes sem gastar tokens: fallback e accounting
 
 PHPUnit não deveria depender de internet, quota e disponibilidade da OpenAI para descobrir se sua regra de negócio funciona.
 
@@ -1225,8 +1243,6 @@ Mesmo um provider funcionando corretamente pode produzir outra frase equivalente
 
 Teste contrato, estrutura e decisões controladas pelo seu código.
 
-## 32.53 Testando fallback e accounting
-
 Uma camada de orquestração precisa de testes próprios.
 
 Casos importantes incluem:
@@ -1247,61 +1263,7 @@ O último caso é especialmente importante para garantir que uma falha interna n
 
 Também teste concorrência do ledger quando possível, porque limite financeiro que funciona somente em execução sequencial é um limite decorativo.
 
-## 32.54 Providers locais não eliminam os outros riscos
-
-Rodar Ollama ou outro modelo dentro da rede pode reduzir envio de dados para terceiros e dar maior controle de infraestrutura, mas não torna a integração automaticamente segura.
-
-Ainda precisamos lidar com:
-
-```text
-controle de acesso ao endpoint
-SSRF
-capacidade do servidor
-fila e concorrência
-timeout
-modelo carregado
-versão
-qualidade da resposta
-prompt injection
-logs
-backup e retenção
-```
-
-“É local” responde onde o processamento acontece. Não responde se o sistema está bem desenhado.
-
-## 32.55 Custos precisam ser observáveis antes de virarem surpresa
-
-Durante desenvolvimento, uma chamada custa quase nada e parece instantânea. Em produção, multiplique por milhares de usuários, tentativas, automações e recursos.
-
-Colete pelo menos:
-
-```text
-quantidade de requisições
-tokens de entrada
-tokens de saída
-latência
-provider
-modelo
-purpose
-custo estimado
-falhas
-```
-
-Depois olhe por unidade e por usuário quando a política permitir.
-
-Sem isso, “IA ficou cara” chega como reclamação no cartão de crédito e não como métrica monitorável.
-
-## 32.56 O modelo vai mudar
-
-Não coloque decisões permanentes em nomes temporários.
-
-Modelos são descontinuados, renomeados, substituídos e têm preço alterado. APIs também mudam. O Moodle 5.2.3, por exemplo, precisou corrigir uma mudança de endpoint de geração de imagem do provider Gemini.
-
-Se a aplicação espalha o nome do modelo por PHP, JavaScript, banco e prompt, cada mudança externa vira manutenção interna.
-
-Purpose e Route reduzem esse acoplamento porque permitem trocar implementação mantendo a finalidade estável.
-
-## 32.57 Anti-patterns que merecem desconfiança
+## 32.42 Anti-patterns que merecem desconfiança
 
 Ao revisar um plugin com IA, procure por sinais como estes:
 
@@ -1324,7 +1286,7 @@ provider-specific code no plugin consumidor
 
 Nenhum item isolado prova que o projeto está condenado, mas todos merecem uma pergunta antes de seguir.
 
-## 32.58 Projeto prático do capítulo
+## 32.43 Projeto prático do capítulo
 
 Crie um plugin `local_aidemo` com uma funcionalidade simples: explicar um texto de curso para o usuário atual.
 
@@ -1357,8 +1319,6 @@ Mostre o texto ao usuário, mas trate falhas. Não exiba exceção bruta nem esc
 
 Por fim, troque a rota preferencial de um provider para outro sem alterar o código do `local_aidemo`. Se precisar editar o plugin para trocar fornecedor, volte e descubra onde a infraestrutura vazou.
 
-## 32.59 Uma evolução do exercício
-
 Depois da versão simples, faça o plugin pedir uma resposta estruturada como:
 
 ```json
@@ -1382,7 +1342,7 @@ Depois provoque respostas inválidas deliberadamente e garanta que o plugin falh
 
 Esse exercício ensina mais sobre integração real do que dez exemplos de prompt perfeito.
 
-## 32.60 O princípio que deve sobreviver à moda
+## 32.44 O princípio que deve sobreviver à moda
 
 Modelos, nomes de API e fornecedores mudarão rápido. A arquitetura precisa durar mais do que eles.
 
@@ -1392,7 +1352,15 @@ Se daqui a dois anos trocarmos OpenAI por outro fornecedor, ou LLMs atuais por u
 
 E essa é a parte importante. Um bom plugin de IA não é aquele que possui mais botões com estrelinhas. É aquele que continua compreensível, seguro e substituível depois que a novidade deixa de ser novidade.
 
-## 32.61 Referências e código-fonte
+Não coloque decisões permanentes em nomes temporários.
+
+Modelos são descontinuados, renomeados, substituídos e têm preço alterado. APIs também mudam. O Moodle 5.2.3, por exemplo, precisou corrigir uma mudança de endpoint de geração de imagem do provider Gemini.
+
+Se a aplicação espalha o nome do modelo por PHP, JavaScript, banco e prompt, cada mudança externa vira manutenção interna.
+
+Purpose e Route reduzem esse acoplamento porque permitem trocar implementação mantendo a finalidade estável.
+
+## 32.45 Referências e código-fonte
 
 Documentação oficial do AI Subsystem:
 

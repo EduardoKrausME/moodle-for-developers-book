@@ -48,13 +48,19 @@ Isso evita uma solução muito pior: conceder ao usuário do servidor web permis
 
 Quando um painel administrativo precisa fazer algo privilegiado, a pergunta correta não é "como faço o PHP rodar como root?", mas "como transformo essa ação em uma mensagem validada para um executor privilegiado com superfície mínima?".
 
-## 31.3 Separação entre plano de controle e executor
+## 31.3 Separação entre plano de controle, executor e jobs privilegiados
 
 O painel atua como plano de controle. Ele recebe intenção, valida parâmetros, registra estado e apresenta resultados.
 
 O runner atua como executor. Ele conhece um conjunto fechado de tipos de job e executa apenas as operações previstas.
 
 Essa separação reduz o impacto de uma falha no painel. Se uma entrada arbitrária enviada pelo navegador puder virar diretamente um comando de shell, a aplicação web virou uma API remota para o sistema operacional. A fila não resolve isso sozinha, mas cria uma fronteira onde cada tipo de ação pode ser validado novamente antes da execução.
+
+Ativar ou desativar ModSecurity ou cache do NGINX não é uma simples preferência visual. É uma mudança de configuração de servidor.
+
+Por isso essas ações entram na fila privilegiada, passam por validação de configuração e reload controlado.
+
+A interface pode continuar oferecendo um botão simples, mas a implementação precisa tratar o clique como uma mudança operacional com possibilidade de falha e rollback.
 
 ## 31.4 A fila é uma máquina de estados
 
@@ -77,7 +83,7 @@ O projeto usa lock no runner e executa um job pendente por vez. Essa decisão re
 
 Antes de aumentar concorrência, é preciso responder quais operações podem rodar juntas sem disputar os mesmos arquivos, portas, pacotes, serviços ou limites do host.
 
-## 31.5 Instalação de Moodle como pipeline
+## 31.5 Instalação de Moodle como pipeline e idempotência
 
 A instalação não é uma única operação. Ela é uma sequência de passos com dependências.
 
@@ -109,7 +115,13 @@ Se o DNS ainda não aponta para o servidor, por exemplo, não faz sentido tratar
 
 Essa diferença entre erro recuperável, dependência externa ainda não satisfeita e falha definitiva é importante em qualquer automação de infraestrutura.
 
-## 31.6 Templates são código de produção
+Scripts de infraestrutura precisam considerar reexecução.
+
+Se uma tentativa falha depois de criar o banco, a segunda tentativa não deveria destruir dados ou falhar apenas porque o banco agora existe. O mesmo vale para diretórios, certificados, arquivos de configuração e plugins.
+
+Nem toda etapa consegue ser perfeitamente idempotente, mas o fluxo deve saber distinguir "já está no estado desejado" de "estado inesperado".
+
+## 31.6 Templates, validação e rollback
 
 O projeto gera arquivos de servidor a partir de templates. Isso exige o mesmo cuidado aplicado a código PHP.
 
@@ -118,8 +130,6 @@ Um template de NGINX incorreto pode tirar um domínio do ar. Um template de Apac
 Por isso configuração gerada deve passar por validação antes da ativação. No caso de NGINX, `nginx -t`; no caso de Apache, `apache2ctl` ou `httpd` com a opção adequada.
 
 O projeto valida a configuração antes de ativar mudanças e, quando a validação ou reload falha, restaura a configuração anterior. Isso é muito mais importante do que simplesmente mostrar "salvo com sucesso" na interface.
-
-## 31.7 Rollback não é luxo
 
 Toda ação administrativa que modifica uma configuração funcional deveria pensar no caminho de volta.
 
@@ -140,7 +150,7 @@ se falhar:
 
 Sem rollback, a interface pode converter um erro simples de digitação ou template em indisponibilidade.
 
-## 31.8 Diagnóstico precisa responder perguntas operacionais
+## 31.7 Diagnóstico e observabilidade operacional
 
 Uma tela de diagnóstico útil não mostra apenas "OK" em verde. Ela ajuda a responder por que um site não está funcionando.
 
@@ -156,7 +166,26 @@ O projeto verifica, entre outros pontos:
 
 O valor dessa tela está na correlação. DNS correto com SSL ausente sugere um problema diferente de DNS incorreto com certificado ainda não emitido.
 
-## 31.9 Métricas caras não pertencem ao request web
+Uma automação sem histórico vira uma caixa-preta.
+
+Cada job deve registrar pelo menos:
+
+```
+id
+tipo
+domínio/alvo
+estado
+criado em
+iniciado em
+finalizado em
+resultado
+mensagem de erro
+referência para log
+```
+
+Quando uma instalação falha às três da manhã, a pergunta não pode ser "quem lembra em qual etapa o script estava?".
+
+## 31.8 Métricas caras não pertencem ao request web
 
 Calcular tamanho de `moodledata`, código, banco e uso do disco pode envolver operações caras. Fazer isso em toda abertura da página transforma o painel em gerador de I/O.
 
@@ -178,7 +207,7 @@ substitui snapshot
 
 É o mesmo raciocínio usado dentro do Moodle quando uma informação pode ser materializada ou calculada fora do caminho crítico do usuário.
 
-## 31.10 Logs precisam ter limites
+## 31.9 Logs precisam ter limites
 
 Dar acesso a logs pelo painel parece simples até alguém abrir um arquivo de vários gigabytes.
 
@@ -188,7 +217,7 @@ Esse detalhe evita duas classes de problema: consumo exagerado de memória no PH
 
 Além disso, o painel só deve permitir leitura de arquivos conhecidos. Um parâmetro como `?file=/etc/shadow` nunca pode decidir livremente o caminho que será aberto.
 
-## 31.11 Segurança de caminhos e domínios
+## 31.10 Segurança de caminhos e domínios
 
 Domínio, diretório, package UID e nomes usados em arquivos precisam ser tratados como dados hostis.
 
@@ -198,15 +227,7 @@ Por exemplo, se o sistema opera apenas em `/home/[domain]`, o domínio deve pass
 
 Automação de infraestrutura amplifica erros. Uma falha de path traversal em um plugin pode expor arquivos do Moodle; uma falha semelhante em um painel executado junto de um runner root pode alcançar o servidor inteiro.
 
-## 31.12 ModSecurity e cache como jobs
-
-Ativar ou desativar ModSecurity ou cache do NGINX não é uma simples preferência visual. É uma mudança de configuração de servidor.
-
-Por isso essas ações entram na fila privilegiada, passam por validação de configuração e reload controlado.
-
-A interface pode continuar oferecendo um botão simples, mas a implementação precisa tratar o clique como uma mudança operacional com possibilidade de falha e rollback.
-
-## 31.13 SSO administrativo
+## 31.11 Segredos, autenticação e dados operacionais
 
 O projeto permite acesso administrativo por um arquivo SSO gerado dentro do Moodle.
 
@@ -215,8 +236,6 @@ Esse recurso merece atenção especial porque qualquer mecanismo de login admini
 Tokens ou arquivos temporários precisam ser imprevisíveis, ter escopo pequeno, vida curta e idealmente uso único. Também devem ser removidos ou invalidados depois do consumo.
 
 A conveniência de "entrar como admin com um clique" nunca pode criar uma URL permanente que funcione como senha eterna.
-
-## 31.14 Dados do painel fora de public
 
 Usuários, fila, runtime e logs são gravados em diretórios como:
 
@@ -231,15 +250,13 @@ Esses dados não precisam ficar dentro do document root. Manter arquivos operaci
 
 O mesmo princípio vale para qualquer aplicação PHP: se o navegador não precisa baixar um arquivo diretamente, ele provavelmente não deveria morar no document root.
 
-## 31.15 Senhas e bootstrap
-
 O primeiro usuário é criado em `data/users.json`. Quando uma senha em texto simples é encontrada no primeiro login, ela é substituída por `password_hash()`.
 
 Isso simplifica o bootstrap, mas a senha inicial ainda precisa ser protegida como segredo desde o momento em que é escrita.
 
 Em produção, o passo seguinte natural é reduzir ao máximo o tempo em que existe segredo em texto puro e garantir permissões de arquivo restritas.
 
-## 31.16 Build do APP como outra pipeline
+## 31.12 Build do APP: pipeline, identidade e keystore
 
 A geração do aplicativo Android é uma segunda pipeline, diferente da instalação Moodle.
 
@@ -249,15 +266,11 @@ O projeto valida um ícone PNG 1024x1024, associa recursos ao `Package UID`, cri
 
 O ponto arquitetural importante é que build mobile também é processamento pesado e potencialmente lento, portanto não deve ocorrer dentro do request HTTP que recebeu o formulário.
 
-## 31.17 Package UID não é campo cosmético
-
 Depois que um aplicativo é publicado, mudar o package ID significa mudar sua identidade para Android e lojas.
 
 Por isso o projeto bloqueia o `Package UID` depois da primeira gravação.
 
 Essa é uma boa demonstração de regra de domínio: tecnicamente o campo poderia continuar editável, mas permitir isso produziria uma consequência operacional muito maior do que a interface sugere.
-
-## 31.18 Keystore é ativo crítico
 
 O keystore usado para assinar o APP precisa ser tratado como ativo de longo prazo.
 
@@ -265,7 +278,7 @@ Perder esse arquivo ou sua senha pode impedir atualizações do aplicativo. Expo
 
 Portanto backup, permissão de filesystem e procedimento de recuperação do keystore merecem documentação própria, não apenas um campo escondido no formulário.
 
-## 31.19 Interface multilíngue
+## 31.13 Interface multilíngue
 
 Os textos do painel vivem em `public/app/lang/`. Cada idioma retorna um array com os textos e metadata como nome, idioma HTML e bandeira.
 
@@ -273,7 +286,7 @@ A seleção é mantida em sessão e cookie e também pode ser alterada pela URL.
 
 Separar texto de interface do código evita o padrão clássico de espalhar strings por templates e condicionais, o que torna uma tradução futura praticamente uma busca e substituição manual pelo projeto inteiro.
 
-## 31.20 O que este projeto ensina sobre segurança
+## 31.14 O que este projeto ensina sobre segurança
 
 O projeto junta várias fronteiras que costumam aparecer isoladas:
 
@@ -295,36 +308,7 @@ Quanto maior o privilégio do próximo processo, menor deve ser a liberdade da e
 
 Não passe "comandos" pela fila. Passe intenção estruturada, como `install_moodle`, `toggle_modsecurity` ou `build_app`, e deixe o executor construir internamente a operação permitida.
 
-## 31.21 O que este projeto ensina sobre observabilidade
-
-Uma automação sem histórico vira uma caixa-preta.
-
-Cada job deve registrar pelo menos:
-
-```
-id
-tipo
-domínio/alvo
-estado
-criado em
-iniciado em
-finalizado em
-resultado
-mensagem de erro
-referência para log
-```
-
-Quando uma instalação falha às três da manhã, a pergunta não pode ser "quem lembra em qual etapa o script estava?".
-
-## 31.22 Idempotência
-
-Scripts de infraestrutura precisam considerar reexecução.
-
-Se uma tentativa falha depois de criar o banco, a segunda tentativa não deveria destruir dados ou falhar apenas porque o banco agora existe. O mesmo vale para diretórios, certificados, arquivos de configuração e plugins.
-
-Nem toda etapa consegue ser perfeitamente idempotente, mas o fluxo deve saber distinguir "já está no estado desejado" de "estado inesperado".
-
-## 31.23 O repositório como estudo de caso
+## 31.15 O repositório como estudo de caso
 
 Ao estudar o código do Moodle Friendly Installation, não olhe apenas para telas. Siga um fluxo inteiro.
 
@@ -342,7 +326,7 @@ Depois repita o exercício para build do APP e para uma alteração de configura
 
 Essa leitura transversal mostra arquitetura melhor do que analisar arquivos isolados.
 
-## 31.24 Onde o projeto pode evoluir
+## 31.16 Onde o projeto pode evoluir
 
 Uma evolução natural é substituir gradualmente arquivos JSON por um armazenamento transacional quando volume, concorrência ou auditoria exigirem isso.
 
@@ -352,7 +336,7 @@ Também faz sentido separar adaptadores de NGINX, Apache, banco e distribuição
 
 A regra continua a mesma usada em plugins: abstração deve nascer de variação real, não da vontade de criar mais diretórios.
 
-## 31.25 Exercício prático
+## 31.17 Exercício prático
 
 Clone o projeto em um ambiente descartável e escolha um único fluxo para auditar.
 
@@ -366,7 +350,7 @@ Se o processo PHP for comprometido, quais ações o atacante consegue solicitar 
 
 Essas respostas dizem muito mais sobre a segurança e maturidade da automação do que a aparência do dashboard.
 
-## 31.26 Código-fonte
+## 31.18 Código-fonte
 
 O projeto completo está disponível em:
 
