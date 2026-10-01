@@ -41,6 +41,7 @@ Os capítulos podem ser lidos em sequência, como um livro, ou utilizados indivi
 29. [Compatibilidade e Manutenção entre Versões](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_29_Compatibilidade_e_Manutencao_entre_Versoes.html)
 30. [Projeto Final](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_30_Projeto_Final.html)
 31. [Moodle Friendly Installation: Operação e Automação](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_31_Moodle_Friendly_Installation.html)
+32. [Inteligência Artificial no Desenvolvimento Moodle](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_32_Inteligencia_Artificial_no_Desenvolvimento_Moodle.html)
 
 ---
 

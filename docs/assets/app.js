@@ -53,7 +53,8 @@
         'Capitulo_28_Seguranca_Ofensiva_Aplicada.md': 'Segurança ofensiva aplicada',
         'Capitulo_29_Compatibilidade_e_Manutencao_entre_Versoes.md': 'Compatibilidade e manutenção entre versões',
         'Capitulo_30_Projeto_Final.md': 'Projeto final',
-        'Capitulo_31_Moodle_Friendly_Installation.md': 'Moodle Friendly Installation: operação e automação'
+        'Capitulo_31_Moodle_Friendly_Installation.md': 'Moodle Friendly Installation: operação e automação',
+        'Capitulo_32_Inteligencia_Artificial_no_Desenvolvimento_Moodle.md': 'Inteligência artificial no desenvolvimento Moodle'
     };
 
     const CHAPTERS_EN = {
