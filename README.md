@@ -8,6 +8,8 @@ Os capítulos podem ser lidos em sequência, como um livro, ou utilizados indivi
 
 [**Acessar o livro - Moodle para Desenvolvedores**](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/)
 
+[**Ler o prefácio**](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Prefacio.html)
+
 ## Capítulos
 
 1. [Arquitetura do Moodle](https://eduardokrausme.github.io/moodle-for-developers-book/pt_br/Capitulo_01_Arquitetura_do_Moodle.html)
