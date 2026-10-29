@@ -380,6 +380,17 @@
 
     const chapter = id => {
         const n = Number(id);
+
+        if (n === 0 && LANGUAGE === 'pt_br') {
+            return {
+                id: '00',
+                number: 0,
+                title: 'Prefácio',
+                file: 'chapters/Prefacio.md',
+                url: 'Prefacio.html'
+            };
+        }
+
         const entries = Object.entries(CHAPTERS);
 
         if (n < 1 || n > entries.length) {
@@ -402,6 +413,10 @@
             location.pathname.split('/').pop() || ''
         );
 
+        if (LANGUAGE === 'pt_br' && currentPage === 'Prefacio.html') {
+            return '00';
+        }
+
         const files = Object.keys(CHAPTERS);
         const pageIndex = files.findIndex(
             file => file.replace(/\.md$/i, '.html') === currentPage
@@ -423,7 +438,7 @@
             return pad(h[1]);
         }
 
-        return '01';
+        return LANGUAGE === 'pt_br' ? '00' : '01';
     }
 
     function setTheme(theme) {
@@ -450,7 +465,11 @@
     function renderSidebar() {
         const list = qs('#chapterList');
 
-        list.innerHTML = Object.entries(CHAPTERS)
+        const prefaceLink = LANGUAGE === 'pt_br'
+            ? '<li><a class="chapter-link" data-chapter="00" href="Prefacio.html"><span class="num">—</span><span>Prefácio</span></a></li>'
+            : '';
+
+        list.innerHTML = prefaceLink + Object.entries(CHAPTERS)
             .map(([file, title], i) => {
                 const c = chapter(i + 1);
 
@@ -959,18 +978,18 @@
                 : c.title;
 
             qs('#chapterLabel').textContent =
-                `${TEXT.chapter} ${c.id}`;
+                c.number === 0 ? 'ABERTURA' : `${TEXT.chapter} ${c.id}`;
 
             qs('#chapterTitle').textContent =
                 title;
 
             qs('#meta').textContent =
                 `${minutes} ${TEXT.reading} · ` +
-                `${sections} ${TEXT.sections} · ` +
+                (c.number === 0 ? '' : `${sections} ${TEXT.sections} · `) +
                 `${words.toLocaleString(TEXT.locale)} ${TEXT.words}`;
 
             document.title =
-                `${c.id} · ${title} - Moodle Developer`;
+                `${c.number === 0 ? title : c.id + ' · ' + title} - Moodle Developer`;
 
             qs('#chapterBody').innerHTML =
                 markdown(md);
@@ -1047,11 +1066,11 @@
                             class="nav-card"
                         >
                             <small>
-                                ${TEXT.previous}
+                                ${prev.number === 0 ? '← prefácio' : TEXT.previous}
                             </small>
 
                             <strong>
-                                ${prev.id} · ${esc(prev.title)}
+                                ${prev.number === 0 ? '' : prev.id + ' · '}${esc(prev.title)}
                             </strong>
                         </a>
                     `
