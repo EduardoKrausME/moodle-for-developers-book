@@ -8,7 +8,7 @@ Se você já pegou um plugin que funciona perfeitamente no seu Moodle e quebra a
 
 Pegue uma URL comum, como `https://ead.exemplo.com/mod/forum/view.php?id=42`. Em que momento o Moodle realmente entra nessa história? Quando `$DB` passa a existir? Quem define `$USER`? Por que incluir uma classe na mão às vezes faz o erro desaparecer e ainda assim deixa a aplicação mais errada do que antes? Essas perguntas parecem detalhes até você precisar depurar um problema de bootstrap em produção.
 
-Vamos seguir essa requisição do navegador até o HTML final. Não para decorar uma árvore de diretórios — para isso existe `find`, busca da IDE e o próprio código —, mas para entender por que `config.php`, `lib/setup.php`, `$CFG`, contextos, Moodledata, componentes, autoloading e o Routing Engine existem onde existem. Quando esse mapa fica claro, o core deixa de parecer uma escavação arqueológica de vinte anos de PHP e começa a mostrar uma lógica bastante consistente, inclusive nas partes antigas que convivem com APIs modernas.
+Vamos seguir essa requisição do navegador até o HTML final. Não para decorar uma árvore de diretórios - para isso existe `find`, busca da IDE e o próprio código -, mas para entender por que `config.php`, `lib/setup.php`, `$CFG`, contextos, Moodledata, componentes, autoloading e o Routing Engine existem onde existem. Quando esse mapa fica claro, o core deixa de parecer uma escavação arqueológica de vinte anos de PHP e começa a mostrar uma lógica bastante consistente, inclusive nas partes antigas que convivem com APIs modernas.
 
 ## 1.1 Como uma requisição chega ao Moodle
 

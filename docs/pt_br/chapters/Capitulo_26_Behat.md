@@ -6,7 +6,7 @@ No capítulo anterior nós tiramos muita coisa do navegador e colocamos em PHPUn
 
 Pense num fluxo comum. O professor entra no curso, adiciona a atividade, salva, abre um relatório, usa uma modal e aplica um filtro; depois o aluno acessa, responde, recebe uma notificação e o professor volta para verificar o novo estado. Podemos testar cada serviço isoladamente e ainda assim quebrar um botão, um seletor, uma condição de visibilidade ou uma integração JavaScript no caminho.
 
-É aí que Behat entra. Não para automatizar cada clique existente no Moodle — isso seria uma forma cara de construir uma suíte lenta e frágil —, mas para proteger jornadas que precisam atravessar várias camadas. Enquanto avançamos com `mod_checkpoint`, use uma regra prática: se o comportamento importante pode ser provado em PHP, prefira PHPUnit; se o que você quer provar é a experiência completa do usuário, aí Behat começa a fazer sentido.
+É aí que Behat entra. Não para automatizar cada clique existente no Moodle - isso seria uma forma cara de construir uma suíte lenta e frágil -, mas para proteger jornadas que precisam atravessar várias camadas. Enquanto avançamos com `mod_checkpoint`, use uma regra prática: se o comportamento importante pode ser provado em PHP, prefira PHPUnit; se o que você quer provar é a experiência completa do usuário, aí Behat começa a fazer sentido.
 
 ## 26.1 PHPUnit versus Behat
 
