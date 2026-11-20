@@ -955,7 +955,7 @@ Modals should receive focus when opened and return focus to the originating elem
 
 The most common mistake appears when developers test everything by clicking. The interface looks perfect until someone presses `Tab` and discovers that focus disappears, enters an invisible element, or never reaches the primary action.
 
-## 6.50 Exercise — convert a PHP page full of HTML to Output + Mustache + ESM
+## 6.50 Exercise - convert a PHP page full of HTML to Output + Mustache + ESM
 
 The exercise in this chapter deliberately starts with a bad page. Create `local_catalogsync/report.php` and make a first version that queries records, builds a table by concatenation, creates buttons with HTML inside PHP, and uses a small inline script to retry a synchronization. The page must work, because the goal is not to fix a functional bug; it is to improve the architecture.
 
